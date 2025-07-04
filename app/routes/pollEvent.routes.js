@@ -1,0 +1,32 @@
+module.exports = (app) => {
+  const PollEvent = require("../controllers/pollEvent.controller.js");
+  const { authenticateRoute } = require("../authentication/authentication");
+  var router = require("express").Router();
+
+  // Create a new PollEvent
+  router.post("/poll-events/", [authenticateRoute], PollEvent.create);
+
+  // Retrieve all Recipes for user
+  router.get(
+    "/poll-events/user/:userId",
+    [authenticateRoute],
+    PollEvent.findAllForUser
+  );
+
+  // Retrieve all published Recipes
+  router.get("/poll-events/", PollEvent.findAllPublished);
+
+  // Retrieve a single PollEvent with id
+  router.get("/poll-events/:id", PollEvent.findOne);
+
+  // Update a PollEvent with id
+  router.put("/poll-events/:id", [authenticateRoute], PollEvent.update);
+
+  // Delete a PollEvent with id
+  router.delete("/poll-events/:id", [authenticateRoute], PollEvent.delete);
+
+  // Delete all Recipes
+  router.delete("/poll-events/", [authenticateRoute], PollEvent.deleteAll);
+
+  app.use("/realtime-pollapi", router);
+};
