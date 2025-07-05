@@ -7,14 +7,17 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.STRING,
       allowNull: true,
+      defaultValue: "",
     },
     isQuiz: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: false
     },
     secondsPerQuestion: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: 30,
     },
   });
   return Poll;
