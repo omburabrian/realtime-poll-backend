@@ -88,14 +88,14 @@ exports.findAllForUser = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find PollEventUsers for user with id=${userId}.`,
+          message: `Cannot find PollEventUsers for user with ID=${userId}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Error retrieving PollEventUsers for user with id=" + userId,
+          err.message || "Error retrieving PollEventUsers for user with ID=" + userId,
       });
     });
 };
@@ -179,13 +179,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find PollEventUser with id=${id}.`,
+          message: `Cannot find PollEventUser with ID=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving PollEventUser with id=" + id,
+        message: err.message || "Error retrieving PollEventUser with ID = " + id,
       });
     });
 };
@@ -198,21 +198,21 @@ exports.update = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "PollEventUser was updated successfully.",
+          message: "PollEventUser was updated successfully",
         });
       } else {
         res.send({
-          message: `Cannot update PollEventUser with id=${id}. Maybe PollEventUser was not found or req.body is empty!`,
+          message: `Cannot update PollEventUser with ID = ${id}. Maybe PollEventUser was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating PollEventUser with id=" + id,
+        message: err.message || "Error updating PollEventUser with ID = " + id,
       });
     });
 };
-// Delete a PollEventUser with the specified id in the request
+// Delete a PollEventUser with the specified ID
 exports.delete = (req, res) => {
   const id = req.params.id;
   PollEventUser.destroy({
@@ -225,13 +225,13 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete PollEventUser with id=${id}. Maybe PollEventUser was not found!`,
+          message: `Cannot delete PollEventUser with ID = ${id}. Maybe PollEventUser was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete PollEventUser with id=" + id,
+        message: err.message || "Could not delete PollEventUser with ID = " + id,
       });
     });
 };
@@ -247,7 +247,7 @@ exports.deleteAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all pollEventUsers.",
+          err.message || "Some error occurred while deleting all pollEventUsers.",
       });
     });
 };

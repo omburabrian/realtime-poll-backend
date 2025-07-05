@@ -15,13 +15,13 @@ module.exports = (app) => {
   router.get("/user-answers/poll-event/:pollEventId", [authenticateRoute],
     UserAnswer.findAllForPollEvent);
 
-  //  Retrieve a single UserAnswer with id
+  //  Retrieve a single UserAnswer with ID
   router.get("/user-answers/:id", [authenticateRoute], UserAnswer.findOne);
 
-  //  Update a UserAnswer with id
+  //  Update a UserAnswer with ID
   router.put("/user-answers/:id", [authenticateRoute], UserAnswer.update);
 
-  //  Delete a UserAnswer with id
+  //  Delete a UserAnswer with ID
   router.delete("/user-answers/:id", [authenticateRoute], UserAnswer.delete);
 
   //  Delete all UserAnswers

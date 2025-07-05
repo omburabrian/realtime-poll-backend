@@ -88,14 +88,14 @@ exports.findAllForUser = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find PollEvents for user with id=${userId}.`,
+          message: `Cannot find PollEvents for user with ID=${userId}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Error retrieving PollEvents for user with id=" + userId,
+          err.message || "Error retrieving PollEvents for user with ID=" + userId,
       });
     });
 };
@@ -179,13 +179,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find PollEvent with id=${id}.`,
+          message: `Cannot find PollEvent with ID=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving PollEvent with id=" + id,
+        message: err.message || "Error retrieving PollEvent with ID = " + id,
       });
     });
 };
@@ -198,21 +198,21 @@ exports.update = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "PollEvent was updated successfully.",
+          message: "PollEvent was updated successfully",
         });
       } else {
         res.send({
-          message: `Cannot update PollEvent with id=${id}. Maybe PollEvent was not found or req.body is empty!`,
+          message: `Cannot update PollEvent with ID = ${id}. Maybe PollEvent was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating PollEvent with id=" + id,
+        message: err.message || "Error updating PollEvent with ID = " + id,
       });
     });
 };
-// Delete a PollEvent with the specified id in the request
+// Delete a PollEvent with the specified ID
 exports.delete = (req, res) => {
   const id = req.params.id;
   PollEvent.destroy({
@@ -225,13 +225,13 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete PollEvent with id=${id}. Maybe PollEvent was not found!`,
+          message: `Cannot delete PollEvent with ID = ${id}. Maybe PollEvent was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete PollEvent with id=" + id,
+        message: err.message || "Could not delete PollEvent with ID = " + id,
       });
     });
 };
@@ -247,7 +247,7 @@ exports.deleteAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all pollEvents.",
+          err.message || "Some error occurred while deleting all pollEvents.",
       });
     });
 };

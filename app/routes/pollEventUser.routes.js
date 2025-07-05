@@ -15,13 +15,13 @@ module.exports = (app) => {
   router.get("/poll-event-users/poll/:pollId", [authenticateRoute],
     PollEventUser.findAllForPoll);
 
-  //  Retrieve a single PollEventUser with id
+  //  Retrieve a single PollEventUser with ID
   router.get("/poll-event-users/:id", [authenticateRoute], PollEventUser.findOne);
 
-  //  Update a PollEventUser with id
+  //  Update a PollEventUser with ID
   router.put("/poll-event-users/:id", [authenticateRoute], PollEventUser.update);
 
-  //  Delete a PollEventUser with id
+  //  Delete a PollEventUser with ID
   router.delete("/poll-event-users/:id", [authenticateRoute], PollEventUser.delete);
 
   //  Delete all PollEventUsers

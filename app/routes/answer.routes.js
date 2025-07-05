@@ -11,13 +11,13 @@ module.exports = (app) => {
   router.get("/answers/question/:questionId", [authenticateRoute],
     Answer.findAllForQuestion);
 
-  //  Retrieve a single Answer with id
+  //  Retrieve a single Answer with ID
   router.get("/answers/:id", [authenticateRoute], Answer.findOne);
 
-  //  Update an Answer with id
+  //  Update an Answer with ID
   router.put("/answers/:id", [authenticateRoute], Answer.update);
 
-  //  Delete an Answer with id
+  //  Delete an Answer with ID
   router.delete("/answers/:id", [authenticateRoute], Answer.delete);
 
   //  Delete all Answers

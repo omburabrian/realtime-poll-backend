@@ -111,7 +111,7 @@ exports.update = (req, res) => {
         .then((number) => {
             if (number == 1) {
                 res.send({
-                    message: "Poll was updated successfully.",
+                    message: "Poll was updated successfully",
                 });
             } else {
                 res.send({

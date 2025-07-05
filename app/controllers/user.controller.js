@@ -173,22 +173,22 @@ exports.update = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "User was updated successfully.",
+          message: "User was updated successfully",
         });
       } else {
         res.send({
-          message: `Cannot update user with id = ${id}`,
+          message: `Cannot update user with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating user with id =" + id,
+        message: err.message || "Error updating user with ID =" + id,
       });
     });
 };
 
-// Delete a User with the specified id in the request
+// Delete a User with the specified ID
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -202,7 +202,7 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete user with id = ${id}`,
+          message: `Cannot delete user with ID = ${id}`,
         });
       }
     })

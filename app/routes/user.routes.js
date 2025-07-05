@@ -9,13 +9,13 @@ module.exports = (app) => {
   // Retrieve all Users
   router.get("/users/", User.findAll);
 
-  // Retrieve a single User with id
+  // Retrieve a single User with ID
   router.get("/users/:id", User.findOne);
 
-  // Update a User with id
+  // Update a User with ID
   router.put("/users/:id", [authenticateRoute], User.update);
 
-  // Delete a User with id
+  // Delete a User with ID
   router.delete("/users/:id", [authenticateRoute], User.delete);
 
   // Delete all User

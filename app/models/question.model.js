@@ -10,9 +10,14 @@ module.exports = (sequelize, Sequelize) => {
     },
     isAnswerOrderRandomized: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: false,
     },
     secondsPerQuestion: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+    },
+    questionNumber: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },

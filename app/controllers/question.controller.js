@@ -1,45 +1,36 @@
 const db = require("../models");
 const Question = db.question;
 const Op = db.Sequelize.Op;
-// Create and Save a new Question
+
+//  Create and save a new Question
 exports.create = (req, res) => {
-  // Validate request
-  if (req.body.name === undefined) {
-    const error = new Error("Name cannot be empty for question!");
+
+  //  Validate request
+  if (req.body.questionType === undefined) {
+    const error = new Error("QUESTION TYPE cannot be empty");
     error.statusCode = 400;
     throw error;
-  } else if (req.body.description === undefined) {
-    const error = new Error("Description cannot be empty for question!");
+  } else if (req.body.text === undefined) {
+    const error = new Error("QUESTION TEXT cannot be empty");
     error.statusCode = 400;
     throw error;
-  } else if (req.body.servings === undefined) {
-    const error = new Error("Servings cannot be empty for question!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.time === undefined) {
-    const error = new Error("Time cannot be empty for question!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.isPublished === undefined) {
-    const error = new Error("Is Published cannot be empty for question!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.userId === undefined) {
-    const error = new Error("User Id cannot be empty for question!");
+  } else if (req.body.pollId === undefined) {
+    const error = new Error("POLL ID cannot be empty");
     error.statusCode = 400;
     throw error;
   }
 
-  // Create a Question
+  //  Create an instance of Question from the request data
   const question = {
-    name: req.body.name,
-    description: req.body.description,
-    servings: req.body.servings,
-    time: req.body.time,
-    isPublished: req.body.isPublished ? req.body.isPublished : false,
-    userId: req.body.userId,
+    questionType: req.body.questionType,
+    text: req.body.text,
+    isAnswerOrderRandomized: req.body.isAnswerOrderRandomized
+      ? req.body.isAnswerOrderRandomized : false,
+    secondsPerQuestion: req.body.secondsPerQuestion,
+    pollId: req.body.pollId,
   };
-  // Save Question in the database
+
+  //  Save the instance in the database
   Question.create(question)
     .then((data) => {
       res.send(data);
@@ -47,40 +38,18 @@ exports.create = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Question.",
+          err.message || "Error occurred while creating the Question",
       });
     });
 };
 
-// Find all Questions for a user
-exports.findAllForUser = (req, res) => {
-  const userId = req.params.userId;
+//  Find all Questions for a Poll
+exports.findAllForPoll = (req, res) => {
+  const pollId = req.params.pollId;
   Question.findAll({
-    where: { userId: userId },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    where: { pollId: pollId },
     order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
+      ["questionNumber", "ASC"],
     ],
   })
     .then((data) => {
@@ -88,108 +57,41 @@ exports.findAllForUser = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Questions for user with id=${userId}.`,
+          message: `Cannot find Questions for Poll with ID = ${pollId}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Error retrieving Questions for user with id=" + userId,
+          err.message || "Error retrieving Questions for Poll with ID = " + pollId,
       });
     });
 };
 
-// Find all Published Questions
-exports.findAllPublished = (req, res) => {
-  Question.findAll({
-    where: { isPublished: true },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
-    ],
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Published Questions.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving Published Questions.",
-      });
-    });
-};
-
-// Find a single Question with an id
+//  Find a single Question with ID
 exports.findOne = (req, res) => {
   const id = req.params.id;
   Question.findAll({
     where: { id: id },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [[RecipeStep, "stepNumber", "ASC"]],
   })
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Question with id=${id}.`,
+          message: `Cannot find Question with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving Question with id=" + id,
+        message: err.message || "Error retrieving Question with ID = " + id,
       });
     });
 };
-// Update a Question by the id in the request
+
+//  Update a Question with ID
 exports.update = (req, res) => {
   const id = req.params.id;
   Question.update(req.body, {
@@ -198,21 +100,22 @@ exports.update = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "Question was updated successfully.",
+          message: "Question was updated successfully",
         });
       } else {
         res.send({
-          message: `Cannot update Question with id=${id}. Maybe Question was not found or req.body is empty!`,
+          message: `Cannot update Question with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating Question with id=" + id,
+        message: err.message || "Error updating Question with ID = " + id,
       });
     });
 };
-// Delete a Question with the specified id in the request
+
+//  Delete a Question with the specified ID
 exports.delete = (req, res) => {
   const id = req.params.id;
   Question.destroy({
@@ -225,17 +128,34 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Question with id=${id}. Maybe Question was not found!`,
+          message: `Cannot delete Question with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete Question with id=" + id,
+        message: err.message || "Could not delete Question with ID = " + id,
       });
     });
 };
-// Delete all Questions from the database.
+
+//  Delete all Question for a specified Poll ID
+exports.deleteForPoll = (req, res) => {
+  const pollId = req.params.pollId;
+  Question.destroy({
+    where: { pollId: pollId },
+  })
+    .then((number) => {
+      res.send({ message: `${number} Questions were deleted successfully from the Poll` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Could not delete Questions from the Poll with ID = " + pollId,
+      });
+    });
+};
+
+//  Delete ALL Questions
 exports.deleteAll = (req, res) => {
   Question.destroy({
     where: {},
@@ -247,7 +167,7 @@ exports.deleteAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all questions.",
+          err.message || "Error occurred while deleting all questions",
       });
     });
 };
