@@ -3,30 +3,26 @@ module.exports = (app) => {
   const { authenticateRoute } = require("../authentication/authentication");
   var router = require("express").Router();
 
-  // Create a new Answer
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //  Create a new Answer
   router.post("/answers/", [authenticateRoute], Answer.create);
 
-  // Retrieve all Recipes for user
-  router.get(
-    "/answers/user/:userId",
-    [authenticateRoute],
-    Answer.findAllForUser
-  );
+  //  Retrieve all Answers for a Question
+  router.get("/answers/question/:questionId", [authenticateRoute],
+    Answer.findAllForQuestion);
 
-  // Retrieve all published Recipes
-  router.get("/answers/", Answer.findAllPublished);
+  //  Retrieve a single Answer with id
+  router.get("/answers/:id", [authenticateRoute], Answer.findOne);
 
-  // Retrieve a single Answer with id
-  router.get("/answers/:id", Answer.findOne);
-
-  // Update a Answer with id
+  //  Update an Answer with id
   router.put("/answers/:id", [authenticateRoute], Answer.update);
 
-  // Delete a Answer with id
+  //  Delete an Answer with id
   router.delete("/answers/:id", [authenticateRoute], Answer.delete);
 
-  // Delete all Recipes
+  //  Delete all Answers
   router.delete("/answers/", [authenticateRoute], Answer.deleteAll);
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

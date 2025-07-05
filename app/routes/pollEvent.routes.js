@@ -3,30 +3,30 @@ module.exports = (app) => {
   const { authenticateRoute } = require("../authentication/authentication");
   var router = require("express").Router();
 
-  // Create a new PollEvent
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //  Create a new PollEvent (specific instance of a given poll)
   router.post("/poll-events/", [authenticateRoute], PollEvent.create);
 
-  // Retrieve all Recipes for user
-  router.get(
-    "/poll-events/user/:userId",
-    [authenticateRoute],
-    PollEvent.findAllForUser
-  );
+  //  Retrieve all PollEvents for a Poll
+  router.get("/poll-events/poll/:pollId", [authenticateRoute],
+    PollEvent.findAllForPoll);
 
-  // Retrieve all published Recipes
-  router.get("/poll-events/", PollEvent.findAllPublished);
+  //  Retrieve all PollEvents for a User
+  router.get("/poll-events/user/:userId", [authenticateRoute],
+    PollEvent.findAllForUser);    
 
-  // Retrieve a single PollEvent with id
-  router.get("/poll-events/:id", PollEvent.findOne);
+  //  Retrieve a single PollEvent with id
+  router.get("/poll-events/:id", [authenticateRoute], PollEvent.findOne);
 
-  // Update a PollEvent with id
+  //  Update a PollEvent with id
   router.put("/poll-events/:id", [authenticateRoute], PollEvent.update);
 
-  // Delete a PollEvent with id
+  //  Delete a PollEvent with id
   router.delete("/poll-events/:id", [authenticateRoute], PollEvent.delete);
 
-  // Delete all Recipes
+  //  Delete all PollEvents
   router.delete("/poll-events/", [authenticateRoute], PollEvent.deleteAll);
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

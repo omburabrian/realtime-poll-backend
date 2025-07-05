@@ -14,6 +14,17 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+//-----------------------------------------------------------------------------
+//  Real-time Poll models / tables
+db.ingredient = require("./poll.model.js")(sequelize, Sequelize);
+db.ingredient = require("./pollEvent.model.js")(sequelize, Sequelize);
+db.ingredient = require("./pollEventUser.model.js")(sequelize, Sequelize);
+db.ingredient = require("./question.model.js")(sequelize, Sequelize);
+db.ingredient = require("./answer.model.js")(sequelize, Sequelize);
+db.ingredient = require("./userAnswer.model.js")(sequelize, Sequelize);
+
+//-----------------------------------------------------------------------------
+//  Example RECIPE tables -- TODO:  DELETE LATER
 db.ingredient = require("./ingredient.model.js")(sequelize, Sequelize);
 db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
 db.recipeStep = require("./recipeStep.model.js")(sequelize, Sequelize);
@@ -21,10 +32,20 @@ db.recipeIngredient = require("./recipeIngredient.model.js")(
   sequelize,
   Sequelize
 );
+
+//-----------------------------------------------------------------------------
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 
-// foreign key for session
+//-----------------------------------------------------------------------------
+//  FOREIGN KEYS
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//  Users and Sessions
 db.user.hasMany(
   db.session,
   { as: "session" },
@@ -35,6 +56,11 @@ db.session.belongsTo(
   { as: "user" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
+
+
+
+//-----------------------------------------------------------------------------
+//  RECIPE FOREIGN KEYS -- TODO:  DELETE LATER
 
 // foreign key for recipe
 db.user.hasMany(
@@ -92,4 +118,5 @@ db.recipeIngredient.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
+//-----------------------------------------------------------------------------
 module.exports = db;
