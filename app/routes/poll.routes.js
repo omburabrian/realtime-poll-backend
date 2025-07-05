@@ -29,6 +29,9 @@ module.exports = (app) => {
   //  Delete all Polls
   router.delete("/polls/", [authenticateRoute], Poll.deleteAll);
 
+  //  Bulk create Polls
+  router.post("/polls/bulk-create", [authenticateRoute], Poll.bulkCreate);
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

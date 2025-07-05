@@ -91,7 +91,7 @@ exports.findAll = (req, res) => {
   const id = req.query.id;
   var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
 
-  User.findAll({ where: condition })
+  Poll.findAll({ where: condition })
     .then((data) => {
       res.send(data);
     })
@@ -165,4 +165,19 @@ exports.deleteAll = (req, res) => {
                     err.message || "Error occurred while deleting all polls",
             });
         });
+};
+
+//  Create Polls in bulk from JSON list
+exports.bulkCreate = async (req, res) => {
+  await Poll.bulkCreate(req.body)
+    .then((data) => {
+      let number = data.length;
+      res.send({ message: `${number} Polls were created successfully` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Error occurred while creating Polls in bulk",
+      });
+    });
 };
