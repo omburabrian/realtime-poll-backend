@@ -86,6 +86,22 @@ exports.findOne = (req, res) => {
         });
 };
 
+//  Retrieve ALL Polls (for ADMINs only)
+exports.findAll = (req, res) => {
+  const id = req.query.id;
+  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+
+  User.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Error occurred while retrieving Polls",
+      });
+    });
+};
+
 //  Update a Poll identified by the specified ID
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -119,7 +135,7 @@ exports.delete = (req, res) => {
         .then((number) => {
             if (number == 1) {
                 res.send({
-                    message: "Poll was deleted successfully!",
+                    message: "Poll was deleted successfully",
                 });
             } else {
                 res.send({

@@ -221,7 +221,7 @@ exports.delete = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "PollEvent was deleted successfully!",
+          message: "PollEvent was deleted successfully",
         });
       } else {
         res.send({
@@ -242,7 +242,7 @@ exports.deleteAll = (req, res) => {
     truncate: false,
   })
     .then((number) => {
-      res.send({ message: `${number} PollEvents were deleted successfully!` });
+      res.send({ message: `${number} PollEvents were deleted successfully` });
     })
     .catch((err) => {
       res.status(500).send({

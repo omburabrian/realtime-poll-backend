@@ -21,5 +21,9 @@ module.exports = (app) => {
   // Delete all User
   router.delete("/users/", [authenticateRoute], User.deleteAll);
 
+  //  Create users in bulk
+  router.post("/users/bulk-create", [authenticateRoute], User.bulkCreate);
+
+  // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

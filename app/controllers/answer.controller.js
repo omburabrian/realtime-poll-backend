@@ -221,7 +221,7 @@ exports.delete = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "Answer was deleted successfully!",
+          message: "Answer was deleted successfully",
         });
       } else {
         res.send({
@@ -242,7 +242,7 @@ exports.deleteAll = (req, res) => {
     truncate: false,
   })
     .then((number) => {
-      res.send({ message: `${number} Answers were deleted successfully!` });
+      res.send({ message: `${number} Answers were deleted successfully` });
     })
     .catch((err) => {
       res.status(500).send({

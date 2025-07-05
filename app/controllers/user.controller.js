@@ -8,19 +8,19 @@ const { encrypt, getSalt, hashPassword } = require("../authentication/crypto");
 exports.create = async (req, res) => {
   // Validate request
   if (req.body.firstName === undefined) {
-    const error = new Error("First name cannot be empty for user!");
+    const error = new Error("FIRST NAME cannot be empty");
     error.statusCode = 400;
     throw error;
   } else if (req.body.lastName === undefined) {
-    const error = new Error("Last name cannot be empty for user!");
+    const error = new Error("LAST NAME cannot be empty");
     error.statusCode = 400;
     throw error;
   } else if (req.body.email === undefined) {
-    const error = new Error("Email cannot be empty for user!");
+    const error = new Error("EMAIL cannot be empty");
     error.statusCode = 400;
     throw error;
   } else if (req.body.password === undefined) {
-    const error = new Error("Password cannot be empty for user!");
+    const error = new Error("PASSWORD cannot be empty");
     error.statusCode = 400;
     throw error;
   }
@@ -45,10 +45,17 @@ exports.create = async (req, res) => {
           id: req.body.id,
           firstName: req.body.firstName,
           lastName: req.body.lastName,
+          userName: req.body.userName,
+          role: req.body.role,
           email: req.body.email,
           password: hash,
           salt: salt,
         };
+
+        //  If no ROLE was specified, set default value.
+        if (req.body.role === undefined) {
+          user.role = "user";
+        }
 
         // Save User in the database
         await User.create(user)
@@ -71,6 +78,8 @@ exports.create = async (req, res) => {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                userName: user.userName,
+                role: user.role,
                 id: user.id,
                 token: token,
               };
@@ -81,13 +90,13 @@ exports.create = async (req, res) => {
             console.log(err);
             res.status(500).send({
               message:
-                err.message || "Some error occurred while creating the User.",
+                err.message || "Error occurred while creating the user account",
             });
           });
       }
     })
     .catch((err) => {
-      return err.message || "Error retrieving User with email=" + email;
+      return err.message || "Error retrieving user with email = " + email;
     });
 };
 
@@ -102,7 +111,7 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving users.",
+        message: err.message || "Error occurred while retrieving users",
       });
     });
 };
@@ -117,13 +126,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find User with id = ${id}.`,
+          message: `Cannot find User with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving User with id = " + id,
+        message: err.message || "Error retrieving User with ID = " + id,
       });
     });
 };
@@ -149,7 +158,7 @@ exports.findByEmail = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving User with email=" + email,
+        message: err.message || "Error retrieving user with email = " + email,
       });
     });
 };
@@ -168,13 +177,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update User with id = ${id}. Maybe User was not found or req.body is empty!`,
+          message: `Cannot update user with id = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating User with id =" + id,
+        message: err.message || "Error updating user with id =" + id,
       });
     });
 };
@@ -189,17 +198,17 @@ exports.delete = (req, res) => {
     .then((number) => {
       if (number == 1) {
         res.send({
-          message: "User was deleted successfully!",
+          message: "User was deleted successfully",
         });
       } else {
         res.send({
-          message: `Cannot delete User with id = ${id}. Maybe User was not found!`,
+          message: `Cannot delete user with id = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete User with id = " + id,
+        message: err.message || "Could not delete user with ID = " + id,
       });
     });
 };
@@ -211,12 +220,27 @@ exports.deleteAll = (req, res) => {
     truncate: false,
   })
     .then((number) => {
-      res.send({ message: `${number} People were deleted successfully!` });
+      res.send({ message: `${number} users were deleted successfully` });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all people.",
+          err.message || "Error occurred while deleting all users",
+      });
+    });
+};
+
+//  Create Users in bulk from JSON list
+exports.bulkCreate = async (req, res) => {
+  await User.bulkCreate(req.body)
+    .then((data) => {
+      let number = data.length;
+      res.send({ message: `${number} users were created successfully` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Error occurred while creating users in bulk",
       });
     });
 };

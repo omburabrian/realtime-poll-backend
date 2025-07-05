@@ -16,12 +16,12 @@ db.sequelize = sequelize;
 
 //-----------------------------------------------------------------------------
 //  Real-time Poll models / tables
-db.ingredient = require("./poll.model.js")(sequelize, Sequelize);
-db.ingredient = require("./pollEvent.model.js")(sequelize, Sequelize);
-db.ingredient = require("./pollEventUser.model.js")(sequelize, Sequelize);
-db.ingredient = require("./question.model.js")(sequelize, Sequelize);
-db.ingredient = require("./answer.model.js")(sequelize, Sequelize);
-db.ingredient = require("./userAnswer.model.js")(sequelize, Sequelize);
+db.poll = require("./poll.model.js")(sequelize, Sequelize);
+db.pollEvent = require("./pollEvent.model.js")(sequelize, Sequelize);
+db.pollEventUser = require("./pollEventUser.model.js")(sequelize, Sequelize);
+db.question = require("./question.model.js")(sequelize, Sequelize);
+db.answer = require("./answer.model.js")(sequelize, Sequelize);
+db.userAnswer = require("./userAnswer.model.js")(sequelize, Sequelize);
 
 //-----------------------------------------------------------------------------
 //  Example RECIPE tables -- TODO:  DELETE LATER
@@ -39,6 +39,18 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 
 //-----------------------------------------------------------------------------
 //  FOREIGN KEYS
+
+//  User (professor) polls
+db.user.hasMany(
+  db.poll,
+  { as: "poll" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.poll.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
 
 
 
