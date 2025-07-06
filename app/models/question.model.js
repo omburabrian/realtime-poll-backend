@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     questionNumber: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   });
   return Question;

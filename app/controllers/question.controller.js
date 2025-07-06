@@ -14,6 +14,10 @@ exports.create = (req, res) => {
     const error = new Error("QUESTION TEXT cannot be empty");
     error.statusCode = 400;
     throw error;
+  // } else if (req.body.questionNumber === undefined) {
+  //   const error = new Error("QUESTION NUMBER cannot be empty");
+  //   error.statusCode = 400;
+  //   throw error;
   } else if (req.body.pollId === undefined) {
     const error = new Error("POLL ID cannot be empty");
     error.statusCode = 400;
@@ -27,6 +31,7 @@ exports.create = (req, res) => {
     isAnswerOrderRandomized: req.body.isAnswerOrderRandomized
       ? req.body.isAnswerOrderRandomized : false,
     secondsPerQuestion: req.body.secondsPerQuestion,
+    questionNumber: req.body.questionNumber,
     pollId: req.body.pollId,
   };
 
@@ -139,7 +144,7 @@ exports.delete = (req, res) => {
     });
 };
 
-//  Delete all Question for a specified Poll ID
+//  Delete all Questions for a specified Poll ID
 exports.deleteForPoll = (req, res) => {
   const pollId = req.params.pollId;
   Question.destroy({
