@@ -20,8 +20,9 @@ exports.create = (req, res) => {
     const poll = {
         name: req.body.name,
         description: req.body.description,
-        isQuiz: req.body.isQuiz ? req.body.isQuiz : false,
         secondsPerQuestion: req.body.secondsPerQuestion,
+        isQuiz: req.body.isQuiz ? req.body.isQuiz : false,
+        isPublic: req.body.isPublic ? req.body.isPublic : false,
         userId: req.body.userId,
     };
 
@@ -88,18 +89,24 @@ exports.findOne = (req, res) => {
 
 //  Retrieve ALL Polls (for ADMINs only)
 exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+    const id = req.query.id;
+    var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
 
-  Poll.findAll({ where: condition })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error occurred while retrieving Polls",
-      });
-    });
+    Poll.findAll(
+        {
+            where: condition,
+            order: [
+                ["name", "ASC"],
+            ],
+        },)
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Error occurred while retrieving Polls",
+            });
+        });
 };
 
 //  Update a Poll identified by the specified ID
@@ -169,15 +176,15 @@ exports.deleteAll = (req, res) => {
 
 //  Create Polls in bulk from JSON list
 exports.bulkCreate = async (req, res) => {
-  await Poll.bulkCreate(req.body)
-    .then((data) => {
-      let number = data.length;
-      res.send({ message: `${number} Polls were created successfully` });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Error occurred while creating Polls in bulk",
-      });
-    });
+    await Poll.bulkCreate(req.body)
+        .then((data) => {
+            let number = data.length;
+            res.send({ message: `${number} Polls were created successfully` });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message || "Error occurred while creating Polls in bulk",
+            });
+        });
 };

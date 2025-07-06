@@ -9,15 +9,20 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: true,
       defaultValue: "",
     },
+    secondsPerQuestion: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 30,
+    },
     isQuiz: {
       type: Sequelize.BOOLEAN,
       allowNull: true,
       defaultValue: false
     },
-    secondsPerQuestion: {
-      type: Sequelize.INTEGER,
+    isPublic: {
+      type: Sequelize.BOOLEAN,
       allowNull: true,
-      defaultValue: 30,
+      defaultValue: false
     },
   });
   return Poll;
