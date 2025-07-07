@@ -157,6 +157,23 @@ exports.delete = (req, res) => {
         });
 };
 
+//  Delete all Polls for a user
+exports.deleteAllForUser = (req, res) => {
+    const userId = req.params.userId;
+    Poll.destroy({
+        where: { userId: userId },
+    })
+        .then((number) => {
+            res.send({ message: `${number} Polls were deleted successfully` });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message || "Error deleting Polls for user ID = " + userId,
+            });
+        });
+};
+
 //  Delete all Polls
 exports.deleteAll = (req, res) => {
     Poll.destroy({

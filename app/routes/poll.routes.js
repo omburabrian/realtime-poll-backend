@@ -14,7 +14,7 @@ module.exports = (app) => {
   //  Retrieve a single Poll with ID
   router.get("/polls/:id", [authenticateRoute], Poll.findOne);
 
-  //  Retrieve ALL Polls  (for ADMINs only)
+  //  Retrieve ALL Polls  (ADMIN use only)
   router.get("/polls/", Poll.findAll);
 
   //  TODO:  Need a Poll.findAllTakenByUser ?
@@ -26,7 +26,11 @@ module.exports = (app) => {
   //  Delete a Poll with ID
   router.delete("/polls/:id", [authenticateRoute], Poll.delete);
 
-  //  Delete all Polls
+  //  Delete all Polls for a user (Professor)
+  router.delete("/polls/user/:userId", [authenticateRoute],
+    Poll.deleteAllForUser);
+
+  //  Delete all Polls  (ADMIN use only)
   router.delete("/polls/", [authenticateRoute], Poll.deleteAll);
 
   //  Bulk create Polls
