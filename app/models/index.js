@@ -14,6 +14,17 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+//-----------------------------------------------------------------------------
+//  Real-time Poll models / tables
+db.poll = require("./poll.model.js")(sequelize, Sequelize);
+db.pollEvent = require("./pollEvent.model.js")(sequelize, Sequelize);
+db.pollEventUser = require("./pollEventUser.model.js")(sequelize, Sequelize);
+db.question = require("./question.model.js")(sequelize, Sequelize);
+db.answer = require("./answer.model.js")(sequelize, Sequelize);
+db.userAnswer = require("./userAnswer.model.js")(sequelize, Sequelize);
+
+//-----------------------------------------------------------------------------
+//  Example RECIPE tables -- TODO:  DELETE LATER
 db.ingredient = require("./ingredient.model.js")(sequelize, Sequelize);
 db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
 db.recipeStep = require("./recipeStep.model.js")(sequelize, Sequelize);
@@ -21,10 +32,76 @@ db.recipeIngredient = require("./recipeIngredient.model.js")(
   sequelize,
   Sequelize
 );
+
+//-----------------------------------------------------------------------------
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 
-// foreign key for session
+//-----------------------------------------------------------------------------
+//  FOREIGN KEYS
+
+//  User (professor) & Polls : one-to-many
+db.user.hasMany(
+  db.poll,
+  { as: "poll" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.poll.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
+//  Polls & Questions : one-to-many
+db.poll.hasMany(
+  db.question,
+  { as: "question" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.question.belongsTo(
+  db.poll,
+  { as: "poll" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
+//  Questions & Answers : one-to-many
+db.question.hasMany(
+  db.answer,
+  { as: "answer" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.answer.belongsTo(
+  db.question,
+  { as: "question" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
+//  Polls & PollEvents : one-to-many
+db.poll.hasMany(
+  db.pollEvent,
+  { as: "pollEvent" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.pollEvent.belongsTo(
+  db.poll,
+  { as: "poll" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
+//  PollEvents & Users : many-to-many
+db.user.belongsToMany(db.pollEvent, { through: db.pollEventUser });
+db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
+
+//  ToDo:  Have used the MODEL NAMES previously, but not working here... yet.
+// User.belongsToMany(PollEvent, { through: PollEventUser });
+// PollEvent.belongsToMany(User, { through: PollEventUser });
+
+//  PollEventUsers & UserAnswers : many-to-many
+db.pollEventUser.belongsToMany(db.question, { through: db.userAnswer });
+db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
+
+//-----------------------------------------------------------------------------
+//  Users & Sessions : one-to-many
 db.user.hasMany(
   db.session,
   { as: "session" },
@@ -35,6 +112,10 @@ db.session.belongsTo(
   { as: "user" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
+
+//#############################################################################
+//VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//  RECIPE FOREIGN KEYS -- TODO:  DELETE LATER
 
 // foreign key for recipe
 db.user.hasMany(
@@ -92,4 +173,8 @@ db.recipeIngredient.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//#############################################################################
+
+//-----------------------------------------------------------------------------
 module.exports = db;

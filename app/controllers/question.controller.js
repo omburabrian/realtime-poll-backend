@@ -18,6 +18,7 @@ exports.create = (req, res) => {
     //   const error = new Error("QUESTION NUMBER cannot be empty");
     //   error.statusCode = 400;
     //   throw error;
+
   } else if (req.body.pollId === undefined) {
     const error = new Error("POLL ID cannot be empty");
     error.statusCode = 400;
@@ -94,6 +95,22 @@ exports.findOne = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Error retrieving Question with ID = " + id,
+      });
+    });
+};
+
+// Retrieve all Questions  (ADMIN use only)
+exports.findAll = (req, res) => {
+  const id = req.query.id;
+  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+
+  Question.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Error occurred while retrieving Questions",
       });
     });
 };

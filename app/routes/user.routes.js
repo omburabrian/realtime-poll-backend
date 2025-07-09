@@ -12,14 +12,18 @@ module.exports = (app) => {
   // Retrieve a single User with ID
   router.get("/users/:id", [authenticateRoute], User.findOne);
 
-  // Update a User with id
+  // Update a User with ID
   router.put("/users/:id", [authenticateRoute], User.update);
 
-  // Delete a User with id
+  // Delete a User with ID
   router.delete("/users/:id", [authenticateRoute], User.delete);
 
   // Delete all User
   router.delete("/users/", [authenticateRoute], User.deleteAll);
 
+  //  Create users in bulk
+  router.post("/users/bulk-create", [authenticateRoute], User.bulkCreate);
+
+  // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };
