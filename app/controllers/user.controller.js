@@ -25,10 +25,14 @@ exports.create = async (req, res) => {
     throw error;
   }
 
-  // find by email
+  //  Find by email, POSTED IN THE BODY
   await User.findOne({
     where: {
       email: req.body.email,
+    },
+    //  Exclude sensitive data!
+    attributes: {
+      exclude: ['password', 'salt']
     },
   })
     .then(async (data) => {
@@ -71,6 +75,7 @@ exports.create = async (req, res) => {
               userId: userId,
               expirationDate: expireTime,
             };
+
             await Session.create(session).then(async (data) => {
               let sessionId = data.id;
               let token = await encrypt(sessionId);
@@ -100,12 +105,18 @@ exports.create = async (req, res) => {
     });
 };
 
-// Retrieve all Users from the database.
+//  Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const id = req.query.id;
   var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
 
-  User.findAll({ where: condition })
+  User.findAll({
+    where: condition,
+    //  Exclude sensitive data!
+    attributes: {
+      exclude: ['password', 'salt']
+    },
+  })
     .then((data) => {
       res.send(data);
     })
@@ -116,11 +127,18 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single User with an id
+//  Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  User.findByPk(id)
+  User.findByPk(
+    id,
+    {
+      //  Exclude sensitive data!
+      attributes: {
+        exclude: ['password', 'salt']
+      },
+    })
     .then((data) => {
       if (data) {
 
@@ -141,7 +159,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Find a single User with an email
+//  Find a single User with an email IN THE URL PARAMETERS LIST
 exports.findByEmail = (req, res) => {
   const email = req.params.email;
 
@@ -149,12 +167,16 @@ exports.findByEmail = (req, res) => {
     where: {
       email: email,
     },
+    //  Exclude sensitive data!
+    attributes: {
+      exclude: ['password', 'salt']
+    },
   })
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
-        res.send({ email: "not found" });
+        res.send({ email: " not found" });
         /*res.status(404).send({
           message: `Cannot find User with email=${email}.`
         });*/
@@ -167,7 +189,7 @@ exports.findByEmail = (req, res) => {
     });
 };
 
-// Update a User by the id in the request
+//  Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -192,7 +214,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a User with the specified ID
+//  Delete a User with the specified ID
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -217,7 +239,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all People from the database.
+//  Delete all users from the database.
 exports.deleteAll = (req, res) => {
   User.destroy({
     where: {},
@@ -235,6 +257,8 @@ exports.deleteAll = (req, res) => {
 };
 
 //  Create Users in bulk from JSON list
+//  NOTE:  The passwords/salt will be unusable since this does not
+//          go through the regular User.create() process.  Todo:  Fix later?
 exports.bulkCreate = async (req, res) => {
   await User.bulkCreate(req.body)
     .then((data) => {

@@ -22,6 +22,7 @@ exports.login = async (req, res) => {
       userId: userId,
       expirationDate: expireTime,
     };
+    
     await Session.create(session).then(async (data) => {
       let sessionId = data.id;
       let token = await encrypt(sessionId);
