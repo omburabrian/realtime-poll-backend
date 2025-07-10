@@ -112,10 +112,14 @@ exports.findAll = (req, res) => {
 
   User.findAll({
     where: condition,
-    //  Exclude sensitive data!
+    //  Exclude sensitive data! <<<  ToDo:  No.  Login uses this function
+    //    and needs [password, salt].  ToDo:  Code separate function that
+    //    is only used by the login function, to return these.
+    /*
     attributes: {
       exclude: ['password', 'salt']
     },
+    //  */
   })
     .then((data) => {
       res.send(data);
