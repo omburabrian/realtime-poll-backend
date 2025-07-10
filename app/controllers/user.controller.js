@@ -123,6 +123,10 @@ exports.findOne = (req, res) => {
   User.findByPk(id)
     .then((data) => {
       if (data) {
+
+        //  TODO:  Don't send the whole user object?  Just the necessities.
+        //          Including the ROLE.
+
         res.send(data);
       } else {
         res.status(404).send({

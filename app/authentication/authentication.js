@@ -130,9 +130,24 @@ authenticateRoute = async (req, res, next) => {
   }
 };
 
+//  Use AFTER authenticateRoute (in admin controller).  Check if authenticated user is an ADMIN.
+isAdmin = (req, res, next) => {
+  //  authenticateRoute() will have already attached the user object to the request.
+  if (req.user  &&  req.user.role === 'admin') {
+    return next();  //  User is an admin.  Proceed to next middleware/controller.
+  }
+
+  //  If NOT an admin, respond with error.
+  return res.status(403).send({
+    message: "Access Forbidden: Requires ADMIN permissions",
+  });
+};
+
+//  Exported object with authentication checks.
 const auth = {
   authenticate: authenticate,
   authenticateRoute: authenticateRoute,
+  isAdmin: isAdmin,
 };
 
 module.exports = auth;
