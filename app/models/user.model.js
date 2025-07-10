@@ -10,8 +10,17 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    userName: {
+      type: Sequelize.STRING,
+      allowNull: true,
+      defaultValue: "",
+    },
     email: {
       type: Sequelize.STRING,
+      allowNull: false,
+    },
+    role: {
+      type: Sequelize.TEXT('tiny'),
       allowNull: false,
     },
     password: {

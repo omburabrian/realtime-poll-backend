@@ -7,19 +7,23 @@ module.exports = (app) => {
   router.post("/users/", User.create);
 
   // Retrieve all Users
-  router.get("/users/", User.findAll);
+  router.get("/users/", [authenticateRoute], User.findAll);
 
-  // Retrieve a single User with id
-  router.get("/users/:id", User.findOne);
+  // Retrieve a single User with ID
+  router.get("/users/:id", [authenticateRoute], User.findOne);
 
-  // Update a User with id
+  // Update a User with ID
   router.put("/users/:id", [authenticateRoute], User.update);
 
-  // Delete a User with id
+  // Delete a User with ID
   router.delete("/users/:id", [authenticateRoute], User.delete);
 
   // Delete all User
   router.delete("/users/", [authenticateRoute], User.deleteAll);
 
-  app.use("/recipeapi", router);
+  //  Create users in bulk
+  router.post("/users/bulk-create", [authenticateRoute], User.bulkCreate);
+
+  // - - - - - - - - - - - - - - - - - - - - - -
+  app.use("/realtime-pollapi", router);
 };
