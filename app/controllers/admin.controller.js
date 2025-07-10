@@ -16,6 +16,7 @@ exports.dashboard = async (req, res) => {
       attributes: { exclude: ['password', 'salt'] }
     });
 
+    //  Prepare return data
     const dashboardData = {
       stats: {
         users: userCount,
@@ -25,6 +26,7 @@ exports.dashboard = async (req, res) => {
     };
 
     res.send(dashboardData);
+
   } catch (err) {
     res.status(500).send({
       message: err.message || "Error occurred while retrieving admin dashboard data.",
