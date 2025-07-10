@@ -1,4 +1,24 @@
 const db = require("../models");
+<<<<<<< HEAD
+
+const Answer = db.answer;
+const Op = db.Sequelize.Op;
+
+//  Create and Save a new Answer
+exports.create = (req, res) => {
+
+  // Validate request
+  if (req.body.text === undefined) {
+    const error = new Error("ANSWER TEXT cannot be empty");
+    error.statusCode = 400;
+    throw error;
+  } else if (req.body.answerOrder === undefined) {
+    const error = new Error("ANSWER ORDER cannot be empty");
+    error.statusCode = 400;
+    throw error;
+  } else if (req.body.isCorrectAnswer === undefined) {
+    const error = new Error("ANSWER - IS CORRECT ANSWER cannot be empty");
+=======
 const Answer = db.answer;
 const Op = db.Sequelize.Op;
 // Create and Save a new Answer
@@ -26,10 +46,20 @@ exports.create = (req, res) => {
     throw error;
   } else if (req.body.userId === undefined) {
     const error = new Error("User Id cannot be empty for answer!");
+>>>>>>> feature/b-13496-setup-models-with-db-gd
     error.statusCode = 400;
     throw error;
   }
 
+<<<<<<< HEAD
+  //  Create an Answer
+  const answer = {
+    text: req.body.text,
+    answerOrder: req.body.answerOrder,
+    isCorrectAnswer: req.body.isCorrectAnswer,
+    
+
+=======
   // Create a Answer
   const answer = {
     name: req.body.name,
@@ -38,6 +68,7 @@ exports.create = (req, res) => {
     time: req.body.time,
     isPublished: req.body.isPublished ? req.body.isPublished : false,
     userId: req.body.userId,
+>>>>>>> feature/b-13496-setup-models-with-db-gd
   };
   // Save Answer in the database
   Answer.create(answer)

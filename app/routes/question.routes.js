@@ -14,6 +14,9 @@ module.exports = (app) => {
   //  Retrieve a single Question with ID
   router.get("/questions/:id", [authenticateRoute], Question.findOne);
 
+  //  Retrieve ALL Questions   (Amdin use only)
+  router.get("/questions", [authenticateRoute], Question.findAll);
+
   //  Update a Question with ID
   router.put("/questions/:id", [authenticateRoute], Question.update);
 
@@ -26,6 +29,9 @@ module.exports = (app) => {
   //  Delete all Questions
   router.delete("/questions/", [authenticateRoute], Question.deleteAll);
 
+  //  Bulk create Questions
+  router.post("/questions/bulk-create", [authenticateRoute], Question.bulkCreate);
+  
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

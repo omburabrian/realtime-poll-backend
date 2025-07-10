@@ -14,10 +14,11 @@ exports.create = (req, res) => {
     const error = new Error("QUESTION TEXT cannot be empty");
     error.statusCode = 400;
     throw error;
-  // } else if (req.body.questionNumber === undefined) {
-  //   const error = new Error("QUESTION NUMBER cannot be empty");
-  //   error.statusCode = 400;
-  //   throw error;
+    // } else if (req.body.questionNumber === undefined) {
+    //   const error = new Error("QUESTION NUMBER cannot be empty");
+    //   error.statusCode = 400;
+    //   throw error;
+
   } else if (req.body.pollId === undefined) {
     const error = new Error("POLL ID cannot be empty");
     error.statusCode = 400;
@@ -30,8 +31,10 @@ exports.create = (req, res) => {
     text: req.body.text,
     isAnswerOrderRandomized: req.body.isAnswerOrderRandomized
       ? req.body.isAnswerOrderRandomized : false,
-    secondsPerQuestion: req.body.secondsPerQuestion,
-    questionNumber: req.body.questionNumber,
+    secondsPerQuestion: req.body.secondsPerQuestion
+      ? req.body.secondsPerQuestion : null,
+    questionNumber: req.body.questionNumber
+      ? req.body.questionNumber : null,
     pollId: req.body.pollId,
   };
 
@@ -43,7 +46,7 @@ exports.create = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Error occurred while creating the Question",
+          err.message || "Error occurred while creating a Question",
       });
     });
 };
@@ -96,6 +99,22 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Retrieve all Questions  (ADMIN use only)
+exports.findAll = (req, res) => {
+  const id = req.query.id;
+  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+
+  Question.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Error occurred while retrieving Questions",
+      });
+    });
+};
+
 //  Update a Question with ID
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -139,7 +158,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete Question with ID = " + id,
+        message: err.message || "Error deleting Question with ID = " + id,
       });
     });
 };
@@ -151,11 +170,11 @@ exports.deleteForPoll = (req, res) => {
     where: { pollId: pollId },
   })
     .then((number) => {
-      res.send({ message: `${number} Questions were deleted successfully from the Poll` });
+      res.send({ message: `${number} Questions were deleted from the Poll` });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete Questions from the Poll with ID = " + pollId,
+        message: err.message || "Error deleting Questions from the Poll with ID = " + pollId,
       });
     });
 };
@@ -167,7 +186,7 @@ exports.deleteAll = (req, res) => {
     truncate: false,
   })
     .then((number) => {
-      res.send({ message: `${number} Questions were deleted successfully` });
+      res.send({ message: `${number} Questions were deleted` });
     })
     .catch((err) => {
       res.status(500).send({
@@ -175,4 +194,19 @@ exports.deleteAll = (req, res) => {
           err.message || "Error occurred while deleting all questions",
       });
     });
+};
+
+//  Create Questions in bulk from JSON list
+exports.bulkCreate = async (req, res) => {
+    await Question.bulkCreate(req.body)
+        .then((data) => {
+            let number = data.length;
+            res.send({ message: `${number} Questions were created successfully` });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message || "Error occurred while creating Questions in bulk",
+            });
+        });
 };
