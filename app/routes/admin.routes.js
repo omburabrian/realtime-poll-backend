@@ -6,8 +6,8 @@ module.exports = (app) => {
   const { authenticateRoute, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
 
-  //  Navigate to ADMIN Dashboard
-  router.get("/admin", [authenticateRoute, isAdmin], Admin.dashboard);
+  //  Get admin dashboard data
+  router.get("/admin", [authenticateRoute, isAdmin], Admin.getDashboardData);
 
   // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

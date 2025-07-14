@@ -130,7 +130,7 @@ authenticateRoute = async (req, res, next) => {
   }
 };
 
-//  Use AFTER authenticateRoute (in admin controller).  Check if authenticated user is an ADMIN.
+//  Use AFTER authenticateRoute (in admin routes).  Check if authenticated user is an ADMIN.
 isAdmin = (req, res, next) => {
   //  authenticateRoute() will have already attached the user object to the request.
   if (req.user  &&  req.user.role === 'admin') {

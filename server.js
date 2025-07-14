@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
 //  Users, Authentication, and Sessions
 require("./app/routes/auth.routes.js")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/admin.routes")(app);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //  Real-time Poll routes

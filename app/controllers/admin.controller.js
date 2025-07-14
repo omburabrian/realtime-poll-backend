@@ -3,7 +3,7 @@ const User = db.user;
 const Poll = db.poll;
 
 //  Naviate to the ADMIN Dashboard
-exports.dashboard = async (req, res) => {
+exports.getDashboardData = async (req, res) => {
 
   try {
     //  Example: Fetch counts and all users for the dashboard
