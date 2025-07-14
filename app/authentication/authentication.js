@@ -88,17 +88,21 @@ authenticate = async (req, res, require = true) => {
   return { type: "none", userId: null };
 };
 
+//--------------------------------------------------------
 authenticateRoute = async (req, res, next) => {
+
   let auth = req.get("authorization");
-  console.log(auth);
+  //  console.log(auth);
+
   if (auth != null) {
-    if (
-      auth.startsWith("Bearer ") &&
-      (typeof require !== "string" || require === "token")
-    ) {
+
+    if (auth.startsWith("Bearer ") &&
+    (typeof require !== "string" || require === "token")) {
+
       let token = auth.slice(7);
       let sessionId = await decrypt(token);
       let session = {};
+
       await Session.findAll({ where: { id: sessionId } })
         .then((data) => {
           session = data[0];
@@ -106,30 +110,49 @@ authenticateRoute = async (req, res, next) => {
         .catch((error) => {
           console.log(error);
         });
+
       if (session != null) {
-        console.log(session >= Date.now());
-        console.log(Date.now());
+        //  console.log(session >= Date.now());
+        //  console.log(Date.now());
+
         if (session.expirationDate >= Date.now()) {
-          next();
-          return;
+          //  Add the user to the request so that any potential, subsequent
+          //  isAdmin() middleware check can check the user's role.
+
+          //  Get the user ID from the session, then use it to get the
+          //  whole user object.
+          const user = await User.findByPk(session.userId);
+
+          if (!user) {
+            return res.status(401).send({ message: "Unauthorized!  User for session not found." });
+          }
+
+          //  Convert the returned Sequelize user MODEL to a
+          //  *plain* JavaScript user object and attach to request.
+          req.user = user.get({ plain: true });
+          next();   //  Progress to any next middleware.
+          return;   //  This return is unecessary as the code block has been exited with next()?
         } else {
+          //  Delete the expired session.
+          await Session.destroy({ where: { id: sessionId } });
           return res.status(401).send({
-            message: "Unauthorized! Expired Token, Logout and Login again",
+            message: "Unauthorized!  Expired Token, Logout and Login again.",
           });
         }
       } else {
         return res.status(401).send({
-          message: "Unauthorized! Expired Token, Logout and Login again",
+          message: "Unauthorized!  Expired Token, Logout and Login again.",
         });
       }
     }
   } else {
     return res.status(401).send({
-      message: "Unauthorized! No Auth Header",
+      message: "Unauthorized!  No Auth Header",
     });
   }
 };
 
+//--------------------------------------------------------
 //  Use AFTER authenticateRoute (in admin routes).  Check if authenticated user is an ADMIN.
 isAdmin = (req, res, next) => {
   //  authenticateRoute() will have already attached the user object to the request.
@@ -143,6 +166,7 @@ isAdmin = (req, res, next) => {
   });
 };
 
+//--------------------------------------------------------
 //  Exported object with authentication checks.
 const auth = {
   authenticate: authenticate,
