@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/quiz/:id/qrcode', async (req, res) => {
   const quizId = req.params.id;
+  const quizLink = 'http://localhost:8081/quiz/' + quizId;
   //const quizLink = `https://website.com/quiz/${quizId}`;
 
   try {
