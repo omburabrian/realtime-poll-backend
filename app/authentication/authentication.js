@@ -1,7 +1,8 @@
 const db = require("../models");
-const { hashPassword } = require("./crypto");
+const { hashPassword, decrypt } = require("./crypto");
 const Session = db.session;
 const User = db.user;
+const { ROLES } = require("../config/constants");
 
 /**
  * Gets the authentication for this request. Throws an error if there is an authentcation problem.
@@ -186,13 +187,13 @@ authenticateRoute = async (req, res, next) => {
 //  Use AFTER authenticateRoute (in admin routes).  Check if authenticated user is an ADMIN.
 isAdmin = (req, res, next) => {
   //  authenticateRoute() will have already attached the user object to the request.
-  if (req.user && req.user.role === 'admin') {
+  if (req.user && req.user.role === ROLES.ADMIN) {
     return next();  //  User is an admin.  Proceed to next middleware/controller.
   }
 
   //  If NOT an admin, respond with error.
   return res.status(403).send({
-    message: "Access Forbidden: Requires ADMIN permissions",
+    message: `Access Forbidden: Requires ${ROLES.ADMIN} role.`,
   });
 };
 

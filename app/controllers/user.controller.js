@@ -2,6 +2,7 @@ const db = require("../models");
 const User = db.user;
 const Session = db.session;
 const Op = db.Sequelize.Op;
+const { ROLES } = require("../config/constants");
 const { encrypt, getSalt, hashPassword } = require("../authentication/crypto");
 
 // Create and Save a new User
@@ -58,7 +59,7 @@ exports.create = async (req, res) => {
 
         //  If no ROLE was specified, set default value.
         if (req.body.role === undefined) {
-          user.role = "user";
+          user.role = ROLES.USER;
         }
 
         // Save User in the database
@@ -146,10 +147,6 @@ exports.findOne = (req, res) => {
     })
     .then((data) => {
       if (data) {
-
-        //  TODO:  Don't send the whole user object?  Just the necessities.
-        //          Including the ROLE.
-
         res.send(data);
       } else {
         res.status(404).send({
