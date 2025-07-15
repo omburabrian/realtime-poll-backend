@@ -116,6 +116,11 @@ exports.findAll = (req, res) => {
     attributes: {
       exclude: ['password', 'salt']
     },
+    order: [
+      ['lastName', 'ASC'],
+      ['firstName', 'ASC'],
+      ['userName', 'ASC'],
+    ],
   })
     .then((data) => {
       res.send(data);

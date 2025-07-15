@@ -119,7 +119,8 @@ authenticateRoute = async (req, res, next) => {
   if (auth != null) {
 
     if (auth.startsWith("Bearer ") &&
-      (typeof require !== "string" || require === "token")) {
+      (typeof require !== "string" || require === "token"))
+    {
       let token = auth.slice(7);
       let sessionId = await decrypt(token);
       let session = {};
@@ -136,9 +137,10 @@ authenticateRoute = async (req, res, next) => {
         //  console.log(session >= Date.now());
         //  console.log(Date.now());
 
+        //  Is the session still valid?  (not expired)
         if (session.expirationDate >= Date.now()) {
-          //  Add the user to the request so that any potential, subsequent
-          //  isAdmin() middleware check can check the user's role.
+          //  Add the user to the request so that any potential,
+          //  subsequent middleware check can check the user's role.
 
           //  Get the user ID from the session, then use it to get the
           //  whole user object (excluding [password & salt]).
@@ -161,7 +163,7 @@ authenticateRoute = async (req, res, next) => {
           next();   //  Progress to any next middleware.
           return;   //  This return is unecessary as the code block has been exited with next()?
         } else {
-          //  Delete the expired session.
+          //  Session is expired.  Delete it.
           await Session.destroy({ where: { id: sessionId } });
           return res.status(401).send({
             message: "Unauthorized!  Expired Token, Logout and Login again.",
