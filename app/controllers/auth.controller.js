@@ -3,7 +3,8 @@ const { authenticate } = require("../authentication/authentication");
 const User = db.user;
 const Session = db.session;
 const Op = db.Sequelize.Op;
-const { encrypt } = require("../authentication/crypto");
+const { encrypt, decrypt } = require("../authentication/crypto");
+const { ROLES } = require("../config/constants");
 
 exports.login = async (req, res) => {
   let { userId } = await authenticate(req, res, "credentials");
@@ -22,6 +23,7 @@ exports.login = async (req, res) => {
       userId: userId,
       expirationDate: expireTime,
     };
+    
     await Session.create(session).then(async (data) => {
       let sessionId = data.id;
       let token = await encrypt(sessionId);
@@ -29,6 +31,8 @@ exports.login = async (req, res) => {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        userName: user.userName,
+        role: user.role,
         id: user.id,
         token: token,
       };
@@ -54,4 +58,9 @@ exports.logout = async (req, res) => {
       }
     );
   }
+};
+
+//  Send a list of ROLES to the frontend.
+exports.getRoles = (req, res) => {
+  res.send(ROLES);
 };
