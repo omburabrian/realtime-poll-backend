@@ -16,6 +16,9 @@ db.sequelize = sequelize;
 
 //-----------------------------------------------------------------------------
 //  Real-time Poll models / tables
+//  These models (and resulting JSON objects) are partially patterned from:
+//    "Open Trivia Database",  https://opentdb.com/api_config.php
+
 db.poll = require("./poll.model.js")(sequelize, Sequelize);
 db.pollEvent = require("./pollEvent.model.js")(sequelize, Sequelize);
 db.pollEventUser = require("./pollEventUser.model.js")(sequelize, Sequelize);

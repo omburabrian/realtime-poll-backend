@@ -1,3 +1,4 @@
+const { QUESTION_TYPES } = require("../config/constants");
 const db = require("../models");
 const Question = db.question;
 const Op = db.Sequelize.Op;
@@ -209,4 +210,9 @@ exports.bulkCreate = async (req, res) => {
                     err.message || "Error occurred while creating Questions in bulk",
             });
         });
+};
+
+//  Send a list of QUESTION_TYPES
+exports.getQuestionTypes = (req, res) => {
+  res.send(QUESTION_TYPES);
 };

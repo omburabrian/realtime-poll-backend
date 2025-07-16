@@ -31,6 +31,9 @@ module.exports = (app) => {
 
   //  Bulk create Questions
   router.post("/questions/bulk-create", [authenticateRoute], Question.bulkCreate);
+
+  //  Get question types
+  router.get("/question-types", [authenticateRoute], Question.getQuestionTypes);
   
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

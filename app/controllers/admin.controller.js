@@ -2,7 +2,9 @@ const db = require("../models");
 const User = db.user;
 const Poll = db.poll;
 
-//  Naviate to the ADMIN Dashboard
+const { USER_ROLES, QUESTION_TYPES } = require("../config/constants");
+
+//  Data for the ADMIN Dashboard
 exports.getDashboardData = async (req, res) => {
 
   try {
@@ -11,6 +13,7 @@ exports.getDashboardData = async (req, res) => {
 
     const userCount = await User.count();
     const pollCount = await Poll.count();
+
     const allUsers = await User.findAll({
       //  Exclude sensitive data!
       attributes: { exclude: ['password', 'salt'] }
@@ -21,6 +24,10 @@ exports.getDashboardData = async (req, res) => {
       stats: {
         users: userCount,
         polls: pollCount,
+      },
+      configData: {
+        userRoles: USER_ROLES,
+        questionTypes: QUESTION_TYPES,
       },
       users: allUsers,
     };
