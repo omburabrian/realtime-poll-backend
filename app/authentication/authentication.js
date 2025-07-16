@@ -184,7 +184,8 @@ authenticateRoute = async (req, res, next) => {
 };
 
 //--------------------------------------------------------
-//  Use AFTER authenticateRoute (in admin routes).  Check if authenticated user is an ADMIN.
+//  Use AFTER authenticateRoute (in admin routes).
+//  Check whether authenticated user is an ADMIN.
 isAdmin = (req, res, next) => {
   //  authenticateRoute() will have already attached the user object to the request.
   if (req.user && req.user.role === ROLES.ADMIN) {
@@ -198,11 +199,30 @@ isAdmin = (req, res, next) => {
 };
 
 //--------------------------------------------------------
+//  Use AFTER authenticateRoute (for restricted professor routes).
+//  Check whether authenticated user is a PROFESSOR (or an ADMIN).
+isProfessor = (req, res, next) => {
+  //  authenticateRoute() will have already attached the user object to the request.
+  if (req.user  &&
+    ((req.user.role === ROLES.PROFESSOR)  ||  (req.user.role === ROLES.ADMIN)))
+  {
+    //  User is a professor or an admin.  Proceed to next middleware/controller.
+    return next();
+  }
+
+  //  If NOT a professor (or an admin), respond with error.
+  return res.status(403).send({
+    message: `Access Forbidden: Requires ${ROLES.PROFESSOR} role.`,
+  });
+};
+
+//--------------------------------------------------------
 //  Exported object with authentication checks.
 const auth = {
   authenticate: authenticate,
   authenticateRoute: authenticateRoute,
   isAdmin: isAdmin,
+  isProfessor: isProfessor,
 };
 
 module.exports = auth;

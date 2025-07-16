@@ -1,76 +1,34 @@
 const db = require("../models");
-<<<<<<< HEAD
 
 const Answer = db.answer;
 const Op = db.Sequelize.Op;
 
-//  Create and Save a new Answer
+//  Create and Save a new ANSWER
 exports.create = (req, res) => {
 
-  // Validate request
+  //  Validate request
   if (req.body.text === undefined) {
     const error = new Error("ANSWER TEXT cannot be empty");
     error.statusCode = 400;
     throw error;
-  } else if (req.body.answerOrder === undefined) {
-    const error = new Error("ANSWER ORDER cannot be empty");
+  } else if (req.body.answerIndex === undefined) {
+    const error = new Error("ANSWER INDEX cannot be empty");
     error.statusCode = 400;
     throw error;
   } else if (req.body.isCorrectAnswer === undefined) {
-    const error = new Error("ANSWER - IS CORRECT ANSWER cannot be empty");
-=======
-const Answer = db.answer;
-const Op = db.Sequelize.Op;
-// Create and Save a new Answer
-exports.create = (req, res) => {
-  // Validate request
-  if (req.body.name === undefined) {
-    const error = new Error("Name cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.description === undefined) {
-    const error = new Error("Description cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.servings === undefined) {
-    const error = new Error("Servings cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.time === undefined) {
-    const error = new Error("Time cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.isPublished === undefined) {
-    const error = new Error("Is Published cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.userId === undefined) {
-    const error = new Error("User Id cannot be empty for answer!");
->>>>>>> feature/b-13496-setup-models-with-db-gd
+    const error = new Error("ANSWER - IS-CORRECT-ANSWER cannot be empty");
     error.statusCode = 400;
     throw error;
   }
 
-<<<<<<< HEAD
-  //  Create an Answer
+  //  Create an ANSWER object
   const answer = {
     text: req.body.text,
-    answerOrder: req.body.answerOrder,
+    answerIndex: req.body.answerIndex,
     isCorrectAnswer: req.body.isCorrectAnswer,
-    
-
-=======
-  // Create a Answer
-  const answer = {
-    name: req.body.name,
-    description: req.body.description,
-    servings: req.body.servings,
-    time: req.body.time,
-    isPublished: req.body.isPublished ? req.body.isPublished : false,
-    userId: req.body.userId,
->>>>>>> feature/b-13496-setup-models-with-db-gd
   };
-  // Save Answer in the database
+
+  //  Save ANSWER object in the database
   Answer.create(answer)
     .then((data) => {
       res.send(data);
@@ -83,35 +41,15 @@ exports.create = (req, res) => {
     });
 };
 
-// Find all Answers for a user
-exports.findAllForUser = (req, res) => {
-  const userId = req.params.userId;
+//  Find all ANSWERS for QUESTION ID
+exports.findAllForQuestionId = (req, res) => {
+
+  const questionId = req.params.questionId;
+
   Answer.findAll({
-    where: { userId: userId },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    where: { questionId: questionId },
     order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
+      ["answerIndex", "ASC"],
     ],
   })
     .then((data) => {
@@ -119,98 +57,32 @@ exports.findAllForUser = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Answers for user with ID=${userId}.`,
+          message: `Cannot find Answers for question ID = ${questionId}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Error retrieving Answers for user with ID=" + userId,
+          err.message || "Error retrieving Answers for question ID = " + questionId,
       });
     });
 };
 
-// Find all Published Answers
-exports.findAllPublished = (req, res) => {
-  Answer.findAll({
-    where: { isPublished: true },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
-    ],
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Published Answers.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving Published Answers.",
-      });
-    });
-};
-
-// Find a single Answer with an id
+//  Find ANSWER with ID
 exports.findOne = (req, res) => {
+
   const id = req.params.id;
+
   Answer.findAll({
     where: { id: id },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [[RecipeStep, "stepNumber", "ASC"]],
   })
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Answer with ID=${id}.`,
+          message: `Cannot find Answer with ID = ${id}`,
         });
       }
     })
@@ -220,65 +92,105 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// Update a Answer by the id in the request
+
+//  Update ANSWER with ID
 exports.update = (req, res) => {
+
   const id = req.params.id;
+
   Answer.update(req.body, {
     where: { id: id },
   })
     .then((number) => {
       if (number == 1) {
-        res.send({
-          message: "Answer was updated successfully",
-        });
+        res.send({ message: "Answer was updated successfully", });
       } else {
         res.send({
-          message: `Cannot update Answer with ID = ${id}. Maybe Answer was not found or req.body is empty!`,
+          message: `Could not update ANSWER with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating Answer with ID = " + id,
+        message: err.message || "Error updating ANSWER with ID = " + id,
       });
     });
 };
-// Delete a Answer with the specified ID
+
+//  Delete ANSWER with ID
 exports.delete = (req, res) => {
+
   const id = req.params.id;
+
   Answer.destroy({
     where: { id: id },
   })
     .then((number) => {
       if (number == 1) {
-        res.send({
-          message: "Answer was deleted successfully",
-        });
+        res.send({ message: "Answer was deleted successfully", });
       } else {
         res.send({
-          message: `Cannot delete Answer with ID = ${id}. Maybe Answer was not found!`,
+          message: `Could not delete ANSWER with ID = ${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete Answer with ID = " + id,
+        message: err.message || "Error deleting ANSWER with ID = " + id,
       });
     });
 };
-// Delete all Answers from the database.
+
+//  Delete all ANSWERS for QUESTION with ID
+exports.deleteAllForQuestionId = (req, res) => {
+
+  const questionId = req.params.questionId;
+
+  Answer.destroy({
+    where: { questionId: questionId },
+  })
+    .then((number) => {
+      if (number == 1) {
+        res.send({ message: "ANSWERS deleted for question ID = " + questionId, });
+      } else {
+        res.send({ message: `Could not delete ANSWERS for question ID = ${questionId}`, });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Error deleting ANSWERS for question ID = " + id,
+      });
+    });
+};
+
+//  Delete all Answers from the database.
 exports.deleteAll = (req, res) => {
   Answer.destroy({
     where: {},
     truncate: false,
   })
     .then((number) => {
-      res.send({ message: `${number} Answers were deleted successfully` });
+      res.send({ message: `${number} ANSWERS were deleted successfully` });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while deleting all answers.",
+          err.message || "Error occurred while deleting all ANSWERS",
       });
     });
+};
+
+//  Bulk create ANSWERS from JSON list (contained in req.body)
+exports.bulkCreate = async (req, res) => {
+    await Answer.bulkCreate(req.body)
+        .then((data) => {
+            let number = data.length;   //  Returned data = JSON array of created ANSWERS
+            res.send({ message: `${number} ANSWERS were created successfully` });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message || "Error occurred while creating ANSWERS in bulk",
+            });
+        });
 };

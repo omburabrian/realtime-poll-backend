@@ -1,6 +1,6 @@
 module.exports = (app) => {
 
-  //  Routes require not only AUTHENTICATION, but also ADMIN role:
+  //  Routes require not only AUTHENTICATION, but also ADMIN role.
 
   const Admin = require("../controllers/admin.controller.js");
   const { authenticateRoute, isAdmin } = require("../authentication/authentication");
