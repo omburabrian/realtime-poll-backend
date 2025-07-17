@@ -9,6 +9,10 @@ module.exports = (app) => {
   //  Get admin dashboard data
   router.get("/admin", [authenticateRoute, isAdmin], Admin.getDashboardData);
 
+  //  Load test data for USERS
+  router.post("/admin/load-test-data/users", [authenticateRoute, isAdmin],
+    Admin.loadTestData_users);
+
   // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };
