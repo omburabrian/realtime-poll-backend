@@ -53,11 +53,27 @@ https://opentdb.com/browse.php
 
 const opentdbBaseUri = "https://opentdb.com/api.php";
 
+//  ToDo:  Get the JSON from the API.  For now, read from file.
+const { loadJsonFromFile } = require("./utility.services.js");
+
 var amount = 10;
 var category = 18;
 var difficulty = "easy";
 
-async function getTriviaQuestions(amount, category, difficulty) {
+//  ToDo:   Change this back to async when fetching from API.
+
+function getTriviaQuestions(amount, category, difficulty) {
+//  async function getTriviaQuestions(amount, category, difficulty) {
+
+    //  TODO:   TESTING -- For now, just return JSON from a file already downloaded.
+    return loadJsonFromFile(
+        path.resolve(
+            __dirname,
+            '../testData/opentdb/cs-10-easy.json'
+        )
+    );
+
+    /*
 
     const response = await fetch(
         `${opentdbBaseUri}?amount=${amount}&category=${category}&difficulty=${difficulty}`
@@ -66,6 +82,8 @@ async function getTriviaQuestions(amount, category, difficulty) {
     //  (Response will already be in JSON format.)
     //  return await response.json();
     return response;
+
+    //  */
 }
 
 module.exports = { getTriviaQuestions };

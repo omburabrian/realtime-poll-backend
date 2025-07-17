@@ -2,6 +2,7 @@ const db = require("../models");
 const User = db.user;
 const Poll = db.poll;
 const UserServices = require("../services/user.services.js");
+const PollServices = require("../services/poll.services.js");
 
 const { USER_ROLES, QUESTION_TYPES } = require("../config/constants");
 
@@ -49,20 +50,27 @@ exports.getDashboardData = async (req, res) => {
 //  Load test data for USERS
 exports.loadTestData_users = async (req, res) => {
 
-  console.log('admin.controller::loadTestData_users()');
+  //  console.log('admin.controller::loadTestData_users()');
 
   try {
     const responseMessage = await UserServices.loadTestData();
-
-    console.log('responseMessage');
-    console.log(responseMessage);
-
     res.send({ message: responseMessage });
   } catch (err) {
-    console.log('} catch (err) {');
-    console.log(err);
     res.status(500).send({
-      message: err.message || "Error occurred while loading test data for users",
+      message: err.message || "Error occurred while loading test data for USERS",
+    });
+  }
+}
+
+//---------------------------------------------------------------------------
+//  Load test data for POLLS, QUESTIONS, and ANSWERS
+exports.loadTestData_pollsQuestionsAnswers = async (req, res) => {
+  try {
+    const responseMessage = await PollServices.loadTestData();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while loading test data for POLLS",
     });
   }
 }

@@ -52,11 +52,8 @@ exports.logout = async (req, res) => {
     let token = auth.slice(7);
     let sessionId = await decrypt(token);
     if (sessionId == null) return;
-    return await Session.destroy({ where: { id: sessionId } }).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
+    return await Session.destroy({ where: { id: sessionId } })
+    .catch( (error) => { console.log(error); } );
   }
 };
 
