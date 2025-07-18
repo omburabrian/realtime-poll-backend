@@ -55,6 +55,37 @@ db.poll.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
+//  @@@@@@@@@@@@@@@@@@@@@@@@@@#################################
+//  TODO:   TESTING EXPLICITLY SPECIFYING FOREIGN KEYS TO ALLOW FOR BULK CREATION
+
+
+//  Polls & Questions : one-to-many
+db.poll.hasMany(
+  db.question,
+  { as: "question" },
+  { foreignKey: { name: 'pollId', allowNull: false }, onDelete: "CASCADE" }
+);
+db.question.belongsTo(
+  db.poll,
+  { as: "poll" },
+  { foreignKey: { name: 'pollId', allowNull: false }, onDelete: "CASCADE" }
+);
+
+//  Questions & Answers : one-to-many
+db.question.hasMany(
+  db.answer,
+  { as: "answer" },
+  { foreignKey: { name: 'questionId', allowNull: false }, onDelete: "CASCADE" }
+);
+db.answer.belongsTo(
+  db.question,
+  { as: "question" },
+  { foreignKey: { name: 'questionId', allowNull: false }, onDelete: "CASCADE" }
+);
+
+//  @@@@@@@@@@@@@@@@@@@@@@@@@@#################################
+
+/*
 //  Polls & Questions : one-to-many
 db.poll.hasMany(
   db.question,
@@ -78,6 +109,12 @@ db.answer.belongsTo(
   { as: "question" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
+
+//  */
+
+//  @@@@@@@@@@@@@@@@@@@@@@@@@@#################################
+
+
 
 //  Polls & PollEvents : one-to-many
 db.poll.hasMany(

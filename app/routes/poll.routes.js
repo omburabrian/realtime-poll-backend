@@ -36,6 +36,10 @@ module.exports = (app) => {
   //  Bulk create Polls
   router.post("/polls/bulk-create", [authenticateRoute], Poll.bulkCreate);
 
+  //  Bulk create Polls with Q & A
+  router.post("/polls/bulk-create-with-questions-and-answers", [authenticateRoute],
+    Poll.bulkCreateWithQuestionsAndAnswers);
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

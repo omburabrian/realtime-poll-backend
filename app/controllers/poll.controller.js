@@ -1,5 +1,8 @@
 const db = require("../models");
 const Poll = db.poll;
+const Question = db.question;
+const Answer = db.answer;
+const { bulkCreatePollsWithQuestionsAndAnswers } = require("../services/poll.services");
 const Op = db.Sequelize.Op;
 
 //  Create and save a new Poll
@@ -192,7 +195,10 @@ exports.deleteAll = (req, res) => {
 };
 
 //  Create Polls in bulk from JSON list
+//  ToDo:   Add the "include:[] s, to allow for creating nested objects."
 exports.bulkCreate = async (req, res) => {
+    //  ToDo:   Add the "include:[] s, to allow for creating nested objects."
+    //          e.g.    await Poll.bulkCreate(req.body, {...})
     await Poll.bulkCreate(req.body)
         .then((data) => {
             let number = data.length;
@@ -205,3 +211,14 @@ exports.bulkCreate = async (req, res) => {
             });
         });
 };
+
+exports.bulkCreateWithQuestionsAndAnswers = async (req, res) => {
+//  async function yourControllerFunction(req, res) {
+  try {
+    //  Expecting req.body to contain POLLS with QUESTIONS and ANSWERS
+    const createdPolls = await bulkCreatePollsWithQuestionsAndAnswers(req.body);
+    res.status(201).send(createdPolls);
+  } catch (error) {
+    res.status(500).send({ message: 'Failed to create POLLS' });
+  }
+}
