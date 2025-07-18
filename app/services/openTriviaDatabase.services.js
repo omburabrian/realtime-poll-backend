@@ -78,19 +78,19 @@ var category = 18;
 var difficulty = "easy";
 
 //---------------------------------------------------------------------------
-async function getTriviaQuestions(amount, category, difficulty) {
+async function getTriviaQuestions(filename, amount, category, difficulty) {
 
     var realtimePoll_JSON = {};     //  JSON Real-time Poll to be returned.
-    const opentdbQuestions_JSON = await getTriviaQuestionsFromApi(amount, category, difficulty);
+    const opentdbQuestions_JSON = await getTriviaQuestionsFromApi(filename, amount, category, difficulty);
     realtimePoll_JSON = convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON);
 
     //  Edit the poll's description to include the user inputs:  amount, category, difficulty.
-    realtimePoll_JSON.description = `(amount = ${amount}, category = ${category}, difficulty = ${difficulty})`;
+    realtimePoll_JSON.description = `(amount = ${amount},  category = ${category},  difficulty = ${difficulty})`;
     return realtimePoll_JSON;
 }
 
 //---------------------------------------------------------------------------
-async function getTriviaQuestionsFromApi(amount, category, difficulty) {
+async function getTriviaQuestionsFromApi(filename, amount, category, difficulty) {
 
     //  ToDo:   Setup fetch from API later.
     /*
@@ -100,7 +100,8 @@ async function getTriviaQuestionsFromApi(amount, category, difficulty) {
     //  */
 
     //  TODO:   TESTING -- For now, just return JSON from a file already downloaded.
-    const relativePathToJsonFile = '../testData/opentdb/cs-10-easy.json';
+    //  const relativePathToJsonFile = '../testData/opentdb/cs-10-easy.json';
+    const relativePathToJsonFile = `../testData/opentdb/${filename}`;
     const opentdbQuestions_JSON = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
 
     return opentdbQuestions_JSON;

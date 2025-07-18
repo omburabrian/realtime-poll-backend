@@ -1,8 +1,4 @@
 const { getTriviaQuestions } = require("./openTriviaDatabase.services");
-//  const { loadJsonFromFile } = require("./utility.services");
-
-
-//  V:\xampp\htdocs\projects\rt-poll\realtime-poll-backend\app\services\openTriviaDatabase.services.js
 
 const db = require("../models");
 const Poll = db.poll;
@@ -16,76 +12,128 @@ const fs = require('fs');
 //---------------------------------------------------------------------------
 async function loadTestData() {
 
-    var returnMessage = '(return message from loadTestData())';
-    const poll_JSON = await getTriviaQuestions();
+    //  (Let calling function catch errors.  Probably a contoller function.)
 
-    //  The console.log() will not display nested JSON arrays?
-    //  Convert to a string and log and check in Notepad++.
-    //  const poll_jsonString = JSON.stringify(poll_JSON);
-    //  console.log(poll_jsonString);
+    var returnMessage = 'Error occurred while loading test data for POLLS';
 
+    //  For testing, just assign the test data polls to the first user,
+    //  assuming it is the dev who first logged in.
+    //  ToDo:   Assign the polls to various users who have the role of "professor".
+    const theUserId = 1;
+    const testDataFiles = getTestDataFiles();
+    var quizList = [];      //  List of polls that will be bulkCreate()'d.
+    var poll_JSON = {};     //  Temporary variable for holding the poll in the loop.
 
-    /*
-    Assign the returned Poll object(s) to a user that has a role of
-    "professor", using the USER ID.
-    e.g.
-        poll_JSON["userId"] = 1;
+    //  Read the list of test data files (previously downloaded from opentdb),
+    //  converting them to Real-time Polls, Questions, and Answers.
+    testDataFiles.forEach(async (testDataFile) => { 
 
+        poll_JSON = await getTriviaQuestions(
+            //  ToDo:  Eventually won't need fileName, as data will come from API.
+            testDataFile.fileName,
+            testDataFile.amount,
+            testDataFile.category,
+            testDataFile.difficulty
+        );
 
-    Then use bulkCreate() to create the poll.
+        //  Assign the "professor" user and add to the list from which
+        //  to bulkCreate() the new POLLS (quizzes).
+        poll_JSON["userId"] = theUserId;
+        quizList.push(poll_JSON);
+    });
 
-    */
-
-
-
-
-
-
+    //  Bulk create all the polls, en masse... ("The Incredible *Bulk*!")
+    const pollCount = await bulkCreatePollsWithQuestionsAndAnswers(quizList);
+    returnMessage = `${pollCount} POLLS were created successfully`;
+    // console.log(returnMessage);
     return returnMessage;
-
-    //  Let calling function catch errors.  Probably a contoller function.
 }
 
 //---------------------------------------------------------------------------
-async function bulkCreatePollsWithQuestionsAndAnswers(pollsData, includeOptionsBlock) {
+async function bulkCreatePollsWithQuestionsAndAnswers(pollsData) {
 
-    //  TODO:   <includeOptionsBlock> not yet being utilized.
-    //          Need to include the <transaction>.
-    //          Try setting with:
-    //              includeOptionsBlock.transaction: transaction
-
-    //  Start a transaction.  (Allows for rolling all DB operations en masse upon failure.)
+    //  Start a transaction.
+    //  (Allows for rolling back all DB operations en masse upon failure.)
     const transaction = await db.sequelize.transaction();
 
-    //  ToDo:   Add these includes to the regular "create" and make them optional.
+    //  Get the options block and add the transaction.
+    var includeOptionsBlock = getIncludeOptionsBlockForCreate();
+    includeOptionsBlock['transaction'] = transaction;
 
     try {
         const createdPolls = await Poll.bulkCreate(
             pollsData,
-            {
-                include: [
-                    {
-                        model: Question,
-                        //  as: 'question',
-                        include: [{
-                            model: Answer,
-                            //  as: 'answer',
-                        }],
-                    },
-                ],
-                transaction: transaction,   //  "Pass the transaction to ensure atomicity"
-            }
+            includeOptionsBlock,
         );
 
         //  When the transaction completes (instantiates), then commit() it.
         await transaction.commit();
-        return createdPolls;
+        return createdPolls.length;
 
     } catch (error) {
         await transaction.rollback();   //  If error, rollback any and all DB operations.
         console.error('Error during bulk creation of POLLs:', error);
         throw error;    //  Re-throw error to let calling function handle it.
     }
+}
+
+function getIncludeOptionsBlockForCreate() {
+     //  Create options to enable creating nested model instances, simultaneously
+    return {
+        include: [
+            {
+                model: Question,
+                //  as: 'question',
+                include: [{
+                    model: Answer,
+                    //  as: 'answer',
+                }],
+            },
+        ],
+    };
+}
+
+//--------------------------------------------------------
+function getTestDataFiles() {
+
+    return [
+        {
+            fileName: 'science-and-nature-10-easy.json',
+            category: 'Science and Nature',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'animals-10-easy.json',
+            category: 'Animals',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'computer-science-10-easy.json',
+            category: 'Computer Science',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'geography-10-easy.json',
+            category: 'Geography',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'history-10-easy.json',
+            category: 'History',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'sports-10-easy.json',
+            category: 'Sports',
+            difficulty: 'easy',
+            amount: '10'
+        },
+    ];
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

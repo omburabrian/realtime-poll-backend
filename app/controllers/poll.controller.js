@@ -196,6 +196,10 @@ exports.deleteAll = (req, res) => {
 
 //  Create Polls in bulk from JSON list
 exports.bulkCreate = async (req, res) => {
+
+    //  ToDo:   Make this one call the service, like the example below.
+    //          (The service is used for creating test data too.  Reuse it.)
+
     await Poll.bulkCreate(req.body, getIncludeOptionsBlockForCreate())
         .then((data) => {
             let number = data.length;
@@ -209,15 +213,19 @@ exports.bulkCreate = async (req, res) => {
         });
 };
 
+//  ToDo:   Can delete this one and just use the regular bulkCreate().
+//  They behave the same.
 exports.bulkCreateWithQuestionsAndAnswers = async (req, res) => {
-    //  async function yourControllerFunction(req, res) {
     try {
         //  Expecting req.body to contain POLLS with QUESTIONS and ANSWERS
         const createdPolls = await bulkCreatePollsWithQuestionsAndAnswers(
-            req.body,
-            getIncludeOptionsBlockForCreate()
+            req.body
+            //  getIncludeOptionsBlockForCreate()
         );
-        res.status(201).send(createdPolls);
+
+        const pollCount = createdPolls.length;
+        //  res.status(201).send(createdPolls);
+        res.status(201).send(`${pollCount} POLLS were created successfully`);
     } catch (error) {
         res.status(500).send({ message: 'Failed to create POLLS' });
     }
