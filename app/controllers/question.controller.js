@@ -1,6 +1,7 @@
-const { QUESTION_TYPES } = require("../config/constants");
+const { QUESTION_TYPES, QUESTION_DIFFICULTY } = require("../config/constants");
 const db = require("../models");
 const Question = db.question;
+const Answer = db.answer;
 const Op = db.Sequelize.Op;
 
 //  Create and save a new Question
@@ -43,7 +44,7 @@ exports.findAllForPoll = async (req, res) => {
   try {
     const data = await Question.findAll({
       where: { pollId: pollId },
-      include: [ Answer ],
+      include: [{ model: Answer }],
       order: [["questionNumber", "ASC"]],
     });
     res.send(data);
@@ -58,7 +59,7 @@ exports.findAllForPoll = async (req, res) => {
 exports.findOne = async (req, res) => {
   const id = req.params.id;
   try {
-    const data = await Question.findByPk(id, { include: [ Answer ] });
+    const data = await Question.findByPk(id, { include: [{ model: Answer }] });
     if (data) {
       res.send(data);
     } else {
@@ -80,7 +81,7 @@ exports.findAll = async (req, res) => {
   try {
     const data = await Question.findAll({
       where: condition,
-      include: [ Answer ],
+      include: [{ model: Answer }],
       order: [
         ["pollId", "ASC"],
         ["questionNumber", "ASC"],
@@ -98,7 +99,11 @@ exports.findAll = async (req, res) => {
 exports.update = async (req, res) => {
   const id = req.params.id;
   try {
-    //  TODO:  Why the [] around number??????
+    //  ANSWER to the TODO:
+    //  Sequelize's `update` method returns an array where the first element
+    //  is the number of affected rows. Using array destructuring `[number]` is a
+    //  concise way to get that value.
+    //  ( ToDo:  Dive into this more later.  Still have questions about it. )
     const [number] = await Question.update(req.body, { where: { id: id } });
     if (number === 1) {
       res.send({ message: "Question was updated successfully." });
@@ -174,4 +179,9 @@ exports.bulkCreate = async (req, res) => {
 //  Send a list of QUESTION_TYPES
 exports.getQuestionTypes = (req, res) => {
   res.send(QUESTION_TYPES);
+};
+
+//  Send a list of QUESTION_TYPES
+exports.getQuestionDifficulties = (req, res) => {
+  res.send(QUESTION_DIFFICULTY);
 };

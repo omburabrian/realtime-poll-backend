@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
     if (req.body.isCorrectAnswer === undefined) {
       return res.status(400).send({ message: "ANSWER - IS-CORRECT-ANSWER cannot be empty" });
     }
-    if (req.body.questionId === undefined) {
+    if (req.params.questionId === undefined) {
       return res.status(400).send({ message: "QUESTION ID cannot be empty" });
     }
 
@@ -27,7 +27,7 @@ exports.create = async (req, res) => {
       text: req.body.text,
       answerIndex: req.body.answerIndex,
       isCorrectAnswer: req.body.isCorrectAnswer,
-      questionId: req.body.questionId,
+      questionId: req.params.questionId,
     };
 
     //  Save ANSWER object in the database
@@ -37,7 +37,7 @@ exports.create = async (req, res) => {
 
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Error occurred while creating the Answer.",
+      message: err.message || "Error occurred while creating the Answer",
     });
   }
 };
@@ -78,41 +78,40 @@ exports.findOne = async (req, res) => {
 };
 
 //  Update ANSWER with ID
-//  Todo:  Re-write using try {} catch() {} and async-await
-exports.update = (req, res) => {
-
+exports.update = async (req, res) => {
   const id = req.params.id;
-
-  Answer.update(req.body, {
-    where: { id: id },
-  })
-    .then((number) => {
-      if (number === 1) {
-        res.send({ message: "Answer was updated successfully", });
-      } else {
-        res.send({
-          message: `Could not update ANSWER with ID = ${id}`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error updating ANSWER with ID = " + id,
-      });
+  try {
+    //  ANSWER to the TODO:
+    //  Sequelize's `update` method returns an array where the first element
+    //  is the number of affected rows. Using array destructuring `[number]` is a
+    //  concise way to get that value from the array.
+    //  ( ToDo:  Dive into this more later.  Still have questions about it. )
+    const [number] = await Answer.update(req.body, {
+      where: { id: id },
     });
+    if (number === 1) {
+      res.send({ message: "Answer was updated successfully" });
+    } else {
+      res.send({
+        message: `Cannot update Answer with ID = ${id}`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error updating Answer with ID = ${id}`,
+    });
+  }
 };
 
 //  Delete ANSWER with ID
 exports.delete = async (req, res) => {
   const id = req.params.id;
   try {
-
     const number = await Answer.destroy({
       where: { id: id },
     });
-
     if (number === 1) {
-      res.send({ message: "Answer was deleted successfully." });
+      res.send({ message: "Answer was deleted successfully" });
     } else {
       res.send({
         message: `Cannot delete Answer with ID = ${id}`,
@@ -120,63 +119,50 @@ exports.delete = async (req, res) => {
     }
   } catch (err) {
     res.status(500).send({
-      message: err.message || `Error deleting ANSWER with ID = ${id}`,
+      message: err.message || `Error deleting Answer with ID = ${id}`,
     });
   }
 };
 
 //  Delete all ANSWERS for QUESTION with ID
-//  Todo:  Re-write using try {} catch() {} and async-await
-exports.deleteAllForQuestionId = (req, res) => {
-
+exports.deleteAllForQuestionId = async (req, res) => {
   const questionId = req.params.questionId;
-
-  Answer.destroy({
-    where: { questionId: questionId },
-  })
-    .then((number) => {
-      if (number === 1) {
-        res.send({ message: "ANSWERS deleted for question ID = " + questionId, });
-      } else {
-        res.send({ message: `Could not delete ANSWERS for question ID = ${questionId}`, });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error deleting ANSWERS for question ID = " + id,
-      });
+  try {
+    const number = await Answer.destroy({
+      where: { questionId: questionId },
     });
+    res.send({ message: `${number} Answers were deleted successfully for question ID = ${questionId}` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error deleting Answers for question ID = ${questionId}`,
+    });
+  }
 };
 
 //  Delete all Answers from the database.
-//  Todo:  Re-write using try {} catch() {} and async-await
-exports.deleteAll = (req, res) => {
-  Answer.destroy({
-    where: {},
-    truncate: false,
-  })
-    .then((number) => {
-      res.send({ message: `${number} ANSWERS were deleted successfully` });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Error occurred while deleting all ANSWERS",
-      });
+exports.deleteAll = async (req, res) => {
+  try {
+    const number = await Answer.destroy({
+      where: {},
+      truncate: false,
     });
+    res.send({ message: `${number} Answers were deleted successfully` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while deleting all Answers",
+    });
+  }
 };
 
 //  Bulk create ANSWERS from JSON list (contained in req.body)
 exports.bulkCreate = async (req, res) => {
-  await Answer.bulkCreate(req.body)
-    .then((data) => {
-      let number = data.length;   //  Returned data = JSON array of created ANSWERS
-      res.send({ message: `${number} ANSWERS were created successfully` });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Error occurred while creating ANSWERS in bulk",
-      });
+  try {
+    const data = await Answer.bulkCreate(req.body);
+    let number = data.length;
+    res.send({ message: `${number} Answers were created successfully` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while creating Answers in bulk",
     });
+  }
 };

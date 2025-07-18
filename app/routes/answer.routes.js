@@ -5,8 +5,9 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //  Create a new Answer
-  router.post("/answers/", [authenticateRoute, isProfessor], Answer.create);
+  //  Create a new Answer for a Question
+  router.post("/questions/:questionId/answers", [authenticateRoute, isProfessor],
+    Answer.create);
 
   //  Retrieve a single Answer with ID
   router.get("/answers/:id", [authenticateRoute], Answer.findOne);

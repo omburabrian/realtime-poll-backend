@@ -34,6 +34,9 @@ module.exports = (app) => {
 
   //  Get question types
   router.get("/question-types", [authenticateRoute], Question.getQuestionTypes);
+
+  //  Get question difficulties
+  router.get("/question-difficulties", [authenticateRoute], Question.getQuestionDifficulties);
   
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
