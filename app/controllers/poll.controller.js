@@ -5,6 +5,8 @@ const Answer = db.answer;
 const { bulkCreatePollsWithQuestionsAndAnswers } = require("../services/poll.services");
 const Op = db.Sequelize.Op;
 
+//  TODO:   Re-write all functions using try {} catch() {} and async-await.
+
 //  Create and save a new Poll
 exports.create = (req, res) => {
 
@@ -47,6 +49,14 @@ exports.findAllForUser = (req, res) => {
     const userId = req.params.userId;
     Poll.findAll({
         where: { userId: userId },
+        include: [
+            {
+                model: Question,
+                include: [{
+                    model: Answer,
+                }],
+            },
+        ],
         order: [
             ["name", "ASC"],
         ],
@@ -71,9 +81,19 @@ exports.findAllForUser = (req, res) => {
 // Find a single Poll with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    Poll.findAll({
-        where: { id: id },
-    })
+    Poll.findByPk(
+        id,
+        {
+            where: { id: id },
+            include: [
+                {
+                    model: Question,
+                    include: [{
+                        model: Answer,
+                    }],
+                },
+            ],
+        })
         .then((data) => {
             if (data) {
                 res.send(data);
@@ -98,6 +118,14 @@ exports.findAll = (req, res) => {
     Poll.findAll(
         {
             where: condition,
+            include: [
+                {
+                    model: Question,
+                    include: [{
+                        model: Answer,
+                    }],
+                },
+            ],
             order: [
                 ["name", "ASC"],
             ],
@@ -200,7 +228,7 @@ exports.bulkCreate = async (req, res) => {
     //  ToDo:   Make this one call the service, like the example below.
     //          (The service is used for creating test data too.  Reuse it.)
 
-    await Poll.bulkCreate(req.body, getIncludeOptionsBlockForCreate())
+    await Poll.bulkCreate(req.body, getIncludeOptionsBlockForQA())
         .then((data) => {
             let number = data.length;
             res.send({ message: `${number} Polls were created successfully` });
@@ -220,7 +248,7 @@ exports.bulkCreateWithQuestionsAndAnswers = async (req, res) => {
         //  Expecting req.body to contain POLLS with QUESTIONS and ANSWERS
         const createdPolls = await bulkCreatePollsWithQuestionsAndAnswers(
             req.body
-            //  getIncludeOptionsBlockForCreate()
+            //  getIncludeOptionsBlockForQA()
         );
 
         const pollCount = createdPolls.length;
@@ -231,8 +259,8 @@ exports.bulkCreateWithQuestionsAndAnswers = async (req, res) => {
     }
 }
 
-function getIncludeOptionsBlockForCreate() {
-     //  Create options to enable creating nested model instances, simultaneously
+function getIncludeOptionsBlockForQA() {
+    //  Create options to enable creating nested model instances, simultaneously
     return {
         include: [
             {

@@ -8,12 +8,12 @@ module.exports = (app) => {
   //  Create a new Answer
   router.post("/answers/", [authenticateRoute, isProfessor], Answer.create);
 
-  //  Retrieve all Answers for a Question ID
-  router.get("/answers/question/:questionId", [authenticateRoute],
-    Answer.findAllForQuestionId);
-
   //  Retrieve a single Answer with ID
   router.get("/answers/:id", [authenticateRoute], Answer.findOne);
+
+  //  Retrieve all Answers for a Question ID
+  router.get("/questions/:questionId/answers", [authenticateRoute],
+    Answer.findAllForQuestionId);
 
   //  Update an Answer with ID
   router.put("/answers/:id", [authenticateRoute, isProfessor], Answer.update);
@@ -22,7 +22,7 @@ module.exports = (app) => {
   router.delete("/answers/:id", [authenticateRoute, isProfessor], Answer.delete);
 
   //  Delete Answers for Question with ID
-  router.delete("/answers/question/:questionId", [authenticateRoute, isProfessor],
+  router.delete("/questions/:questionId/answers", [authenticateRoute, isProfessor],
     Answer.deleteAllForQuestionId);
 
   //  Delete all Answers.  (Requires ADMIN permission / role)

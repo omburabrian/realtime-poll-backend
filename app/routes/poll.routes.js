@@ -8,7 +8,7 @@ module.exports = (app) => {
   router.post("/polls/", [authenticateRoute], Poll.create);
 
   //  Retrieve all Polls for a user (Professor)
-  router.get("/polls/user/:userId", [authenticateRoute],
+  router.get("/users/:userId/polls", [authenticateRoute],
     Poll.findAllForUser);
 
   //  Retrieve a single Poll with ID

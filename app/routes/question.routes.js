@@ -7,8 +7,8 @@ module.exports = (app) => {
   //  Create a new Question
   router.post("/questions/", [authenticateRoute], Question.create);
 
-  //  Retrieve all Questions for a Poll
-  router.get("/questions/poll/:pollId", [authenticateRoute],
+  //  Retrieve all Questions for a Poll ID
+  router.get("/polls/:pollId/questions", [authenticateRoute],
     Question.findAllForPoll);
 
   //  Retrieve a single Question with ID
@@ -24,7 +24,7 @@ module.exports = (app) => {
   router.delete("/questions/:id", [authenticateRoute], Question.delete);
 
   //  Delete all Questions for a Poll
-  router.delete("/questions/poll/:pollId", [authenticateRoute], Question.deleteForPoll);
+  router.delete("/polls/:pollId/questions", [authenticateRoute], Question.deleteForPoll);
 
   //  Delete all Questions
   router.delete("/questions/", [authenticateRoute], Question.deleteAll);

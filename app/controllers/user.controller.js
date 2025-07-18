@@ -5,6 +5,8 @@ const Op = db.Sequelize.Op;
 const { USER_ROLES } = require("../config/constants");
 const { encrypt, getSalt, hashPassword } = require("../authentication/crypto");
 
+//  TODO:   Re-write all functions using try {} catch() {} and async-await.
+
 // Create and Save a new User
 exports.create = async (req, res) => {
   // Validate request

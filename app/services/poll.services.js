@@ -57,7 +57,7 @@ async function bulkCreatePollsWithQuestionsAndAnswers(pollsData) {
     const transaction = await db.sequelize.transaction();
 
     //  Get the options block and add the transaction.
-    var includeOptionsBlock = getIncludeOptionsBlockForCreate();
+    var includeOptionsBlock = getIncludeOptionsBlockForQA();
     includeOptionsBlock['transaction'] = transaction;
 
     try {
@@ -77,7 +77,7 @@ async function bulkCreatePollsWithQuestionsAndAnswers(pollsData) {
     }
 }
 
-function getIncludeOptionsBlockForCreate() {
+function getIncludeOptionsBlockForQA() {
      //  Create options to enable creating nested model instances, simultaneously
     return {
         include: [
