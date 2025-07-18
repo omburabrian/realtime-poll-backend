@@ -46,86 +46,73 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 //  User (professor) & Polls : one-to-many
 db.user.hasMany(
   db.poll,
-  { as: "poll" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "poll",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.poll.belongsTo(
   db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "user",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
-
-//  @@@@@@@@@@@@@@@@@@@@@@@@@@#################################
-//  TODO:   TESTING EXPLICITLY SPECIFYING FOREIGN KEYS TO ALLOW FOR BULK CREATION
-
 
 //  Polls & Questions : one-to-many
 db.poll.hasMany(
   db.question,
-  { as: "question" },
-  { foreignKey: { name: 'pollId', allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "question",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE",
+  }
 );
 db.question.belongsTo(
   db.poll,
-  { as: "poll" },
-  { foreignKey: { name: 'pollId', allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "poll",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE",
+  }
 );
 
 //  Questions & Answers : one-to-many
 db.question.hasMany(
   db.answer,
-  { as: "answer" },
-  { foreignKey: { name: 'questionId', allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "answer",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.answer.belongsTo(
   db.question,
-  { as: "question" },
-  { foreignKey: { name: 'questionId', allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "question",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
-
-//  @@@@@@@@@@@@@@@@@@@@@@@@@@#################################
-
-/*
-//  Polls & Questions : one-to-many
-db.poll.hasMany(
-  db.question,
-  { as: "question" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.question.belongsTo(
-  db.poll,
-  { as: "poll" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-//  Questions & Answers : one-to-many
-db.question.hasMany(
-  db.answer,
-  { as: "answer" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.answer.belongsTo(
-  db.question,
-  { as: "question" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-//  */
-
-//  @@@@@@@@@@@@@@@@@@@@@@@@@@#################################
-
-
 
 //  Polls & PollEvents : one-to-many
 db.poll.hasMany(
   db.pollEvent,
-  { as: "pollEvent" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "pollEvent",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.pollEvent.belongsTo(
   db.poll,
-  { as: "poll" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "poll",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 
 //  PollEvents & Users : many-to-many
@@ -144,13 +131,19 @@ db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
 //  Users & Sessions : one-to-many
 db.user.hasMany(
   db.session,
-  { as: "session" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "session",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.session.belongsTo(
   db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "user",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 
 //#############################################################################

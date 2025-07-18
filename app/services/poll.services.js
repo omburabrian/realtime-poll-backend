@@ -31,7 +31,12 @@ async function loadTestData() {
 }
 
 //---------------------------------------------------------------------------
-async function bulkCreatePollsWithQuestionsAndAnswers(pollsData) {
+async function bulkCreatePollsWithQuestionsAndAnswers(pollsData, includeOptionsBlock) {
+
+    //  TODO:   <includeOptionsBlock> not yet being utilized.
+    //          Need to include the <transaction>.
+    //          Try setting with:
+    //              includeOptionsBlock.transaction: transaction
 
     //  Start a transaction.  (Allows for rolling all DB operations en masse upon failure.)
     const transaction = await db.sequelize.transaction();
@@ -39,27 +44,29 @@ async function bulkCreatePollsWithQuestionsAndAnswers(pollsData) {
     //  ToDo:   Add these includes to the regular "create" and make them optional.
 
     try {
-        const createdPolls = await Poll.bulkCreate(pollsData, {
-            include: [
-                {
-                    model: Question,
-                    as: 'question',     //  (Defined alias in associations in models/index.js)
-                                        //  Possibly need to specify foreign key.  It defaults correctly?
-                    include: [{
-                        model: Answer,
-                        as: 'answer',   //  (Defined alias in associations in models/index.js)
-                                        //  Possibly need to specify foreign key.  It defaults correctly?
-                    }],
-                },
-            ],
-            transaction: transaction,   //  "Pass the transaction to ensure atomicity"
-        });
+        const createdPolls = await Poll.bulkCreate(
+            pollsData,
+            {
+                include: [
+                    {
+                        model: Question,
+                        as: 'question',
+                        include: [{
+                            model: Answer,
+                            as: 'answer',
+                        }],
+                    },
+                ],
+                transaction: transaction,   //  "Pass the transaction to ensure atomicity"
+            }
+        );
 
+        //  When the transaction completes (instantiates), then commit() it.
         await transaction.commit();
         return createdPolls;
 
     } catch (error) {
-        await transaction.rollback();   //  Rollback all upon any error.
+        await transaction.rollback();   //  If error, rollback any and all DB operations.
         console.error('Error during bulk creation of POLLs:', error);
         throw error;    //  Re-throw error to let calling function handle it.
     }
