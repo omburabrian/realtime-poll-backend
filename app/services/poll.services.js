@@ -19,12 +19,28 @@ async function loadTestData() {
     var returnMessage = '(return message from loadTestData())';
     const poll_JSON = await getTriviaQuestions();
 
-
     //  The console.log() will not display nested JSON arrays?
     //  Convert to a string and log and check in Notepad++.
-    const poll_jsonString = JSON.stringify(poll_JSON);
-    console.log(poll_jsonString);
-    // console.log(poll_JSON);
+    //  const poll_jsonString = JSON.stringify(poll_JSON);
+    //  console.log(poll_jsonString);
+
+
+    /*
+    Assign the returned Poll object(s) to a user that has a role of
+    "professor", using the USER ID.
+    e.g.
+        poll_JSON["userId"] = 1;
+
+
+    Then use bulkCreate() to create the poll.
+
+    */
+
+
+
+
+
+
     return returnMessage;
 
     //  Let calling function catch errors.  Probably a contoller function.
@@ -50,10 +66,10 @@ async function bulkCreatePollsWithQuestionsAndAnswers(pollsData, includeOptionsB
                 include: [
                     {
                         model: Question,
-                        as: 'question',
+                        //  as: 'question',
                         include: [{
                             model: Answer,
-                            as: 'answer',
+                            //  as: 'answer',
                         }],
                     },
                 ],

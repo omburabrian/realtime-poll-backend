@@ -196,7 +196,7 @@ exports.deleteAll = (req, res) => {
 
 //  Create Polls in bulk from JSON list
 exports.bulkCreate = async (req, res) => {
-    await Poll.bulkCreate(req.body, getIncludeOptionsBlock())
+    await Poll.bulkCreate(req.body, getIncludeOptionsBlockForCreate())
         .then((data) => {
             let number = data.length;
             res.send({ message: `${number} Polls were created successfully` });
@@ -215,7 +215,7 @@ exports.bulkCreateWithQuestionsAndAnswers = async (req, res) => {
         //  Expecting req.body to contain POLLS with QUESTIONS and ANSWERS
         const createdPolls = await bulkCreatePollsWithQuestionsAndAnswers(
             req.body,
-            getIncludeOptionsBlock()
+            getIncludeOptionsBlockForCreate()
         );
         res.status(201).send(createdPolls);
     } catch (error) {
@@ -223,16 +223,16 @@ exports.bulkCreateWithQuestionsAndAnswers = async (req, res) => {
     }
 }
 
-function getIncludeOptionsBlock() {
+function getIncludeOptionsBlockForCreate() {
      //  Create options to enable creating nested model instances, simultaneously
     return {
         include: [
             {
                 model: Question,
-                as: 'question',
+                //  as: 'question',
                 include: [{
                     model: Answer,
-                    as: 'answer',
+                    //  as: 'answer',
                 }],
             },
         ],
