@@ -1,0 +1,123 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "Which of these is the name of the largest city in the US state Tennessee?",
+            "correct_answer": "Memphis",
+            "incorrect_answers": [
+                "Thebes",
+                "Alexandria",
+                "Luxor"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "The longest shared border in the world can be found between which two nations?",
+            "correct_answer": "Canada and the United States",
+            "incorrect_answers": [
+                "Chile and Argentina",
+                "Russia and China",
+                "India and Pakistan"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "There is an island in Japan called Ōkunoshima, A.K.A. &quot;Rabbit Island&quot;, so named because of it&#039;s huge population of rabbits.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "What is the Capital of the United States?",
+            "correct_answer": "Washington, D.C.",
+            "incorrect_answers": [
+                "Los Angelas, CA",
+                "New York City, NY",
+                "Houston, TX"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "If soccer is called football in England, what is American football called in England?",
+            "correct_answer": "American football",
+            "incorrect_answers": [
+                "Combball",
+                "Handball",
+                "Touchdown"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "What is the capital of Spain?",
+            "correct_answer": "Madrid",
+            "incorrect_answers": [
+                "Barcelona",
+                "Sevilla",
+                "Toledo"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "What colour is the circle on the Japanese flag?",
+            "correct_answer": "Red",
+            "incorrect_answers": [
+                "White",
+                "Yellow",
+                "Black"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "Which nation claims ownership of Antarctica?",
+            "correct_answer": "No one, but there are claims.",
+            "incorrect_answers": [
+                "United States of America",
+                "United Nations",
+                "Australia"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "What country is the second largest in the world by area?",
+            "correct_answer": "Canada",
+            "incorrect_answers": [
+                "Russia",
+                "China",
+                "United States of America"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "The Alps are a mountain range on which continent?",
+            "correct_answer": "Europe",
+            "incorrect_answers": [
+                "North America",
+                "Asia",
+                "Africa"
+            ]
+        }
+    ]
+}

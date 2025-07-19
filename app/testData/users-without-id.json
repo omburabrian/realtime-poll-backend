@@ -1,0 +1,155 @@
+[
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "userName": "john.doe",
+        "email": "john.doe@gmail.com",
+        "role": "user",
+        "password": "johnpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Emily",
+        "lastName": "Smith",
+        "userName": "emily.smith",
+        "email": "emily.smith@gmail.com",
+        "role": "user",
+        "password": "emilypw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Michael",
+        "lastName": "Brown",
+        "userName": "michael.brown",
+        "email": "michael.brown@gmail.com",
+        "role": "user",
+        "password": "michaelpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Sarah",
+        "lastName": "Johnson",
+        "userName": "sarah.johnson",
+        "email": "sarah.johnson@gmail.com",
+        "role": "user",
+        "password": "sarahpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "David",
+        "lastName": "Lee",
+        "userName": "david.lee",
+        "email": "david.lee@gmail.com",
+        "role": "user",
+        "password": "davidpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Olivia",
+        "lastName": "Taylor",
+        "userName": "olivia.taylor",
+        "email": "olivia.taylor@gmail.com",
+        "role": "user",
+        "password": "oliviapw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "James",
+        "lastName": "Anderson",
+        "userName": "james.anderson",
+        "email": "james.anderson@gmail.com",
+        "role": "user",
+        "password": "jamespw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Sophia",
+        "lastName": "Martinez",
+        "userName": "sophia.martinez",
+        "email": "sophia.martinez@gmail.com",
+        "role": "user",
+        "password": "sophiapw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Daniel",
+        "lastName": "Garcia",
+        "userName": "daniel.garcia",
+        "email": "daniel.garcia@gmail.com",
+        "role": "user",
+        "password": "danielpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Mia",
+        "lastName": "Rodriguez",
+        "userName": "mia.rodriguez",
+        "email": "mia.rodriguez@gmail.com",
+        "role": "user",
+        "password": "miapw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "William",
+        "lastName": "Hernandez",
+        "userName": "william.hernandez",
+        "email": "william.hernandez@gmail.com",
+        "role": "user",
+        "password": "williampw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Ava",
+        "lastName": "Lopez",
+        "userName": "ava.lopez",
+        "email": "ava.lopez@gmail.com",
+        "role": "user",
+        "password": "avapw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Dr. Henry",
+        "lastName": "Wright",
+        "userName": "henry.wright",
+        "email": "henry.wright@university.edu",
+        "role": "professor",
+        "password": "henrypw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Dr. Laura",
+        "lastName": "King",
+        "userName": "laura.king",
+        "email": "laura.king@university.edu",
+        "role": "professor",
+        "password": "laurapw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Dr. Brian",
+        "lastName": "Scott",
+        "userName": "brian.scott",
+        "email": "brian.scott@university.edu",
+        "role": "professor",
+        "password": "brianpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Dr. Megan",
+        "lastName": "Turner",
+        "userName": "megan.turner",
+        "email": "megan.turner@university.edu",
+        "role": "professor",
+        "password": "meganpw",
+        "salt": "pepper"
+    },
+    {
+        "firstName": "Andy",
+        "lastName": "Admin",
+        "userName": "aa",
+        "email": "andy.admin@gmail.com",
+        "role": "admin",
+        "password": "admin",
+        "salt": "pepper"
+    }
+]

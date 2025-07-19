@@ -1,8 +1,13 @@
 const db = require("../models");
 const User = db.user;
 const Poll = db.poll;
+const UserServices = require("../services/user.services.js");
+const PollServices = require("../services/poll.services.js");
 
-//  Naviate to the ADMIN Dashboard
+const { USER_ROLES, QUESTION_TYPES, QUESTION_DIFFICULTY } = require("../config/constants");
+
+//---------------------------------------------------------------------------
+//  Data for the ADMIN Dashboard
 exports.getDashboardData = async (req, res) => {
 
   try {
@@ -11,10 +16,13 @@ exports.getDashboardData = async (req, res) => {
 
     const userCount = await User.count();
     const pollCount = await Poll.count();
+
+    /*
     const allUsers = await User.findAll({
       //  Exclude sensitive data!
       attributes: { exclude: ['password', 'salt'] }
     });
+    //  */
 
     //  Prepare return data
     const dashboardData = {
@@ -22,7 +30,12 @@ exports.getDashboardData = async (req, res) => {
         users: userCount,
         polls: pollCount,
       },
-      users: allUsers,
+      configData: {
+        userRoles: USER_ROLES,
+        questionTypes: QUESTION_TYPES,
+        questionDifficulties: QUESTION_DIFFICULTY,
+      },
+      //  users: allUsers,
     };
 
     res.send(dashboardData);
@@ -33,3 +46,32 @@ exports.getDashboardData = async (req, res) => {
     });
   }
 };
+
+//---------------------------------------------------------------------------
+//  Load test data for USERS
+exports.loadTestData_users = async (req, res) => {
+
+  //  console.log('admin.controller::loadTestData_users()');
+
+  try {
+    const responseMessage = await UserServices.loadTestData();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while loading test data for USERS",
+    });
+  }
+}
+
+//---------------------------------------------------------------------------
+//  Load test data for POLLS, QUESTIONS, and ANSWERS
+exports.loadTestData_pollsQuestionsAnswers = async (req, res) => {
+  try {
+    const responseMessage = await PollServices.loadTestData();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while loading test data for POLLS",
+    });
+  }
+}

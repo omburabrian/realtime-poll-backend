@@ -4,7 +4,7 @@ const User = db.user;
 const Session = db.session;
 const Op = db.Sequelize.Op;
 const { encrypt, decrypt } = require("../authentication/crypto");
-const { ROLES } = require("../config/constants");
+const { USER_ROLES } = require("../config/constants");
 
 exports.login = async (req, res) => {
   let { userId } = await authenticate(req, res, "credentials");
@@ -43,7 +43,8 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   let auth = req.get("authorization");
-  console.log(auth);
+  //  console.log(auth);
+  
   if (
     auth != null &&
     auth.startsWith("Bearer ") &&
@@ -52,15 +53,12 @@ exports.logout = async (req, res) => {
     let token = auth.slice(7);
     let sessionId = await decrypt(token);
     if (sessionId == null) return;
-    return await Session.destroy({ where: { id: sessionId } }).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
+    return await Session.destroy({ where: { id: sessionId } })
+    .catch( (error) => { console.log(error); } );
   }
 };
 
-//  Send a list of ROLES to the frontend.
-exports.getRoles = (req, res) => {
-  res.send(ROLES);
+//  Send a list of USER_ROLES to the frontend.
+exports.getUserRoles = (req, res) => {
+  res.send(USER_ROLES);
 };

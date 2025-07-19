@@ -8,7 +8,7 @@ module.exports = (app) => {
   router.post("/polls/", [authenticateRoute], Poll.create);
 
   //  Retrieve all Polls for a user (Professor)
-  router.get("/polls/user/:userId", [authenticateRoute],
+  router.get("/users/:userId/polls", [authenticateRoute],
     Poll.findAllForUser);
 
   //  Retrieve a single Poll with ID
@@ -35,6 +35,10 @@ module.exports = (app) => {
 
   //  Bulk create Polls
   router.post("/polls/bulk-create", [authenticateRoute], Poll.bulkCreate);
+
+  //  Bulk create Polls with Q & A
+  router.post("/polls/bulk-create-with-questions-and-answers", [authenticateRoute],
+    Poll.bulkCreateWithQuestionsAndAnswers);
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

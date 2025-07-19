@@ -1,284 +1,168 @@
 const db = require("../models");
-<<<<<<< HEAD
 
 const Answer = db.answer;
 const Op = db.Sequelize.Op;
 
-//  Create and Save a new Answer
-exports.create = (req, res) => {
+//  Create and Save a new ANSWER
+exports.create = async (req, res) => {
 
-  // Validate request
-  if (req.body.text === undefined) {
-    const error = new Error("ANSWER TEXT cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.answerOrder === undefined) {
-    const error = new Error("ANSWER ORDER cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.isCorrectAnswer === undefined) {
-    const error = new Error("ANSWER - IS CORRECT ANSWER cannot be empty");
-=======
-const Answer = db.answer;
-const Op = db.Sequelize.Op;
-// Create and Save a new Answer
-exports.create = (req, res) => {
-  // Validate request
-  if (req.body.name === undefined) {
-    const error = new Error("Name cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.description === undefined) {
-    const error = new Error("Description cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.servings === undefined) {
-    const error = new Error("Servings cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.time === undefined) {
-    const error = new Error("Time cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.isPublished === undefined) {
-    const error = new Error("Is Published cannot be empty for answer!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.userId === undefined) {
-    const error = new Error("User Id cannot be empty for answer!");
->>>>>>> feature/b-13496-setup-models-with-db-gd
-    error.statusCode = 400;
-    throw error;
+  try {
+
+    //  Validate request
+    if (req.body.text === undefined) {
+      return res.status(400).send({ message: "ANSWER TEXT cannot be empty" });
+    }
+    if (req.body.answerIndex === undefined) {
+      return res.status(400).send({ message: "ANSWER INDEX cannot be empty" });
+    }
+    if (req.body.isCorrectAnswer === undefined) {
+      return res.status(400).send({ message: "ANSWER - IS-CORRECT-ANSWER cannot be empty" });
+    }
+    if (req.params.questionId === undefined) {
+      return res.status(400).send({ message: "QUESTION ID cannot be empty" });
+    }
+
+    //  Create an ANSWER object
+    const answer = {
+      text: req.body.text,
+      answerIndex: req.body.answerIndex,
+      isCorrectAnswer: req.body.isCorrectAnswer,
+      questionId: req.params.questionId,
+    };
+
+    //  Save ANSWER object in the database
+    //  const data = await Answer.create(answer);
+    const data = await Answer.create(answer);
+    res.send(data);
+
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while creating the Answer",
+    });
   }
+};
 
-<<<<<<< HEAD
-  //  Create an Answer
-  const answer = {
-    text: req.body.text,
-    answerOrder: req.body.answerOrder,
-    isCorrectAnswer: req.body.isCorrectAnswer,
-    
+//  Find all ANSWERS for QUESTION ID
+exports.findAllForQuestionId = async (req, res) => {
+  const questionId = req.params.questionId;
+  try {
+    const data = await Answer.findAll({
+      where: { questionId: questionId },
+      order: [["answerIndex", "ASC"]],
+    });
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error retrieving Answers for question ID = ${questionId}`,
+    });
+  }
+};
 
-=======
-  // Create a Answer
-  const answer = {
-    name: req.body.name,
-    description: req.body.description,
-    servings: req.body.servings,
-    time: req.body.time,
-    isPublished: req.body.isPublished ? req.body.isPublished : false,
-    userId: req.body.userId,
->>>>>>> feature/b-13496-setup-models-with-db-gd
-  };
-  // Save Answer in the database
-  Answer.create(answer)
-    .then((data) => {
+//  Find ANSWER with ID
+exports.findOne = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const data = await Answer.findByPk(id);
+    if (data) {
       res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Answer.",
+    } else {
+      res.status(404).send({
+        message: `Cannot find Answer with ID = ${id}`,
       });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error retrieving Answer with ID = ${id}`,
     });
+  }
 };
 
-// Find all Answers for a user
-exports.findAllForUser = (req, res) => {
-  const userId = req.params.userId;
-  Answer.findAll({
-    where: { userId: userId },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
-    ],
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Answers for user with ID=${userId}.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Error retrieving Answers for user with ID=" + userId,
-      });
+//  Update ANSWER with ID
+exports.update = async (req, res) => {
+  const id = req.params.id;
+  try {
+    //  ANSWER to the TODO:
+    //  Sequelize's `update` method returns an array where the first element
+    //  is the number of affected rows. Using array destructuring `[number]` is a
+    //  concise way to get that value from the array.
+    //  ( ToDo:  Dive into this more later.  Still have questions about it. )
+    const [number] = await Answer.update(req.body, {
+      where: { id: id },
     });
+    if (number === 1) {
+      res.send({ message: "Answer was updated successfully" });
+    } else {
+      res.send({
+        message: `Cannot update Answer with ID = ${id}`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error updating Answer with ID = ${id}`,
+    });
+  }
 };
 
-// Find all Published Answers
-exports.findAllPublished = (req, res) => {
-  Answer.findAll({
-    where: { isPublished: true },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
-    ],
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Published Answers.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving Published Answers.",
-      });
+//  Delete ANSWER with ID
+exports.delete = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const number = await Answer.destroy({
+      where: { id: id },
     });
+    if (number === 1) {
+      res.send({ message: "Answer was deleted successfully" });
+    } else {
+      res.send({
+        message: `Cannot delete Answer with ID = ${id}`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error deleting Answer with ID = ${id}`,
+    });
+  }
 };
 
-// Find a single Answer with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-  Answer.findAll({
-    where: { id: id },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [[RecipeStep, "stepNumber", "ASC"]],
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Answer with ID=${id}.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving Answer with ID = " + id,
-      });
+//  Delete all ANSWERS for QUESTION with ID
+exports.deleteAllForQuestionId = async (req, res) => {
+  const questionId = req.params.questionId;
+  try {
+    const number = await Answer.destroy({
+      where: { questionId: questionId },
     });
+    res.send({ message: `${number} Answers were deleted successfully for question ID = ${questionId}` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || `Error deleting Answers for question ID = ${questionId}`,
+    });
+  }
 };
-// Update a Answer by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
-  Answer.update(req.body, {
-    where: { id: id },
-  })
-    .then((number) => {
-      if (number == 1) {
-        res.send({
-          message: "Answer was updated successfully",
-        });
-      } else {
-        res.send({
-          message: `Cannot update Answer with ID = ${id}. Maybe Answer was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error updating Answer with ID = " + id,
-      });
+
+//  Delete all Answers from the database.
+exports.deleteAll = async (req, res) => {
+  try {
+    const number = await Answer.destroy({
+      where: {},
+      truncate: false,
     });
+    res.send({ message: `${number} Answers were deleted successfully` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while deleting all Answers",
+    });
+  }
 };
-// Delete a Answer with the specified ID
-exports.delete = (req, res) => {
-  const id = req.params.id;
-  Answer.destroy({
-    where: { id: id },
-  })
-    .then((number) => {
-      if (number == 1) {
-        res.send({
-          message: "Answer was deleted successfully",
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Answer with ID = ${id}. Maybe Answer was not found!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Could not delete Answer with ID = " + id,
-      });
+
+//  Bulk create ANSWERS from JSON list (contained in req.body)
+exports.bulkCreate = async (req, res) => {
+  try {
+    const data = await Answer.bulkCreate(req.body);
+    let number = data.length;
+    res.send({ message: `${number} Answers were created successfully` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while creating Answers in bulk",
     });
-};
-// Delete all Answers from the database.
-exports.deleteAll = (req, res) => {
-  Answer.destroy({
-    where: {},
-    truncate: false,
-  })
-    .then((number) => {
-      res.send({ message: `${number} Answers were deleted successfully` });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while deleting all answers.",
-      });
-    });
+  }
 };
