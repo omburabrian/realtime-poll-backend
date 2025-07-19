@@ -181,7 +181,7 @@ exports.getQuestionTypes = (req, res) => {
   res.send(QUESTION_TYPES);
 };
 
-//  Send a list of QUESTION_TYPES
+//  Send a list of QUESTION_DIFFICULTY
 exports.getQuestionDifficulties = (req, res) => {
   res.send(QUESTION_DIFFICULTY);
 };
