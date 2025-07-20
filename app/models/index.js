@@ -16,6 +16,9 @@ db.sequelize = sequelize;
 
 //-----------------------------------------------------------------------------
 //  Real-time Poll models / tables
+//  These models (and resulting JSON objects) are partially patterned from:
+//    "Open Trivia Database",  https://opentdb.com/api_config.php
+
 db.poll = require("./poll.model.js")(sequelize, Sequelize);
 db.pollEvent = require("./pollEvent.model.js")(sequelize, Sequelize);
 db.pollEventUser = require("./pollEventUser.model.js")(sequelize, Sequelize);
@@ -40,52 +43,114 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 //-----------------------------------------------------------------------------
 //  FOREIGN KEYS
 
+/*
+|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|
+
+>>>>>>  NOTE !!!!!!!!!!!!!!!!!!!!
+
+To allow BULK CREATION of NESTED MODEL INSTANCES:
+
+When defining associations, >>> OMIT THE "as: modelNameAlias" clause <<< !!!
+and LET IT DEFAULT !!!
+
+The default will PLURALIZE for a "hasMany" relationship, using the
+sequelize.define("modelName", . . . ), using "modelNames", *PLURALIZED*.
+
+>>>>  This is the alias that the bulkCreate() option block uses to associate
+      any NESTED MODELS so that they can also be automatically created!
+
+      If this name is overridden in the "hasMany" definition, then it will
+      NOT MATCH and the nested model objects WILL NOT BE CREATED.
+      (*&^%$#@!!!!)
+
+See the Sequelize API documentation:
+
+bulkCreate
+https://sequelize.org/api/v6/class/src/model.js~model#static-method-bulkCreate
+
+Model definition
+https://sequelize.org/api/v6/class/src/sequelize.js~sequelize#instance-method-define
+
+> > > > > > >   ADDITIONAL ADVICE:   < < < < < < <
+
+Generally, it is best to let Sequelize use its defaults.  By doing so, it knows
+how to interpret and use all of its various elements.  The more the defaults are
+overridden, the more dithering is required to make things work, if at all.
+(Don't shoot yourself in the foot.)
+
+|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|>*<|
+*/
+
 //  User (professor) & Polls : one-to-many
 db.user.hasMany(
   db.poll,
-  { as: "poll" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "poll",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.poll.belongsTo(
   db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "user",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 
 //  Polls & Questions : one-to-many
 db.poll.hasMany(
   db.question,
-  { as: "question" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "question",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE",
+  }
 );
 db.question.belongsTo(
   db.poll,
-  { as: "poll" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "poll",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE",
+  }
 );
 
 //  Questions & Answers : one-to-many
 db.question.hasMany(
   db.answer,
-  { as: "answer" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "answer",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.answer.belongsTo(
   db.question,
-  { as: "question" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "question",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 
 //  Polls & PollEvents : one-to-many
 db.poll.hasMany(
   db.pollEvent,
-  { as: "pollEvent" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "pollEvent",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.pollEvent.belongsTo(
   db.poll,
-  { as: "poll" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    //  as: "poll",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 
 //  PollEvents & Users : many-to-many
@@ -104,13 +169,19 @@ db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
 //  Users & Sessions : one-to-many
 db.user.hasMany(
   db.session,
-  { as: "session" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "session",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 db.session.belongsTo(
   db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+  {
+    as: "user",
+    foreignKey: { allowNull: false },
+    onDelete: "CASCADE"
+  }
 );
 
 //#############################################################################

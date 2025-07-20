@@ -1,6 +1,6 @@
 module.exports = (app) => {
 
-  //  Routes require not only AUTHENTICATION, but also ADMIN role:
+  //  Routes require not only AUTHENTICATION, but also ADMIN role.
 
   const Admin = require("../controllers/admin.controller.js");
   const { authenticateRoute, isAdmin } = require("../authentication/authentication");
@@ -8,6 +8,14 @@ module.exports = (app) => {
 
   //  Get admin dashboard data
   router.get("/admin", [authenticateRoute, isAdmin], Admin.getDashboardData);
+
+  //  Load test data for USERS
+  router.post("/admin/load-test-data/users", [authenticateRoute, isAdmin],
+    Admin.loadTestData_users);
+
+  //  Load test data for POLLS, QUESTIONS, and ANSWERS
+  router.post("/admin/load-test-data/polls", [authenticateRoute, isAdmin],
+    Admin.loadTestData_pollsQuestionsAnswers);
 
   // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
