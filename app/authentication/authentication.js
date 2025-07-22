@@ -2,7 +2,7 @@ const db = require("../models");
 const { hashPassword, decrypt } = require("./crypto");
 const Session = db.session;
 const User = db.user;
-const { ROLES } = require("../config/constants");
+const { USER_ROLES } = require("../config/constants");
 
 /**
  * Gets the authentication for this request. Throws an error if there is an authentcation problem.
@@ -184,16 +184,35 @@ authenticateRoute = async (req, res, next) => {
 };
 
 //--------------------------------------------------------
-//  Use AFTER authenticateRoute (in admin routes).  Check if authenticated user is an ADMIN.
+//  Use AFTER authenticateRoute (in admin routes).
+//  Check whether authenticated user is an ADMIN.
 isAdmin = (req, res, next) => {
   //  authenticateRoute() will have already attached the user object to the request.
-  if (req.user && req.user.role === ROLES.ADMIN) {
+  if (req.user && req.user.role === USER_ROLES.ADMIN) {
     return next();  //  User is an admin.  Proceed to next middleware/controller.
   }
 
   //  If NOT an admin, respond with error.
   return res.status(403).send({
-    message: `Access Forbidden: Requires ${ROLES.ADMIN} role.`,
+    message: `Access Forbidden: Requires ${USER_ROLES.ADMIN} role.`,
+  });
+};
+
+//--------------------------------------------------------
+//  Use AFTER authenticateRoute (for restricted professor routes).
+//  Check whether authenticated user is a PROFESSOR (or an ADMIN).
+isProfessor = (req, res, next) => {
+  //  authenticateRoute() will have already attached the user object to the request.
+  if (req.user  &&
+    ((req.user.role === USER_ROLES.PROFESSOR)  ||  (req.user.role === USER_ROLES.ADMIN)))
+  {
+    //  User is a professor or an admin.  Proceed to next middleware/controller.
+    return next();
+  }
+
+  //  If NOT a professor (or an admin), respond with error.
+  return res.status(403).send({
+    message: `Access Forbidden: Requires ${USER_ROLES.PROFESSOR} role.`,
   });
 };
 
@@ -203,6 +222,7 @@ const auth = {
   authenticate: authenticate,
   authenticateRoute: authenticateRoute,
   isAdmin: isAdmin,
+  isProfessor: isProfessor,
 };
 
 module.exports = auth;

@@ -1,6 +1,10 @@
 const db = require("../models");
 const PollEventUser = db.pollEventUser;
 const Op = db.Sequelize.Op;
+
+//  TODO:  pollEventUser.controller.js
+//  TODO:   Re-write all functions using try {} catch() {} and async-await.
+
 // Create and Save a new PollEventUser
 exports.create = (req, res) => {
   // Validate request
