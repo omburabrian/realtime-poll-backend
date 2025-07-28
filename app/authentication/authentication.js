@@ -36,7 +36,7 @@ authenticate = async (req, res, require = true) => {
       //  and set the where condition accordingly.
       let whereCondition = { email: email };
       if (email.indexOf("@") === -1) {
-        whereCondition = { userName: email };
+        whereCondition = { username: email };
       }
 
       //  await User.findAll({ where: { email: email } })

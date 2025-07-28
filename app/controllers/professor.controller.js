@@ -12,15 +12,14 @@ exports.getDashboardData = async (req, res) => {
         //  TODO:  Update with other data later.
         //  TODO:  Perhaps open up the professor dashboard on the POll List View?
 
-        const userCount = await User.count();
-        const pollCount = await Poll.count();
+        // Count only the polls belonging to the logged-in professor.
+        const pollCount = await Poll.count({ where: { userId: req.user.id } });
 
         //  Prepare return data
         const dashboardData = {
 
             description: 'This is the PROFESSOR DASHBOARD DATA.',
             stats: {
-                users: userCount,
                 polls: pollCount,
             },
         };
@@ -35,9 +34,11 @@ exports.getDashboardData = async (req, res) => {
 };
 
 //---------------------------------------------------------------------------
-//  Get Polls for professor ID
+//  Get Polls for currently logged in professor
+//  ToDo:  Create similar function for ADMIN (in Admin Services) to get POLLS for a specified professor ID.
 exports.getPollsForProfessorId = async (req, res) => {
-    const id = req.params.id;
+    //  (The current user's ID is attached to the request object by the authenticateRoute middleware.)
+    const id = req.user.id;
     try {
         const data = await PollServices.findAllForUserId(id);
         res.send(data);

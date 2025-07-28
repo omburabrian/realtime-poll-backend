@@ -10,8 +10,8 @@ module.exports = (app) => {
   router.get("/professor", [authenticateRoute, isProfessor],
     Professor.getDashboardData);
 
-  //  Get PROFESSOR dashboard data
-  router.get("/professor/:id/polls", [authenticateRoute, isProfessor],
+  //  Get all polls for the logged-in PROFESSOR
+  router.get("/professor/polls", [authenticateRoute, isProfessor],
     Professor.getPollsForProfessorId);
 
   // - - - - - - - - - - - - - - - - - - - - - -

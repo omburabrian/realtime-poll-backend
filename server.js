@@ -51,7 +51,7 @@ async function ensureAdminUserExists() {
   try {
 
     //  Check whether the admin USER already exists, and if not, create it.
-    const adminUser = await db.user.findOne({ where: { userName: "admin" } });
+    const adminUser = await db.user.findOne({ where: { username: "admin" } });
 
     if (!adminUser) {
       console.log("Creating default admin user...");
@@ -73,7 +73,7 @@ async function ensureAdminUserExists() {
       await db.user.create({
         firstName: "Admin",
         lastName: "User",
-        userName: "admin",
+        username: "admin",
         email: process.env.DEFAULT_ADMIN_EMAIL || temporaryDefaultAdminEmail,
         role: USER_ROLES.ADMIN,
         password: hash,
