@@ -12,7 +12,7 @@ module.exports = (app) => {
   router.post("/logout", auth.logout);
 
   //  Get user roles (for logged-in users)
-  router.get("/roles", [authenticateRoute], auth.getRoles);
+  router.get("/user-roles", [authenticateRoute], auth.getUserRoles);
 
   // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

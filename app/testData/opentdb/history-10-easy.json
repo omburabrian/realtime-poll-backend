@@ -1,0 +1,123 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Who was the first ruler of Haiti after the country had gained its independence?",
+            "correct_answer": "Jean-Jacques Dessalines",
+            "incorrect_answers": [
+                "Toussaint Louverture",
+                "Henri Christophe",
+                "Alexandre Petion"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "What was the name commonly given to the ancient trade routes that connected the East and West of Eurasia?",
+            "correct_answer": "Silk Road",
+            "incorrect_answers": [
+                "Spice Road",
+                "Clay Road",
+                "Salt Road"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "The &quot;Trail of Tears&quot; was a result of which United States President&#039;s Indian Removal Policy?",
+            "correct_answer": "Andrew Jackson",
+            "incorrect_answers": [
+                "Harry S. Truman",
+                "Martin Van Buren",
+                "John Quincy Adams"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Former United States Presidents John Adams and Thomas Jefferson died within hours of each other.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Which of the following ancient peoples was NOT classified as Hellenic (Greek)?",
+            "correct_answer": "Illyrians",
+            "incorrect_answers": [
+                "Dorians",
+                "Achaeans",
+                "Ionians"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Abolitionist John Brown raided the arsenal in which Virginia Town?",
+            "correct_answer": "Harper&#039;s Ferry",
+            "incorrect_answers": [
+                "Richmond",
+                "Harrisonburg",
+                "Martinsburg"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "The idea of Socialism was articulated and advanced by whom?",
+            "correct_answer": "Karl Marx",
+            "incorrect_answers": [
+                "Vladimir Lenin",
+                "Joseph Stalin",
+                "Vladimir Putin"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "When did the Byzantine Empire collapse?",
+            "correct_answer": "1453",
+            "incorrect_answers": [
+                "1299",
+                "1353",
+                "1498"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Who was the first American in space?",
+            "correct_answer": "Alan Shephard",
+            "incorrect_answers": [
+                "Neil Armstrong",
+                "John Glenn",
+                "Jim Lovell"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Which country was Josef Stalin born in?",
+            "correct_answer": "Georgia",
+            "incorrect_answers": [
+                "Russia",
+                "Germany",
+                "Poland"
+            ]
+        }
+    ]
+}
