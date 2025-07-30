@@ -1,0 +1,121 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Mythology",
+            "question": "The Norse god Odin has two pet crows named &quot;Huginn&quot; and &quot;Muninn&quot;.  What do their names mean?",
+            "correct_answer": "Thought &amp; Memory",
+            "incorrect_answers": [
+                "Power &amp; Peace",
+                "War &amp; Learning",
+                "Sleeping &amp; Waking"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "hard",
+            "category": "Mythology",
+            "question": "Janus was the Roman god of doorways and passageways.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Mythology",
+            "question": "Who was the King of Gods in Ancient Greek mythology?",
+            "correct_answer": "Zeus",
+            "incorrect_answers": [
+                "Apollo",
+                "Hermes",
+                "Poseidon"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Mythology",
+            "question": "The greek god Poseidon was the god of what?",
+            "correct_answer": "The Sea",
+            "incorrect_answers": [
+                "War",
+                "Sun",
+                "Fire"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Mythology",
+            "question": "Who is a minor god that is protector and creator of various arts, such as cheese making and bee keeping.",
+            "correct_answer": "Aristaeus",
+            "incorrect_answers": [
+                "Autonoe",
+                "Carme",
+                "Cephisso"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Mythology",
+            "question": "The Maori hold that which island nation was founded by Kupe, who discovered it under a long white cloud?",
+            "correct_answer": "New Zealand",
+            "incorrect_answers": [
+                "Vanuatu",
+                "Fiji",
+                "Hawaii"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Mythology",
+            "question": "Talos, the mythical giant bronze man, was the protector of which island?",
+            "correct_answer": "Crete",
+            "incorrect_answers": [
+                "Sardinia",
+                "Sicily",
+                "Cyprus"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "medium",
+            "category": "Mythology",
+            "question": "The Japanese god Izanagi successfully returned his wife Izanami from the Underworld.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Mythology",
+            "question": "Which of the following is not one of the Greek Fates?",
+            "correct_answer": "Narcissus",
+            "incorrect_answers": [
+                "Clotho",
+                "Atropos",
+                "Lachesis"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Mythology",
+            "question": "The ancient Roman god of war was commonly known as which of the following?",
+            "correct_answer": "Mars",
+            "incorrect_answers": [
+                "Jupiter",
+                "Juno",
+                "Ares"
+            ]
+        }
+    ]
+}

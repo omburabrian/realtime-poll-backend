@@ -1,0 +1,123 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "In &quot;Breaking Bad&quot;, Walter White is a high school teacher diagnosed with which form of cancer?",
+            "correct_answer": "Lung Cancer",
+            "incorrect_answers": [
+                "Prostate Cancer",
+                "Brain Cancer",
+                "Testicular Cancer"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "Guy&#039;s Grocery Games is hosted by which presenter?",
+            "correct_answer": "Guy Fieri",
+            "incorrect_answers": [
+                "Guy Martin",
+                "Guy Ritchie",
+                "Ainsley Harriott"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "In the Season 1 SpongeBob Squarepants episode, &quot;Help Wanted,&quot; the song &quot;Living in the Sunlight&quot; by Tiny Tim can be heard.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "What is the name of the planet that the Doctor from television series &quot;Doctor Who&quot; comes from?",
+            "correct_answer": "Gallifrey",
+            "incorrect_answers": [
+                "Sontar",
+                "Skaro",
+                "Mondas"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "On the show &quot;Rick and Morty&quot;, in episode &quot;Total Rickall&quot;, who was a parasite?",
+            "correct_answer": "Pencilvester",
+            "incorrect_answers": [
+                "Beth Smith",
+                "Summer Smith",
+                "Mr. Poopy Butthole"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "In the TV show &quot;Cheers&quot;, Sam Malone was a former relief pitcher for which baseball team?",
+            "correct_answer": "Boston Red Sox",
+            "incorrect_answers": [
+                "New York Mets",
+                "Baltimore Orioles",
+                "Milwaukee Brewers"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "Which Star Trek race advances itself through assimilation?",
+            "correct_answer": "Borg",
+            "incorrect_answers": [
+                "Vulcan",
+                "Betazoid",
+                "Klingon"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "In the show Stranger Things, what is Eleven&#039;s favorite breakfast food?",
+            "correct_answer": "Eggo Waffles",
+            "incorrect_answers": [
+                "Toast",
+                "Captain Crunch",
+                "Bacon and Eggs"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "When Donkey Kong died in the &quot;Donkey Kong Country&quot; episode &quot;It&#039;s a Wonderful Life&quot;, who was his guardian angel?",
+            "correct_answer": "Eddie the Mean Old Yeti",
+            "incorrect_answers": [
+                "Kiddy Kong",
+                "Diddy Kong",
+                "King K. Rool"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "In the show &quot;Tengen Toppa Gurren Lagann&quot; what is the name of the character who force everyone to live underground?",
+            "correct_answer": "Lordgenome",
+            "incorrect_answers": [
+                "Kingloname",
+                "Lord Genome",
+                "King Loname"
+            ]
+        }
+    ]
+}
