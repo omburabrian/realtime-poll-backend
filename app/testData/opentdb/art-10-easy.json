@@ -1,0 +1,123 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Who sculpted the statue of David?",
+            "correct_answer": "Michelangelo",
+            "incorrect_answers": [
+                "Gian Lorenzo Bernini",
+                "Auguste Rodin",
+                "Donatello"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Who painted the biblical fresco The Creation of Adam?",
+            "correct_answer": "Michelangelo",
+            "incorrect_answers": [
+                "Leonardo da Vinci",
+                "Caravaggio",
+                "Rembrandt"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Leonardo da Vinci&#039;s Mona Lisa does not have eyebrows.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Who painted the Mona Lisa?",
+            "correct_answer": "Leonardo da Vinci ",
+            "incorrect_answers": [
+                "Pablo Picasso",
+                " Vincent van Gogh",
+                "Michelangelo"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Which Van Gogh painting depicts the view from his asylum in Saint-R&eacute;my-de-Provence in southern France?",
+            "correct_answer": "The Starry Night",
+            "incorrect_answers": [
+                "Wheatfields with Crows",
+                "The Sower with Setting Sun",
+                "The Church at Auvers"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Who painted the Sistine Chapel?",
+            "correct_answer": "Michelangelo",
+            "incorrect_answers": [
+                "Leonardo da Vinci",
+                "Pablo Picasso",
+                "Raphael"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Who painted The Starry Night?",
+            "correct_answer": "Vincent van Gogh",
+            "incorrect_answers": [
+                "Pablo Picasso",
+                "Leonardo da Vinci",
+                "Michelangelo"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": " What color is produced by mixing black and white?",
+            "correct_answer": "Grey",
+            "incorrect_answers": [
+                "Black",
+                "Brown",
+                "White"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Which painting was not made by Vincent Van Gogh?",
+            "correct_answer": "The Ninth Wave",
+            "incorrect_answers": [
+                "Caf&eacute; Terrace at Night",
+                "Bedroom In Arles",
+                "Starry Night"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Art",
+            "question": "Which artist painted the late 15th century mural &#039;The Last Supper&#039;?",
+            "correct_answer": "Leonardo da Vinci",
+            "incorrect_answers": [
+                "Piero della Francesca",
+                "Paolo Uccello",
+                "Luca Pacioli"
+            ]
+        }
+    ]
+}

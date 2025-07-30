@@ -1,0 +1,117 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "An isosceles triangle has two sides of equal length as opposed to three.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "What type of angle is greater than 90&deg;?",
+            "correct_answer": "Obtuse",
+            "incorrect_answers": [
+                "Acute",
+                "Right",
+                "Straight"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "What is the equation for the area of a sphere?",
+            "correct_answer": "(4/3)&pi;r^3",
+            "incorrect_answers": [
+                "4&pi;r^2",
+                "(1/3)&pi;hr^2",
+                "&pi;r^4"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "What is the correct order of operations for solving equations?",
+            "correct_answer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction",
+            "incorrect_answers": [
+                "Addition, Multiplication, Division, Subtraction, Addition, Parentheses",
+                "Parentheses, Exponents, Addition, Substraction, Multiplication, Division",
+                "The order in which the operations are written."
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "The &#039;Squaring the Circle&#039; problem is solvable.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "A scalene triangle has two sides of equal length.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "The metric prefix &quot;atto-&quot; makes a measurement how much smaller than the base unit?",
+            "correct_answer": "One Quintillionth",
+            "incorrect_answers": [
+                "One Billionth",
+                "One Quadrillionth",
+                "One Septillionth"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "What&#039;s the square root of 49?",
+            "correct_answer": "7",
+            "incorrect_answers": [
+                "4",
+                "12",
+                "9"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "In Roman Numerals, what does XL equate to?",
+            "correct_answer": "40",
+            "incorrect_answers": [
+                "60",
+                "15",
+                "90"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Science: Mathematics",
+            "question": "An equilateral triangle always has every angle measuring 60&deg;.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        }
+    ]
+}
