@@ -38,6 +38,7 @@ require("./app/routes/admin.routes")(app);
 require("./app/routes/poll.routes")(app);
 require("./app/routes/question.routes")(app);
 require("./app/routes/answer.routes")(app);
+require("./app/routes/course.routes")(app);
 
 /*
 require("./app/routes/pollEvent.routes")(app);
