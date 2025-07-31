@@ -1,5 +1,16 @@
 const db = require("../models");
-const { crypto } = require("crypto");
+
+//  NOTE:  crypto.randomUUID() only available in secure context, https.  (So not for local dev.)
+//  const { crypto } = require("crypto");
+
+//  Use this short and sweet version of a GUID / UUID:
+const { nanoid } = require("nanoid");
+
+//  Usage:  Generate a Nano ID
+/*
+const id = nanoid();
+console.log(`Nano ID: ${id}`);
+//  */
 
 const PollEvent = db.pollEvent;
 const Poll = db.poll;
@@ -34,7 +45,10 @@ exports.create = async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             pollId: req.body.pollId,
-            guid: crypto.randomUUID(),  //  Generate globally unique identifier
+            //  crypto.randomUUID() only available in secure context, https.  What other modules available for this?
+            //  guid: crypto.randomUUID(),  //  Generate globally unique identifier
+            //  Use this short & sweet version, instead:
+            guid: nanoid(),
             startDateTime: new Date(),  //  Will be updated when Poll Event is started by professor.
         };
 
