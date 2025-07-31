@@ -1,14 +1,15 @@
 module.exports = (app) => {
+  
   const PollEvent = require("../controllers/pollEvent.controller.js");
-  const { authenticateRoute } = require("../authentication/authentication");
+  const { authenticateRoute, isProfessor, isAdmin } = require("../authentication/authentication.js");
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //  Create a new PollEvent (specific instance of a given poll)
-  router.post("/poll-events/", [authenticateRoute], PollEvent.create);
+  router.post("/poll-events/", [authenticateRoute, isProfessor], PollEvent.create);
 
   //  Retrieve all PollEvents for a Poll
-  router.get("/poll-events/poll/:pollId", [authenticateRoute],
+  router.get("/poll-events/poll/:pollId", [authenticateRoute, isProfessor],
     PollEvent.findAllForPoll);
 
   //  Retrieve all PollEvents for a User
@@ -25,7 +26,7 @@ module.exports = (app) => {
   router.delete("/poll-events/:id", [authenticateRoute], PollEvent.delete);
 
   //  Delete all PollEvents
-  router.delete("/poll-events/", [authenticateRoute], PollEvent.deleteAll);
+  router.delete("/poll-events/", [authenticateRoute, isAdmin], PollEvent.deleteAll);
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

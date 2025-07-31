@@ -1,257 +1,191 @@
 const db = require("../models");
+const { crypto } = require("crypto");
+
 const PollEvent = db.pollEvent;
+const Poll = db.poll;
+const User = db.user;
+const Question = db.question;
+const Answer = db.answer;
+
 const Op = db.Sequelize.Op;
 
-//  TODO:  pollEvent.controller.js
-//  TODO:   Re-write all functions using try {} catch() {} and async-await.
+//---------------------------------------------------------------------------
 
-// Create and Save a new PollEvent
-exports.create = (req, res) => {
-  // Validate request
-  if (req.body.name === undefined) {
-    const error = new Error("Name cannot be empty for pollEvent!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.description === undefined) {
-    const error = new Error("Description cannot be empty for pollEvent!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.servings === undefined) {
-    const error = new Error("Servings cannot be empty for pollEvent!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.time === undefined) {
-    const error = new Error("Time cannot be empty for pollEvent!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.isPublished === undefined) {
-    const error = new Error("Is Published cannot be empty for pollEvent!");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.userId === undefined) {
-    const error = new Error("User Id cannot be empty for pollEvent!");
-    error.statusCode = 400;
-    throw error;
-  }
+//  Create and Save a new PollEvent
+exports.create = async (req, res) => {
+    try {
+        // Validate request
+        if (!req.body.name || !req.body.pollId) {
+            return res.status(400).send({
+                message: "Request must include a name and a pollId!",
+            });
+        }
 
-  // Create a PollEvent
-  const pollEvent = {
-    name: req.body.name,
-    description: req.body.description,
-    servings: req.body.servings,
-    time: req.body.time,
-    isPublished: req.body.isPublished ? req.body.isPublished : false,
-    userId: req.body.userId,
-  };
-  // Save PollEvent in the database
-  PollEvent.create(pollEvent)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the PollEvent.",
-      });
-    });
-};
+        // Check if the parent Poll exists
+        const poll = await Poll.findByPk(req.body.pollId);
+        if (!poll) {
+            return res.status(404).send({
+                message: `Cannot create PollEvent. Poll with id=${req.body.pollId} was not found.`,
+            });
+        }
 
-// Find all PollEvents for a user
-exports.findAllForUser = (req, res) => {
-  const userId = req.params.userId;
-  PollEvent.findAll({
-    where: { userId: userId },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
-    ],
-  })
-    .then((data) => {
-      if (data) {
+        // Create a PollEvent
+        const pollEvent = {
+            name: req.body.name,
+            description: req.body.description,
+            pollId: req.body.pollId,
+            guid: crypto.randomUUID(), // Generate a unique identifier for the event
+            startDateTime: new Date(),
+        };
+
+        const data = await PollEvent.create(pollEvent);
         res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find PollEvents for user with ID=${userId}.`,
+    } catch (err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while creating the PollEvent.",
         });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Error retrieving PollEvents for user with ID=" + userId,
-      });
-    });
+    }
 };
 
-// Find all Published PollEvents
-exports.findAllPublished = (req, res) => {
-  PollEvent.findAll({
-    where: { isPublished: true },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
-            include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    order: [
-      ["name", "ASC"],
-      [RecipeStep, "stepNumber", "ASC"],
-    ],
-  })
-    .then((data) => {
-      if (data) {
+//---------------------------------------------------------------------------
+
+// Retrieve all PollEvents for a specific Poll from the database.
+exports.findAllForPoll = async (req, res) => {
+    const pollId = req.params.pollId;
+
+    try {
+        const data = await PollEvent.findAll({ where: { pollId: pollId } });
         res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Published PollEvents.`,
+    } catch (err) {
+        res.status(500).send({
+            message:
+                err.message ||
+                `Some error occurred while retrieving PollEvents for Poll with id=${pollId}.`,
         });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving Published PollEvents.",
-      });
-    });
+    }
 };
+
+//---------------------------------------------------------------------------
+
+// Retrieve all PollEvents created by a specific User (Professor).
+exports.findAllForUser = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const data = await PollEvent.findAll({
+            include: [
+                {
+                    model: Poll,
+                    where: { userId: userId },
+                    attributes: [], // Exclude Poll attributes from the top-level result
+                },
+            ],
+        });
+        res.send(data);
+    } catch (err) {
+        res.status(500).send({
+            message:
+                err.message ||
+                `Some error occurred while retrieving PollEvents for User with id=${userId}.`,
+        });
+    }
+};
+
+//---------------------------------------------------------------------------
 
 // Find a single PollEvent with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-  PollEvent.findAll({
-    where: { id: id },
-    include: [
-      {
-        model: RecipeStep,
-        as: "recipeStep",
-        required: false,
-        include: [
-          {
-            model: RecipeIngredient,
-            as: "recipeIngredient",
-            required: false,
+exports.findOne = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const data = await PollEvent.findByPk(id, {
             include: [
-              {
-                model: Ingredient,
-                as: "ingredient",
-                required: false,
-              },
+                {
+                    model: Poll, // Include the parent poll
+                    include: [{ model: Question, include: [{ model: Answer }] }],
+                },
+                {
+                    model: User, // Include participating users
+                    attributes: ["id", "firstName", "lastName", "email"],
+                    through: { attributes: [] }, // Don't include join table attributes
+                },
             ],
-          },
-        ],
-      },
-    ],
-    order: [[RecipeStep, "stepNumber", "ASC"]],
-  })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find PollEvent with ID=${id}.`,
         });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving PollEvent with ID = " + id,
-      });
-    });
+
+        if (data) {
+            res.send(data);
+        } else {
+            res.status(404).send({
+                message: `Cannot find PollEvent with id=${id}.`,
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: "Error retrieving PollEvent with id=" + id,
+        });
+    }
 };
+
+//---------------------------------------------------------------------------
+
 // Update a PollEvent by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
-  PollEvent.update(req.body, {
-    where: { id: id },
-  })
-    .then((number) => {
-      if (number == 1) {
-        res.send({
-          message: "PollEvent was updated successfully",
+exports.update = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const [num] = await PollEvent.update(req.body, { where: { id: id } });
+        if (num === 1) {
+            res.send({
+                message: "PollEvent was updated successfully.",
+            });
+        } else {
+            res.send({
+                message: `Cannot update PollEvent with id=${id}. Maybe PollEvent was not found or req.body is empty!`,
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: "Error updating PollEvent with id=" + id,
         });
-      } else {
-        res.send({
-          message: `Cannot update PollEvent with ID = ${id}. Maybe PollEvent was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error updating PollEvent with ID = " + id,
-      });
-    });
+    }
 };
-// Delete a PollEvent with the specified ID
-exports.delete = (req, res) => {
-  const id = req.params.id;
-  PollEvent.destroy({
-    where: { id: id },
-  })
-    .then((number) => {
-      if (number == 1) {
-        res.send({
-          message: "PollEvent was deleted successfully",
+
+//---------------------------------------------------------------------------
+
+// Delete a PollEvent with the specified id in the request
+exports.delete = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const num = await PollEvent.destroy({ where: { id: id } });
+        if (num === 1) {
+            res.send({
+                message: "PollEvent was deleted successfully!",
+            });
+        } else {
+            res.send({
+                message: `Cannot delete PollEvent with id=${id}. Maybe PollEvent was not found!`,
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: "Could not delete PollEvent with id=" + id,
         });
-      } else {
-        res.send({
-          message: `Cannot delete PollEvent with ID = ${id}. Maybe PollEvent was not found!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Could not delete PollEvent with ID = " + id,
-      });
-    });
+    }
 };
+
+//---------------------------------------------------------------------------
+
 // Delete all PollEvents from the database.
-exports.deleteAll = (req, res) => {
-  PollEvent.destroy({
-    where: {},
-    truncate: false,
-  })
-    .then((number) => {
-      res.send({ message: `${number} PollEvents were deleted successfully` });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while deleting all pollEvents.",
-      });
-    });
+exports.deleteAll = async (req, res) => {
+    try {
+        const nums = await PollEvent.destroy({ where: {}, truncate: false });
+        res.send({ message: `${nums} PollEvents were deleted successfully!` });
+    } catch (err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while removing all poll events.",
+        });
+    }
 };
