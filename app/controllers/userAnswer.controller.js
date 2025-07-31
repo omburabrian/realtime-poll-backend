@@ -1,13 +1,10 @@
 const db = require("../models");
 
-const Poll = db.poll;
-const Question = db.question;
-const Answer = db.answer;
 const UserAnswer = db.userAnswer;
 
 const Op = db.Sequelize.Op;
 
-//  Create and Save a new USER ANSWER
+//  Create and Save a new User Answer
 exports.create = async (req, res) => {
   try {
     //  Validate request
@@ -37,13 +34,15 @@ exports.create = async (req, res) => {
     res.send(data);
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Error occurred while creating the User Answer",
+      message:
+        "Question has answer already" ||
+        "Error occurred while creating the User Answer",
     });
   }
 };
 
-//  Find all USER ANSWERS for PollEventUser
-exports.findAllForPollEventUser = async (req, res) => {
+//  Find all User Answers
+exports.findAll = async (req, res) => {
   const pollEventUserId = req.params.pollEventUserId;
 
   try {
@@ -61,7 +60,7 @@ exports.findAllForPollEventUser = async (req, res) => {
   }
 };
 
-//  Find USER ANSWER with ID
+//  Find a single User Answer
 exports.findOne = async (req, res) => {
   const { questionId, pollEventUserId } = req.params;
 
@@ -89,7 +88,7 @@ exports.findOne = async (req, res) => {
   }
 };
 
-//  Update USER ANSWER with PollUserID and QuestionID
+//  Update User Answer
 exports.update = async (req, res) => {
   const { answer } = req.body;
   const { questionId, pollEventUserId } = req.params;
@@ -121,7 +120,7 @@ exports.update = async (req, res) => {
   }
 };
 
-//  Delete USER ANSWER with Question ID
+// Delete a specific User Answer
 exports.delete = async (req, res) => {
   const questionId = req.params.questionId;
   const pollEventUserId = req.params.pollEventUserId;
@@ -147,7 +146,28 @@ exports.delete = async (req, res) => {
   }
 };
 
-//  Delete all USER Answers from the database.
+// Delete all User Answers for a Poll Event User
+exports.deleteAllForPollEventUser = async (req, res) => {
+  const { pollEventUserId } = req.params;
+
+  try {
+    const number = await UserAnswer.destroy({
+      where: { pollEventUserUserId: pollEventUserId },
+    });
+
+    res.send({
+      message: `${number} User Answers deleted for pollEventUserId = ${pollEventUserId}`,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message ||
+        `Error deleting User Answers for pollEventUserId = ${pollEventUserId}`,
+    });
+  }
+};
+
+//  Delete all User Answers
 exports.deleteAll = async (req, res) => {
   try {
     const number = await UserAnswer.destroy({
@@ -162,7 +182,7 @@ exports.deleteAll = async (req, res) => {
   }
 };
 
-//Bulk create USER ANSWERS from JSON list (contained in req.body)
+//Bulk create User Answers from JSON list (contained in req.body)
 exports.bulkCreate = async (req, res) => {
   try {
     const data = await UserAnswer.bulkCreate(req.body, {
