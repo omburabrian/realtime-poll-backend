@@ -1,0 +1,119 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "The Sun rises from the North.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "Which of the following is the IATA code for Manchester Airport?",
+            "correct_answer": "MAN",
+            "incorrect_answers": [
+                "EGLL",
+                "LHR",
+                "EGCC"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "Red Vines is a brand of what type of candy?",
+            "correct_answer": "Licorice",
+            "incorrect_answers": [
+                "Lollipop",
+                "Chocolate",
+                "Bubblegum"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "Jingle Bells was originally meant for Thanksgiving",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "The Hyundai Motor Company was founded in which country?",
+            "correct_answer": "South Korea",
+            "incorrect_answers": [
+                "Russia",
+                "Japan",
+                "China"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "What do the letters of the fast food chain KFC stand for?",
+            "correct_answer": "Kentucky Fried Chicken",
+            "incorrect_answers": [
+                "Kentucky Fresh Cheese",
+                "Kibbled Freaky Cow",
+                "Kiwi Food Cut"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "Which of the following blood component forms a plug at the site of injuries?",
+            "correct_answer": "Platelets",
+            "incorrect_answers": [
+                "Red blood cells",
+                "White blood cells",
+                "Blood plasma"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "Which sign of the zodiac comes between Virgo and Scorpio?",
+            "correct_answer": "Libra",
+            "incorrect_answers": [
+                "Gemini",
+                "Taurus",
+                "Capricorn"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "What is the closest planet to our solar system&#039;s sun?",
+            "correct_answer": "Mercury",
+            "incorrect_answers": [
+                "Mars",
+                "Jupiter",
+                "Earth"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "General Knowledge",
+            "question": "French is an official language in Canada.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        }
+    ]
+}

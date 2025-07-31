@@ -98,20 +98,44 @@ function getTestDataFiles() {
 
     return [
         {
-            fileName: 'science-and-nature-10-easy.json',
-            category: 'Science and Nature',
-            difficulty: 'easy',
-            amount: '10'
-        },
-        {
             fileName: 'animals-10-easy.json',
             category: 'Animals',
             difficulty: 'easy',
             amount: '10'
         },
         {
+            fileName: 'art-10-easy.json',
+            category: 'Art',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'books-10-easy.json',
+            category: 'Books',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'celebrities-10-easy.json',
+            category: 'Celebrities',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
             fileName: 'computer-science-10-easy.json',
             category: 'Computer Science',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'film-10-easy.json',
+            category: 'Film',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'general-knowledge-10-easy.json',
+            category: 'General Knowledge',
             difficulty: 'easy',
             amount: '10'
         },
@@ -128,12 +152,72 @@ function getTestDataFiles() {
             amount: '10'
         },
         {
+            fileName: 'math-10-easy.json',
+            category: 'Math',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'music-10-easy.json',
+            category: 'Music',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'mythology-10-easy.json',
+            category: 'Mythology',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'politics-10-easy.json',
+            category: 'Politics',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
+            fileName: 'science-and-nature-10-easy.json',
+            category: 'Science and Nature',
+            difficulty: 'easy',
+            amount: '10'
+        },
+        {
             fileName: 'sports-10-easy.json',
             category: 'Sports',
             difficulty: 'easy',
             amount: '10'
         },
+                {
+            fileName: 'television-10-easy.json',
+            category: 'Television',
+            difficulty: 'easy',
+            amount: '10'
+        },
     ];
+
+    /*
+    JSON files from Open Trivia Database API:
+
+    app\testData\opentdb
+
+        animals-10-easy.json
+        art-10-easy.json
+        books-10-easy.json
+        celebrities-10-easy.json
+        computer-science-10-easy.json
+        cs-10-easy.json
+        film-10-easy.json
+        general-knowledge-10-easy.json
+        geography-10-easy.json
+        history-10-easy.json
+        math-10-easy.json
+        music-10-easy.json
+        mythology-10-easy.json
+        politics-10-easy.json
+        science-and-nature-10-easy.json
+        sports-10-easy.json
+        television-10-easy.json
+    */
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
