@@ -16,10 +16,10 @@ module.exports = (app) => {
     router.post("/courses/", [authenticateRoute, isProfessor], Course.create);
 
     //  Retrieve all Courses
-    router.get("/courses/", [authenticateRoute], Course.findAll);
+    router.get("/courses/", [authenticateRoute, isProfessor], Course.findAll);
 
     //  Retrieve a single Course with id
-    router.get("/courses/:id", [authenticateRoute], Course.findOne);
+    router.get("/courses/:id", [authenticateRoute, isProfessor], Course.findOne);
 
     //  Update a Course with id
     router.put("/courses/:id", [authenticateRoute, isProfessor], Course.update);
@@ -31,7 +31,7 @@ module.exports = (app) => {
     router.delete("/courses/", [authenticateRoute, isAdmin], Course.deleteAll);
 
     //  Create Courses in bulk
-    router.post("/courses/bulk-create", [authenticateRoute], Course.bulkCreate);
+    router.post("/courses/bulk-create", [authenticateRoute, isProfessor], Course.bulkCreate);
 
     app.use("/realtime-pollapi", router);
 };
