@@ -214,3 +214,18 @@ exports.deleteAll = async (req, res) => {
         });
     }
 };
+
+//---------------------------------------------------------------------------
+
+//  Create PollEvents in bulk from JSON list
+exports.bulkCreate = async (req, res) => {
+  try {
+    const data = await PollEvent.bulkCreate(req.body);
+    let number = data.length;
+    res.send({ message: `${number} PollEvents were created successfully` });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while creating PollEvents in bulk",
+    });
+  }
+};
