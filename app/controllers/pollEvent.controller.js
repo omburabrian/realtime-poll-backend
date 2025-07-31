@@ -14,43 +14,44 @@ const Op = db.Sequelize.Op;
 //  Create and Save a new PollEvent
 exports.create = async (req, res) => {
     try {
-        // Validate request
+        //  Validate request
         if (!req.body.name || !req.body.pollId) {
             return res.status(400).send({
-                message: "Request must include a name and a pollId!",
+                message: "Poll Event NAME and POLL ID are required",
             });
         }
 
-        // Check if the parent Poll exists
+        //  Check if the parent Poll exists
         const poll = await Poll.findByPk(req.body.pollId);
         if (!poll) {
             return res.status(404).send({
-                message: `Cannot create PollEvent. Poll with id=${req.body.pollId} was not found.`,
+                message: `Cannot create PollEvent.  Poll with ID = ${req.body.pollId} not found.`,
             });
         }
 
-        // Create a PollEvent
+        //  Create a PollEvent
         const pollEvent = {
             name: req.body.name,
             description: req.body.description,
             pollId: req.body.pollId,
-            guid: crypto.randomUUID(), // Generate a unique identifier for the event
-            startDateTime: new Date(),
+            guid: crypto.randomUUID(),  //  Generate globally unique identifier
+            startDateTime: new Date(),  //  Will be updated when Poll Event is started by professor.
         };
 
         const data = await PollEvent.create(pollEvent);
         res.send(data);
+
     } catch (err) {
         res.status(500).send({
             message:
-                err.message || "Some error occurred while creating the PollEvent.",
+                err.message || "Error occurred while creating PollEvent",
         });
     }
 };
 
 //---------------------------------------------------------------------------
 
-// Retrieve all PollEvents for a specific Poll from the database.
+//  Retrieve all PollEvents for specific Poll ID
 exports.findAllForPoll = async (req, res) => {
     const pollId = req.params.pollId;
 
@@ -61,24 +62,27 @@ exports.findAllForPoll = async (req, res) => {
         res.status(500).send({
             message:
                 err.message ||
-                `Some error occurred while retrieving PollEvents for Poll with id=${pollId}.`,
+                `Error occurred while retrieving PollEvents for Poll ID = ${pollId}`,
         });
     }
 };
 
 //---------------------------------------------------------------------------
 
-// Retrieve all PollEvents created by a specific User (Professor).
+//  Retrieve all PollEvents created by specified (Professor) User
 exports.findAllForUser = async (req, res) => {
+
     const userId = req.params.userId;
 
     try {
         const data = await PollEvent.findAll({
             include: [
                 {
+                    //  PollEvent belongs to Poll, which belongs to User.
+                    //  (The userId is the Poll's userId.)
                     model: Poll,
                     where: { userId: userId },
-                    attributes: [], // Exclude Poll attributes from the top-level result
+                    attributes: [],  //  Exclude Poll attributes from these PollEvent results
                 },
             ],
         });
@@ -87,28 +91,31 @@ exports.findAllForUser = async (req, res) => {
         res.status(500).send({
             message:
                 err.message ||
-                `Some error occurred while retrieving PollEvents for User with id=${userId}.`,
+                `Error occurred while retrieving PollEvents for Professor with ID = ${userId}`,
         });
     }
 };
 
 //---------------------------------------------------------------------------
 
-// Find a single PollEvent with an id
+//  Find PollEvent with ID
 exports.findOne = async (req, res) => {
+
     const id = req.params.id;
 
     try {
         const data = await PollEvent.findByPk(id, {
+            //  Include the parent Poll and its nested Q&As
             include: [
                 {
-                    model: Poll, // Include the parent poll
+                    model: Poll,    // parent model
                     include: [{ model: Question, include: [{ model: Answer }] }],
                 },
                 {
-                    model: User, // Include participating users
+                    //  Include the nested student Users taking the Poll-(Event)
+                    model: User,
                     attributes: ["id", "firstName", "lastName", "email"],
-                    through: { attributes: [] }, // Don't include join table attributes
+                    through: { attributes: [] },    //  Do not include bridge-table attributes
                 },
             ],
         });
@@ -117,75 +124,79 @@ exports.findOne = async (req, res) => {
             res.send(data);
         } else {
             res.status(404).send({
-                message: `Cannot find PollEvent with id=${id}.`,
+                message: `Cannot find PollEvent with ID = ${id}`,
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: "Error retrieving PollEvent with id=" + id,
+            message: "Error retrieving PollEvent with ID = " + id,
         });
     }
 };
 
 //---------------------------------------------------------------------------
 
-// Update a PollEvent by the id in the request
+//  Update a PollEvent by specified ID
 exports.update = async (req, res) => {
+
     const id = req.params.id;
 
     try {
+        //  From Sequelize documentation, update() return value = array, = return [affectedRows];
+        //  (But this is odd looking.  Apparently the "num" var gets assigned, even within the []s.)
         const [num] = await PollEvent.update(req.body, { where: { id: id } });
         if (num === 1) {
             res.send({
-                message: "PollEvent was updated successfully.",
+                message: "PollEvent was updated successfully",
             });
         } else {
             res.send({
-                message: `Cannot update PollEvent with id=${id}. Maybe PollEvent was not found or req.body is empty!`,
+                message: `Cannot update PollEvent with ID = ${id}`,
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: "Error updating PollEvent with id=" + id,
+            message: "Error updating PollEvent with ID = " + id,
         });
     }
 };
 
 //---------------------------------------------------------------------------
 
-// Delete a PollEvent with the specified id in the request
+//  Delete PollEvent with specified ID
 exports.delete = async (req, res) => {
+
     const id = req.params.id;
 
     try {
         const num = await PollEvent.destroy({ where: { id: id } });
         if (num === 1) {
             res.send({
-                message: "PollEvent was deleted successfully!",
+                message: "PollEvent was deleted successfully",
             });
         } else {
             res.send({
-                message: `Cannot delete PollEvent with id=${id}. Maybe PollEvent was not found!`,
+                message: `Cannot delete PollEvent with ID = ${id}`,
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: "Could not delete PollEvent with id=" + id,
+            message: "Could not delete PollEvent with ID = " + id,
         });
     }
 };
 
 //---------------------------------------------------------------------------
 
-// Delete all PollEvents from the database.
+//  Delete ALL PollEvents!!!
 exports.deleteAll = async (req, res) => {
     try {
         const nums = await PollEvent.destroy({ where: {}, truncate: false });
-        res.send({ message: `${nums} PollEvents were deleted successfully!` });
+        res.send({ message: `${nums} PollEvents were deleted successfully` });
     } catch (err) {
         res.status(500).send({
             message:
-                err.message || "Some error occurred while removing all poll events.",
+                err.message || "Error occurred while deleting all poll events",
         });
     }
 };
