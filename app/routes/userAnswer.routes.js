@@ -4,28 +4,50 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //  Create a new UserAnswer
-  router.post("/user-answers/", [authenticateRoute], UserAnswer.create);
+  //  Create a new User Answer
+  router.post(
+    "/user-answers/:questionId",
+    [authenticateRoute],
+    UserAnswer.create
+  );
 
-  //  Retrieve all UserAnswers for a PollEventUser
-  router.get("/user-answers/poll-event-user/:pollEventUserId", [authenticateRoute],
-    UserAnswer.findAllForPollEventUser);
+  //  Retrieve all User Answers
+  router.get(
+    "/user-answers/poll-event-user/:pollEventUserId",
+    [authenticateRoute],
+    UserAnswer.findAllForPollEventUser
+  );
 
-  //  Retrieve all UserAnswers for a PollEvent
-  router.get("/user-answers/poll-event/:pollEventId", [authenticateRoute],
-    UserAnswer.findAllForPollEvent);
+  //  Retrieve a User Answer with questionID
+  router.get(
+    "/user-answers/:pollEventUserId/:questionId",
+    [authenticateRoute],
+    UserAnswer.findOne
+  );
 
-  //  Retrieve a single UserAnswer with ID
-  router.get("/user-answers/:id", [authenticateRoute], UserAnswer.findOne);
+  //  Update a User Answer with Question ID
+  router.put(
+    "/user-answers/:pollEventUserId/:questionId",
+    [authenticateRoute],
+    UserAnswer.update
+  );
 
-  //  Update a UserAnswer with ID
-  router.put("/user-answers/:id", [authenticateRoute], UserAnswer.update);
+  //  Delete a User Answer with Question ID
+  router.delete(
+    "/user-answers/:pollEventUserId/:questionId",
+    [authenticateRoute],
+    UserAnswer.delete
+  );
 
-  //  Delete a UserAnswer with ID
-  router.delete("/user-answers/:id", [authenticateRoute], UserAnswer.delete);
-
-  //  Delete all UserAnswers
+  //  Delete all User Answers
   router.delete("/user-answers/", [authenticateRoute], UserAnswer.deleteAll);
+
+  //Bulk create User Answers
+  router.post(
+    "/user-answers/bulk-user-answers/bulkCreate",
+    [authenticateRoute],
+    UserAnswer.bulkCreate
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
