@@ -62,12 +62,6 @@ module.exports = (app) => {
     [authenticateRoute, isAdmin],
     UserAnswer.deleteAll
   );
-  //  Delete all UserAnswers
-  router.delete(
-    "/user-answers/",
-    [authenticateRoute, isAdmin],
-    UserAnswer.deleteAll
-  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
