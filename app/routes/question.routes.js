@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const Question = require("../controllers/question.controller.js");
-  const { authenticateRoute } = require("../authentication/authentication");
+  const { authenticateRoute, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -27,7 +27,7 @@ module.exports = (app) => {
   router.delete("/polls/:pollId/questions", [authenticateRoute], Question.deleteForPoll);
 
   //  Delete all Questions
-  router.delete("/questions/", [authenticateRoute], Question.deleteAll);
+  router.delete("/questions/", [authenticateRoute, isAdmin], Question.deleteAll);
 
   //  Bulk create Questions
   router.post("/questions/bulk-create", [authenticateRoute], Question.bulkCreate);

@@ -20,8 +20,8 @@ module.exports = (app) => {
   // Delete a User with ID
   router.delete("/users/:id", [authenticateRoute], User.delete);
 
-  // Delete all User
-  router.delete("/users/", [authenticateRoute], User.deleteAll);
+  // Delete all Users
+  router.delete("/users/", [authenticateRoute, isAdmin], User.deleteAll);
 
   //  Create users in bulk
   router.post("/users/bulk-create", [authenticateRoute], User.bulkCreate);

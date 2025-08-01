@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const PollEvent = require("../controllers/pollEvent.controller.js");
-  const { authenticateRoute } = require("../authentication/authentication");
+  const { authenticateRoute, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -25,7 +25,7 @@ module.exports = (app) => {
   router.delete("/poll-events/:id", [authenticateRoute], PollEvent.delete);
 
   //  Delete all PollEvents
-  router.delete("/poll-events/", [authenticateRoute], PollEvent.deleteAll);
+  router.delete("/poll-events/", [authenticateRoute, isAdmin], PollEvent.deleteAll);
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

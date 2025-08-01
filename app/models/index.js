@@ -25,6 +25,8 @@ db.pollEventUser = require("./pollEventUser.model.js")(sequelize, Sequelize);
 db.question = require("./question.model.js")(sequelize, Sequelize);
 db.answer = require("./answer.model.js")(sequelize, Sequelize);
 db.userAnswer = require("./userAnswer.model.js")(sequelize, Sequelize);
+db.course = require("./course.model.js")(sequelize, Sequelize);
+db.coursePoll = require("./coursePoll.model.js")(sequelize, Sequelize);
 
 //-----------------------------------------------------------------------------
 //  Example RECIPE tables -- TODO:  DELETE LATER
@@ -153,6 +155,9 @@ db.pollEvent.belongsTo(
   }
 );
 
+//---------------------------------------------------------------------------
+//  MANY-TO-MANY RELATIONSHIPS
+
 //  PollEvents & Users : many-to-many
 db.user.belongsToMany(db.pollEvent, { through: db.pollEventUser });
 db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
@@ -165,7 +170,11 @@ db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
 db.pollEventUser.belongsToMany(db.question, { through: db.userAnswer });
 db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
 
-//-----------------------------------------------------------------------------
+//  Courses & Polls : many-to-many
+db.course.belongsToMany(db.poll, { through: db.coursePoll });
+db.poll.belongsToMany(db.course, { through: db.coursePoll });
+
+//---------------------------------------------------------------------------
 //  Users & Sessions : one-to-many
 db.user.hasMany(
   db.session,
