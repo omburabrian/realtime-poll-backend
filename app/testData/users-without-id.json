@@ -2,7 +2,7 @@
     {
         "firstName": "John",
         "lastName": "Doe",
-        "userName": "john.doe",
+        "username": "john.doe",
         "email": "john.doe@gmail.com",
         "role": "user",
         "password": "johnpw",
@@ -11,7 +11,7 @@
     {
         "firstName": "Emily",
         "lastName": "Smith",
-        "userName": "emily.smith",
+        "username": "emily.smith",
         "email": "emily.smith@gmail.com",
         "role": "user",
         "password": "emilypw",
@@ -20,7 +20,7 @@
     {
         "firstName": "Michael",
         "lastName": "Brown",
-        "userName": "michael.brown",
+        "username": "michael.brown",
         "email": "michael.brown@gmail.com",
         "role": "user",
         "password": "michaelpw",
@@ -29,7 +29,7 @@
     {
         "firstName": "Sarah",
         "lastName": "Johnson",
-        "userName": "sarah.johnson",
+        "username": "sarah.johnson",
         "email": "sarah.johnson@gmail.com",
         "role": "user",
         "password": "sarahpw",
@@ -38,7 +38,7 @@
     {
         "firstName": "David",
         "lastName": "Lee",
-        "userName": "david.lee",
+        "username": "david.lee",
         "email": "david.lee@gmail.com",
         "role": "user",
         "password": "davidpw",
@@ -47,7 +47,7 @@
     {
         "firstName": "Olivia",
         "lastName": "Taylor",
-        "userName": "olivia.taylor",
+        "username": "olivia.taylor",
         "email": "olivia.taylor@gmail.com",
         "role": "user",
         "password": "oliviapw",
@@ -56,7 +56,7 @@
     {
         "firstName": "James",
         "lastName": "Anderson",
-        "userName": "james.anderson",
+        "username": "james.anderson",
         "email": "james.anderson@gmail.com",
         "role": "user",
         "password": "jamespw",
@@ -65,7 +65,7 @@
     {
         "firstName": "Sophia",
         "lastName": "Martinez",
-        "userName": "sophia.martinez",
+        "username": "sophia.martinez",
         "email": "sophia.martinez@gmail.com",
         "role": "user",
         "password": "sophiapw",
@@ -74,7 +74,7 @@
     {
         "firstName": "Daniel",
         "lastName": "Garcia",
-        "userName": "daniel.garcia",
+        "username": "daniel.garcia",
         "email": "daniel.garcia@gmail.com",
         "role": "user",
         "password": "danielpw",
@@ -83,7 +83,7 @@
     {
         "firstName": "Mia",
         "lastName": "Rodriguez",
-        "userName": "mia.rodriguez",
+        "username": "mia.rodriguez",
         "email": "mia.rodriguez@gmail.com",
         "role": "user",
         "password": "miapw",
@@ -92,7 +92,7 @@
     {
         "firstName": "William",
         "lastName": "Hernandez",
-        "userName": "william.hernandez",
+        "username": "william.hernandez",
         "email": "william.hernandez@gmail.com",
         "role": "user",
         "password": "williampw",
@@ -101,7 +101,7 @@
     {
         "firstName": "Ava",
         "lastName": "Lopez",
-        "userName": "ava.lopez",
+        "username": "ava.lopez",
         "email": "ava.lopez@gmail.com",
         "role": "user",
         "password": "avapw",
@@ -110,7 +110,7 @@
     {
         "firstName": "Dr. Henry",
         "lastName": "Wright",
-        "userName": "henry.wright",
+        "username": "henry.wright",
         "email": "henry.wright@university.edu",
         "role": "professor",
         "password": "henrypw",
@@ -119,7 +119,7 @@
     {
         "firstName": "Dr. Laura",
         "lastName": "King",
-        "userName": "laura.king",
+        "username": "laura.king",
         "email": "laura.king@university.edu",
         "role": "professor",
         "password": "laurapw",
@@ -128,7 +128,7 @@
     {
         "firstName": "Dr. Brian",
         "lastName": "Scott",
-        "userName": "brian.scott",
+        "username": "brian.scott",
         "email": "brian.scott@university.edu",
         "role": "professor",
         "password": "brianpw",
@@ -137,7 +137,7 @@
     {
         "firstName": "Dr. Megan",
         "lastName": "Turner",
-        "userName": "megan.turner",
+        "username": "megan.turner",
         "email": "megan.turner@university.edu",
         "role": "professor",
         "password": "meganpw",
@@ -146,7 +146,7 @@
     {
         "firstName": "Andy",
         "lastName": "Admin",
-        "userName": "aa",
+        "username": "aa",
         "email": "andy.admin@gmail.com",
         "role": "admin",
         "password": "admin",

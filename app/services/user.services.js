@@ -43,7 +43,7 @@ module.exports = { loadTestData };
 
 
 //  ToDo:   Reset all the passwords using salt.
-//  ToDo:   Create a DEFAULT ADMIN USER, with userName = "admin".
-//  ToDo:   Allow user login option with <userName>, (not just <email>).
+//  ToDo:   Create a DEFAULT ADMIN USER, with username = "admin".
+//  ToDo:   Allow user login option with <username>, (not just <email>).
 //  ToDo:   Auto-generate userNames when users create an account.
 //              Let them override it, but check for duplicates.

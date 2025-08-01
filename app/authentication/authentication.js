@@ -29,10 +29,21 @@ authenticate = async (req, res, require = true) => {
       let user = {};
 
       //  This is for the login.  Need attributes [password, salt].
-      //  Do not exclude them here, like in all other instances.
-      await User.findAll({ where: { email: email } })
+      //  Do NOT exclude them here, like in all other instances.
+
+      //  Allow optional login using USERNAME rather than EMAIL.
+      //  Determine login option being used (email or username) by whether a '@' is present,
+      //  and set the where condition accordingly.
+      let whereCondition = { email: email };
+      if (email.indexOf("@") === -1) {
+        whereCondition = { username: email };
+      }
+
+      //  await User.findAll({ where: { email: email } })
+
+      await User.findAll({ where: whereCondition })
         .then((data) => {
-          user = data[0];
+          user = data[0];   //  (findAll() returns an array.  Get the first (and only) element.)
         })
         .catch((error) => {
           console.log(error);
@@ -43,7 +54,7 @@ authenticate = async (req, res, require = true) => {
 
         if (Buffer.compare(user.password, hash) !== 0) {
           return res.status(401).send({
-            message: "Invalid password!",
+            message: "Invalid password",
           });
         }
 
@@ -55,7 +66,7 @@ authenticate = async (req, res, require = true) => {
 
       } else {
         return res.status(401).send({
-          message: "User not found!",
+          message: "User not found",
         });
       }
     }

@@ -44,7 +44,7 @@ exports.create = (req, res) => {
         });
 };
 
-//  Find all Polls for a user
+//  Find all Polls for a user (professor)
 exports.findAllForUser = (req, res) => {
     const userId = req.params.userId;
     Poll.findAll({

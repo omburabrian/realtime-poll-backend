@@ -10,6 +10,30 @@ const path = require("path");
 const fs = require('fs');
 
 //---------------------------------------------------------------------------
+//  Find all Polls for a user (professor)
+async function findAllForUserId(userId) {
+  try {
+    const data = await Poll.findAll({
+      where: { userId: userId },
+      include: [
+        {
+          model: Question,
+          include: [{
+            model: Answer,
+          }],
+        },
+      ],
+      order: [
+        ["name", "ASC"],
+      ],
+    });
+    return data;
+  } catch (err) {
+    throw new Error(err.message || "Error retrieving Polls for user ID = " + userId);
+  }
+};
+
+//---------------------------------------------------------------------------
 async function loadTestData() {
 
     //  (Let calling function catch errors.  Probably a contoller function.)
@@ -221,4 +245,8 @@ function getTestDataFiles() {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-module.exports = { loadTestData, bulkCreatePollsWithQuestionsAndAnswers };
+module.exports = {
+    findAllForUserId,
+    loadTestData,
+    bulkCreatePollsWithQuestionsAndAnswers
+};
