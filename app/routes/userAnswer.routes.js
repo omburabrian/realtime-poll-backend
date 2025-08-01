@@ -3,7 +3,6 @@ module.exports = (app) => {
   const {
     authenticateRoute,
     isAdmin,
-    isProfessor,
   } = require("../authentication/authentication");
   var router = require("express").Router();
 
@@ -58,6 +57,12 @@ module.exports = (app) => {
   );
 
   // Delete all User Answers
+  router.delete(
+    "/user-answers/",
+    [authenticateRoute, isAdmin],
+    UserAnswer.deleteAll
+  );
+  //  Delete all UserAnswers
   router.delete(
     "/user-answers/",
     [authenticateRoute, isAdmin],
