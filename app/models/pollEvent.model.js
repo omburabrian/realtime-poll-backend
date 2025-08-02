@@ -8,13 +8,21 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: true,
         },
+        guid: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        uri: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
         startDateTime: {
             type: Sequelize.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         endDateTime: {
             type: Sequelize.DATE,
-            allowNull: false,
+            allowNull: true,
         },
     });
     return PollEvent;
