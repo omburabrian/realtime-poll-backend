@@ -34,9 +34,7 @@ exports.create = async (req, res) => {
     res.send(data);
   } catch (err) {
     res.status(500).send({
-      message:
-        "Question has answer already" ||
-        "Error occurred while creating the User Answer",
+      message: err.message || "Error occurred while creating the User Answer",
     });
   }
 };
