@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const Course = sequelize.define("course", {
-        name: {
+        title: {
             type: Sequelize.STRING,
             allowNull: false,
         },
