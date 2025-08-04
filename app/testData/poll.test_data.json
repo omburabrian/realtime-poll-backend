@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Python Basics Quiz",
+    "description": "A quick quiz on fundamental Python concepts.",
+    "isQuiz": true
+  },
+  {
+    "title": "Algorithm Complexity",
+    "description": "Test your knowledge of Big O notation.",
+    "isQuiz": true
+  },
+  {
+    "title": "Favorite Programming Paradigm",
+    "description": "A survey to see which paradigm is most popular.",
+    "isQuiz": false
+  },
+  {
+    "title": "Limits and Continuity Check",
+    "description": "A short quiz on the concept of limits.",
+    "isQuiz": true
+  },
+  {
+    "title": "Derivative Rules Pop Quiz",
+    "description": "How well do you know your derivative rules?",
+    "isQuiz": true
+  },
+  {
+    "title": "Most Challenging Topic?",
+    "description": "An opinion poll on the hardest topic in Calculus I.",
+    "isQuiz": false
+  },
+  {
+    "title": "Vector Spaces True/False",
+    "description": "A quick check on vector space properties.",
+    "isQuiz": true
+  },
+  {
+    "title": "Matrix Operations",
+    "description": "A quiz covering matrix addition, subtraction, and multiplication.",
+    "isQuiz": true
+  },
+  {
+    "title": "Applications of Eigenvalues",
+    "description": "Where are eigenvalues and eigenvectors most useful?",
+    "isQuiz": false
+  },
+  {
+    "title": "Big O Notation Quiz",
+    "description": "Identify the time complexity of various algorithms.",
+    "isQuiz": true
+  },
+  {
+    "title": "Trees vs. Graphs",
+    "description": "A quiz on the differences and similarities between trees and graphs.",
+    "isQuiz": true
+  },
+  {
+    "title": "Most Useful Data Structure",
+    "description": "An opinion poll on the most versatile data structure.",
+    "isQuiz": false
+  },
+  {
+    "title": "Famous Psychologists Match-up",
+    "description": "Match the psychologist to their famous theory or experiment.",
+    "isQuiz": true
+  },
+  {
+    "title": "Cognitive Biases",
+    "description": "Identify common cognitive biases from descriptions.",
+    "isQuiz": true
+  },
+  {
+    "title": "Nature vs. Nurture Opinion",
+    "description": "Which do you think has a greater influence on personality?",
+    "isQuiz": false
+  },
+  {
+    "title": "The Renaissance Period",
+    "description": "A quiz on key figures and events of the Renaissance.",
+    "isQuiz": true
+  },
+  {
+    "title": "Key Events of the 18th Century",
+    "description": "Test your knowledge of major 18th-century world events.",
+    "isQuiz": true
+  },
+  {
+    "title": "Most Impactful Historical Figure",
+    "description": "An opinion poll on the most influential person in modern history.",
+    "isQuiz": false
+  }
+]
