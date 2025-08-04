@@ -3,6 +3,8 @@ module.exports = (app) => {
   const { authenticateRoute, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
 
+//  ToDo:  Add isProfessor check on all routes?
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //  Create a new PollEventUser
   router.post("/poll-event-users/", [authenticateRoute], PollEventUser.create);
