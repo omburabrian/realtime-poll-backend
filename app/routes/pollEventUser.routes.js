@@ -1,33 +1,35 @@
 module.exports = (app) => {
   const PollEventUser = require("../controllers/pollEventUser.controller.js");
-  const { authenticateRoute, isAdmin } = require("../authentication/authentication");
+  const { authenticateRoute, isProfessor, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
-
-//  ToDo:  Add isProfessor check on all routes?
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //  Create a new PollEventUser
   router.post("/poll-event-users/", [authenticateRoute], PollEventUser.create);
 
   //  Retrieve all PollEventUsers for a PollEvent
-  router.get("/poll-event-users/poll-event/:pollEventId", [authenticateRoute],
+  router.get("/poll-event-users/poll-event/:pollEventId", [authenticateRoute, isProfessor],
     PollEventUser.findAllForPollEvent);
 
   //  Retrieve all PollEventUsers for a Poll
-  router.get("/poll-event-users/poll/:pollId", [authenticateRoute],
+  router.get("/poll-event-users/poll/:pollId", [authenticateRoute, isProfessor],
     PollEventUser.findAllForPoll);
 
   //  Retrieve a single PollEventUser with ID
-  router.get("/poll-event-users/:id", [authenticateRoute], PollEventUser.findOne);
+  router.get("/poll-event-users/:id", [authenticateRoute, isProfessor], PollEventUser.findOne);
 
   //  Update a PollEventUser with ID
-  router.put("/poll-event-users/:id", [authenticateRoute], PollEventUser.update);
+  router.put("/poll-event-users/:id", [authenticateRoute, isProfessor], PollEventUser.update);
 
   //  Delete a PollEventUser with ID
-  router.delete("/poll-event-users/:id", [authenticateRoute], PollEventUser.delete);
+  router.delete("/poll-event-users/:id", [authenticateRoute, isProfessor], PollEventUser.delete);
 
   //  Delete all PollEventUsers
   router.delete("/poll-event-users/", [authenticateRoute, isAdmin], PollEventUser.deleteAll);
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //  Create PollEventUsers in bulk
+  router.post("/poll-event-users/bulk-create", [authenticateRoute, isProfessor], PollEventUser.bulkCreate);
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);

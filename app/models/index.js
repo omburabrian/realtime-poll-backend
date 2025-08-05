@@ -162,6 +162,15 @@ db.pollEvent.belongsTo(
 db.user.belongsToMany(db.pollEvent, { through: db.pollEventUser });
 db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
 
+//  Since we will also need to query the join table directly, then we must
+//  also add explicit one-to-many relationships to the join table itself.
+//  This allows for querying the join table directly and including its parent models.
+//  (Without this, get the error "poll_event is not associated to poll_event_user!", etc.)
+db.pollEvent.hasMany(db.pollEventUser);
+db.pollEventUser.belongsTo(db.pollEvent);
+db.user.hasMany(db.pollEventUser);
+db.pollEventUser.belongsTo(db.user);
+
 //  ToDo:  Have used the MODEL NAMES previously, but not working here... yet.
 // User.belongsToMany(PollEvent, { through: PollEventUser });
 // PollEvent.belongsToMany(User, { through: PollEventUser });
