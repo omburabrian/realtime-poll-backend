@@ -1,0 +1,20 @@
+[
+  { "courseId": 1, "pollId": 1 },
+  { "courseId": 1, "pollId": 2 },
+  { "courseId": 1, "pollId": 3 },
+  { "courseId": 2, "pollId": 4 },
+  { "courseId": 2, "pollId": 5 },
+  { "courseId": 2, "pollId": 6 },
+  { "courseId": 3, "pollId": 7 },
+  { "courseId": 3, "pollId": 8 },
+  { "courseId": 3, "pollId": 9 },
+  { "courseId": 4, "pollId": 10 },
+  { "courseId": 4, "pollId": 11 },
+  { "courseId": 4, "pollId": 12 },
+  { "courseId": 5, "pollId": 13 },
+  { "courseId": 5, "pollId": 14 },
+  { "courseId": 5, "pollId": 15 },
+  { "courseId": 6, "pollId": 16 },
+  { "courseId": 6, "pollId": 17 },
+  { "courseId": 6, "pollId": 18 }
+]

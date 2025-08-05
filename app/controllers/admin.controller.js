@@ -3,6 +3,7 @@ const User = db.user;
 const Poll = db.poll;
 const UserServices = require("../services/user.services.js");
 const PollServices = require("../services/poll.services.js");
+const CourseServices = require("../services/course.services.js");
 
 const { USER_ROLES, QUESTION_TYPES, QUESTION_DIFFICULTY } = require("../config/constants");
 
@@ -72,6 +73,19 @@ exports.loadTestData_pollsQuestionsAnswers = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: err.message || "Error occurred while loading test data for POLLS",
+    });
+  }
+}
+
+//---------------------------------------------------------------------------
+//  Load test data for COURSES
+exports.loadTestData_courses = async (req, res) => {
+  try {
+    const responseMessage = await CourseServices.loadTestData();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while loading test data for COURSES",
     });
   }
 }

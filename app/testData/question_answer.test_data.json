@@ -1,0 +1,120 @@
+[
+  {
+    "questionType": "multiple_choice",
+    "text": "What is the output of `print(2 ** 3)`?",
+    "questionNumber": 1,
+    "pollId": 1,
+    "answers": [
+      { "text": "6", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "8", "answerIndex": 1, "isCorrectAnswer": true },
+      { "text": "9", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "12", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "Which of the following is used to define a block of code in Python?",
+    "questionNumber": 2,
+    "pollId": 1,
+    "answers": [
+      { "text": "Curly braces `{}`", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "Parentheses `()`", "answerIndex": 1, "isCorrectAnswer": false },
+      { "text": "Indentation", "answerIndex": 2, "isCorrectAnswer": true },
+      { "text": "Quotation marks `\"\"`", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "What is the time complexity of a binary search algorithm?",
+    "questionNumber": 1,
+    "pollId": 2,
+    "answers": [
+      { "text": "O(n)", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "O(log n)", "answerIndex": 1, "isCorrectAnswer": true },
+      { "text": "O(n^2)", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "O(1)", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "Which sorting algorithm typically has a worst-case time complexity of O(n^2)?",
+    "questionNumber": 2,
+    "pollId": 2,
+    "answers": [
+      { "text": "Merge Sort", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "Bubble Sort", "answerIndex": 1, "isCorrectAnswer": true },
+      { "text": "Heap Sort", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "Radix Sort", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "Which programming paradigm do you prefer for large-scale applications?",
+    "questionNumber": 1,
+    "pollId": 3,
+    "answers": [
+      { "text": "Object-Oriented Programming (OOP)", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "Functional Programming (FP)", "answerIndex": 1, "isCorrectAnswer": false },
+      { "text": "Procedural Programming", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "A mix of paradigms", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "What is the limit of `(x^2 - 1) / (x - 1)` as x approaches 1?",
+    "questionNumber": 1,
+    "pollId": 4,
+    "answers": [
+      { "text": "0", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "1", "answerIndex": 1, "isCorrectAnswer": false },
+      { "text": "2", "answerIndex": 2, "isCorrectAnswer": true },
+      { "text": "Undefined", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "true_false",
+    "text": "True or False: If a function is differentiable at a point, it must be continuous at that point.",
+    "questionNumber": 2,
+    "pollId": 4,
+    "answers": [
+      { "text": "True", "answerIndex": 0, "isCorrectAnswer": true },
+      { "text": "False", "answerIndex": 1, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "What is the derivative of `cos(x)`?",
+    "questionNumber": 1,
+    "pollId": 5,
+    "answers": [
+      { "text": "sin(x)", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "-sin(x)", "answerIndex": 1, "isCorrectAnswer": true },
+      { "text": "tan(x)", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "-cos(x)", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "What is the derivative of `e^x`?",
+    "questionNumber": 2,
+    "pollId": 5,
+    "answers": [
+      { "text": "e^x", "answerIndex": 0, "isCorrectAnswer": true },
+      { "text": "x * e^(x-1)", "answerIndex": 1, "isCorrectAnswer": false },
+      { "text": "ln(x)", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "1", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  },
+  {
+    "questionType": "multiple_choice",
+    "text": "In your opinion, what is the most challenging topic in Calculus I?",
+    "questionNumber": 1,
+    "pollId": 6,
+    "answers": [
+      { "text": "Limits and Continuity", "answerIndex": 0, "isCorrectAnswer": false },
+      { "text": "Related Rates", "answerIndex": 1, "isCorrectAnswer": false },
+      { "text": "Optimization Problems", "answerIndex": 2, "isCorrectAnswer": false },
+      { "text": "Integration by Parts", "answerIndex": 3, "isCorrectAnswer": false }
+    ]
+  }
+]
