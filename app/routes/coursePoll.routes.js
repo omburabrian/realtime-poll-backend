@@ -1,27 +1,31 @@
 module.exports = (app) => {
-  const CoursePoll = require("../controllers/coursePoll.controller.js");
 
-  const {
-    authenticateRoute,
-    isProfessor,
-    isAdmin,
-  } = require("../authentication/authentication");
+    //  This model is the "join table" between Course and Poll.
+    //  This functionality could be handled exclusively through those models
+    //  via additional routes/functionality in them since this is not a "rich"
+    //  join table, but its good to have explicit control here too.
 
-  const router = require("express").Router();
+    const coursePoll = require("../controllers/coursePoll.controller.js");
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    const {
+        authenticateRoute,
+        isProfessor,
+        isAdmin,
+    } = require("../authentication/authentication");
 
-  // Get all course links for a specific poll
-  router.get("/coursePolls/:pollId", [authenticateRoute, isProfessor], CoursePoll.getByPollId);
+    var router = require("express").Router();
 
-  // Create a new course-poll link
-  router.post("/coursePolls/", [authenticateRoute, isProfessor], CoursePoll.create);
+    //  Associate a Poll with a Course
+    router.post("/course-polls/", [authenticateRoute, isProfessor], coursePoll.create);
 
-  // Update a course-poll link for a specific poll
-  router.put("/coursePolls/:pollId", [authenticateRoute, isProfessor], CoursePoll.update);
+    //  Retrieve all Polls for a Course
+    router.get("/course-polls/course/:courseId", [authenticateRoute, isProfessor], coursePoll.findAllPollsForCourse);
 
-  // Delete all course-poll links for a specific poll
-  router.delete("/coursePolls/:pollId", [authenticateRoute, isProfessor], CoursePoll.deleteAllByPollId);
+    //  Retrieve all Courses for a Poll
+    router.get("/course-polls/poll/:pollId", [authenticateRoute, isProfessor], coursePoll.findAllCoursesForPoll);
 
-  app.use("/realtime-pollapi", router);
+    //  Disassociate a Poll from a Course
+    router.delete("/course-polls/", [authenticateRoute, isProfessor], coursePoll.delete);
+
+    app.use("/realtime-pollapi", router);
 };

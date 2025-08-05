@@ -13,15 +13,15 @@ const Op = db.Sequelize.Op;
 exports.create = async (req, res) => {
   try {
     //  Validate request
-    if (!req.body.name) {
+    if (!req.body.title) {
       return res.status(400).send({
-        message: "Course NAME cannot be empty!",
+        message: "Course TITLE cannot be empty!",
       });
     }
 
     //  Create a Course
     const course = {
-      name: req.body.name,
+      title: req.body.title,
       description: req.body.description,
     };
 
@@ -39,10 +39,10 @@ exports.create = async (req, res) => {
 //  ToDo:  Create a findAllWithPolls() method that also includes all the nested models? (Poll, Question, Answer)
 exports.findAll = async (req, res) => {
   try {
-    const name = req.query.name;
+    const title = req.query.title;
 
     //  Optionally, look for course names matching user input.
-    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
     const data = await Course.findAll({ where: condition });
     res.send(data);
@@ -53,7 +53,7 @@ exports.findAll = async (req, res) => {
   }
 };
 
-//  Find a single Course with an id
+//  Find COURSE with ID
 exports.findOne = async (req, res) => {
   const id = req.params.id;
 
