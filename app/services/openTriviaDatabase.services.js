@@ -58,6 +58,7 @@ const path = require("path");
 const { loadJsonFromFile } = require("./utility.services.js");
 const { QUESTION_TYPES } = require("../config/constants");
 const { question } = require("../models/index.js");
+const he = require('he');
 
 var opentdbCategories = [];
 
@@ -138,7 +139,7 @@ function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON) {
         var aRtPollQuestion = {
             questionNumber: index + 1,  //  0-index array, so +1
             questionType: opentdbQuestionTypes[aQuestion.type],
-            text: aQuestion.question,
+            text: he.decode(aQuestion.question),
             isAnswerOrderRandomized: false,
             //  secondsPerQuestion: 30,     //  Accept the default from the RtPoll.
             answers: [],
@@ -154,7 +155,7 @@ function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON) {
         //  Add the INCORRECT ANSWERS
         aQuestion.incorrect_answers.forEach(function (anIncorrectAnswer, index) {
             var anAnswer = {
-                text: anIncorrectAnswer,
+                text: he.decode(anIncorrectAnswer),
                 answerIndex: index + 1,
                 isCorrectAnswer: false,
             }
@@ -163,7 +164,7 @@ function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON) {
 
         //  Add the CORRECT ANSWER
         aRtPollQuestion.answers.push({
-            text: aQuestion.correct_answer,
+            text: he.decode(aQuestion.correct_answer),
             answerIndex: aRtPollQuestion.answers.length + 1,
             isCorrectAnswer: true,
         });

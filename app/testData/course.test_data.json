@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Introduction to Computer Science",
+    "description": "A foundational course on programming principles, algorithms, and computational thinking using Python."
+  },
+  {
+    "title": "Calculus I",
+    "description": "An introduction to differential calculus, including limits, derivatives, and their applications."
+  },
+  {
+    "title": "Linear Algebra",
+    "description": "Covers vector spaces, linear transformations, matrices, determinants, and eigenvalues."
+  },
+  {
+    "title": "Data Structures and Algorithms",
+    "description": "In-depth study of fundamental data structures and the algorithms that operate on them."
+  },
+  {
+    "title": "Introduction to Psychology",
+    "description": "A survey of the major topics in psychology, including cognitive, social, and developmental psychology."
+  },
+  {
+    "title": "World History: 1500 to Present",
+    "description": "Examines major global events, trends, and interactions from the early modern period to today."
+  },
+  {
+    "title": "Principles of Microeconomics",
+    "description": "Analyzes the behavior of individual economic agents, including consumers and firms, and market outcomes."
+  },
+  {
+    "title": "General Chemistry I",
+    "description": "Covers fundamental principles of chemistry, including atomic structure, bonding, and stoichiometry."
+  },
+  {
+    "title": "Introduction to Sociology",
+    "description": "An exploration of social structures, social interaction, and the dynamics of human society."
+  },
+  {
+    "title": "Art History: Renaissance to Modern",
+    "description": "A survey of major movements and artists in Western art from the 14th century to the 20th century."
+  },
+  {
+    "title": "Introduction to Philosophy",
+    "description": "An introduction to the main branches of philosophy, including metaphysics, epistemology, and ethics."
+  },
+  {
+    "title": "English Composition 101",
+    "description": "Focuses on developing skills in critical reading, writing, and analytical argument."
+  }
+]

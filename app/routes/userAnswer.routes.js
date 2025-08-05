@@ -1,32 +1,43 @@
 module.exports = (app) => {
-  const UserAnswer = require("../controllers/userAnswer.controller.js");
-  const { authenticateRoute } = require("../authentication/authentication");
-  var router = require("express").Router();
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //  Create a new UserAnswer
-  router.post("/user-answers/", [authenticateRoute], UserAnswer.create);
+    /*
+    This is a "rich" join table between a student's participation record in a
+    poll event, PollEventUser, and the student's corresponding answers to the
+    "Question"s in that poll.
+    The additional "rich" attribute is the specified student's ANSWER to the
+    question.
+    */
 
-  //  Retrieve all UserAnswers for a PollEventUser
-  router.get("/user-answers/poll-event-user/:pollEventUserId", [authenticateRoute],
-    UserAnswer.findAllForPollEventUser);
+    const UserAnswer = require("../controllers/userAnswer.controller.js");
 
-  //  Retrieve all UserAnswers for a PollEvent
-  router.get("/user-answers/poll-event/:pollEventId", [authenticateRoute],
-    UserAnswer.findAllForPollEvent);
+    const {
+        authenticateRoute,
+        isProfessor,
+        isAdmin,
+    } = require("../authentication/authentication");
 
-  //  Retrieve a single UserAnswer with ID
-  router.get("/user-answers/:id", [authenticateRoute], UserAnswer.findOne);
+    var router = require("express").Router();
 
-  //  Update a UserAnswer with ID
-  router.put("/user-answers/:id", [authenticateRoute], UserAnswer.update);
+    //  Create a new UserAnswer (a student submitting an answer)
+    router.post("/user-answers/", [authenticateRoute], UserAnswer.create);
 
-  //  Delete a UserAnswer with ID
-  router.delete("/user-answers/:id", [authenticateRoute], UserAnswer.delete);
+    //  Retrieve all UserAnswers for a specific PollEventUser (a specific student's answers for a specific poll event)
+    router.get("/user-answers/poll-event-user/:pollEventUserId", [authenticateRoute], UserAnswer.findAllForPollEventUser);
 
-  //  Delete all UserAnswers
-  router.delete("/user-answers/", [authenticateRoute], UserAnswer.deleteAll);
+    //  Retrieve all UserAnswers for a specific PollEvent (ALL student answers for specified POLL EVENT)
+    router.get("/user-answers/poll-event/:pollEventId", [authenticateRoute, isProfessor], UserAnswer.findAllForPollEvent);
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  app.use("/realtime-pollapi", router);
+    //  Retrieve UserAnswer with ID
+    router.get("/user-answers/:id", [authenticateRoute], UserAnswer.findOne);
+
+    //  Update UserAnswer with ID
+    router.put("/user-answers/:id", [authenticateRoute], UserAnswer.update);
+
+    //  Delete UserAnswer with ID
+    router.delete("/user-answers/:id", [authenticateRoute], UserAnswer.delete);
+
+    //  Delete all UserAnswers  (Admin only)
+    router.delete("/user-answers/", [authenticateRoute, isAdmin], UserAnswer.deleteAll);
+
+    app.use("/realtime-pollapi", router);
 };

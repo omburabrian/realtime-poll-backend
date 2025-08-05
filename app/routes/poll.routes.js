@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const Poll = require("../controllers/poll.controller.js");
-  const { authenticateRoute } = require("../authentication/authentication");
+  const { authenticateRoute, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -31,7 +31,7 @@ module.exports = (app) => {
     Poll.deleteAllForUser);
 
   //  Delete all Polls  (ADMIN use only)
-  router.delete("/polls/", [authenticateRoute], Poll.deleteAll);
+  router.delete("/polls/", [authenticateRoute, isAdmin], Poll.deleteAll);
 
   //  Bulk create Polls
   router.post("/polls/bulk-create", [authenticateRoute], Poll.bulkCreate);

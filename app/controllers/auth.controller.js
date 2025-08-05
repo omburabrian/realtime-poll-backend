@@ -7,36 +7,43 @@ const { encrypt, decrypt } = require("../authentication/crypto");
 const { USER_ROLES } = require("../config/constants");
 
 exports.login = async (req, res) => {
-  let { userId } = await authenticate(req, res, "credentials");
 
-  if (userId !== undefined) {
-    let user = {};
-    await User.findByPk(userId).then((data) => {
-      user = data;
-    });
+  //  The error message from authenticate() was not getting passed to the frontend.
+  //  Wrap in try-catch block and handle better.
+  try {
+    let { userId } = await authenticate(req, res, "credentials");
 
-    let expireTime = new Date();
-    expireTime.setDate(expireTime.getDate() + 1);
+    if (userId !== undefined) {
+      const user = await User.findByPk(userId);
 
-    const session = {
-      email: user.email,
-      userId: userId,
-      expirationDate: expireTime,
-    };
-    
-    await Session.create(session).then(async (data) => {
-      let sessionId = data.id;
-      let token = await encrypt(sessionId);
-      let userInfo = {
+      let expireTime = new Date();
+      expireTime.setDate(expireTime.getDate() + 1);
+
+      const session = {
+        email: user.email,
+        userId: userId,
+        expirationDate: expireTime,
+      };
+
+      const newSession = await Session.create(session);
+      const sessionId = newSession.id;
+      const token = await encrypt(sessionId);
+
+      //  Send this user data back to the frontend for future reference.  (e.g. token)
+      const userInfo = {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        userName: user.userName,
+        username: user.username,
         role: user.role,
         id: user.id,
         token: token,
       };
       res.send(userInfo);
+    }
+  } catch (error) {
+    res.status(error.statusCode || 401).send({
+      message: error.message || "Login failed. Please check your credentials.",
     });
   }
 };

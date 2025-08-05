@@ -17,6 +17,10 @@ module.exports = (app) => {
   router.post("/admin/load-test-data/polls", [authenticateRoute, isAdmin],
     Admin.loadTestData_pollsQuestionsAnswers);
 
+  //  Load test data for COURSES
+  router.post("/admin/load-test-data/courses", [authenticateRoute, isAdmin],
+    Admin.loadTestData_courses);
+
   // - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
 };

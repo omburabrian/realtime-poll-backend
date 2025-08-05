@@ -1,0 +1,123 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "The band Muse released their first album, Showbiz, in what year?",
+            "correct_answer": "1999",
+            "incorrect_answers": [
+                "1998",
+                "2000",
+                "2001"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Whose signature guitar technique is called the &quot;windmill&quot;?",
+            "correct_answer": "Pete Townshend",
+            "incorrect_answers": [
+                "Jimmy Page",
+                "Eddie Van Halen",
+                "Jimi Hendrix"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Which of these is the name of a song by Tears for Fears?",
+            "correct_answer": "Shout",
+            "incorrect_answers": [
+                "Scream",
+                "Yell",
+                "Shriek"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "The 2011 movie &quot;The Adventures of Tintin&quot; was directed by Steven Spielberg.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "The &quot;K&quot; in &quot;K-Pop&quot; stands for which word?",
+            "correct_answer": "Korean",
+            "incorrect_answers": [
+                "Kenyan",
+                "Kazakhstan",
+                "Kuwaiti"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Who is the lead singer of Green Day?",
+            "correct_answer": "Billie Joe Armstrong",
+            "incorrect_answers": [
+                "Mike Dirnt",
+                "Sean Hughes",
+                "Tr&eacute; Cool"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Which 80s band is fronted by singer/guitarist Robert Smith?",
+            "correct_answer": "The Cure",
+            "incorrect_answers": [
+                "The Smiths",
+                "Echo &amp; the Bunnymen",
+                "New Order"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Who wrote the Sinead O`Connor hit &#039;Nothing Compares 2 U&#039;?",
+            "correct_answer": "Prince",
+            "incorrect_answers": [
+                "Michael Jackson",
+                "Cameo",
+                "Rick James"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Which punk rock band released hit songs such as &quot;Californication&quot;, &quot;Can&#039;t Stop&quot; and &quot;Under the Bridge&quot;?",
+            "correct_answer": "Red Hot Chilli Peppers",
+            "incorrect_answers": [
+                "Green Day",
+                "Linkin Park",
+                "Foo Fighters"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Which music publication is often abbreviated to NME?",
+            "correct_answer": "New Musical Express",
+            "incorrect_answers": [
+                "New Metro Entertainment",
+                "Next Musical Enterprise",
+                "North Manchester Express"
+            ]
+        }
+    ]
+}

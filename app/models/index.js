@@ -25,6 +25,8 @@ db.pollEventUser = require("./pollEventUser.model.js")(sequelize, Sequelize);
 db.question = require("./question.model.js")(sequelize, Sequelize);
 db.answer = require("./answer.model.js")(sequelize, Sequelize);
 db.userAnswer = require("./userAnswer.model.js")(sequelize, Sequelize);
+db.course = require("./course.model.js")(sequelize, Sequelize);
+db.coursePoll = require("./coursePoll.model.js")(sequelize, Sequelize);
 
 //-----------------------------------------------------------------------------
 //  Example RECIPE tables -- TODO:  DELETE LATER
@@ -153,9 +155,21 @@ db.pollEvent.belongsTo(
   }
 );
 
+//---------------------------------------------------------------------------
+//  MANY-TO-MANY RELATIONSHIPS
+
 //  PollEvents & Users : many-to-many
 db.user.belongsToMany(db.pollEvent, { through: db.pollEventUser });
 db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
+
+//  Since we will also need to query the join table directly, then we must
+//  also add explicit one-to-many relationships to the join table itself.
+//  This allows for querying the join table directly and including its parent models.
+//  (Without this, get the error "poll_event is not associated to poll_event_user!", etc.)
+db.pollEvent.hasMany(db.pollEventUser);
+db.pollEventUser.belongsTo(db.pollEvent);
+db.user.hasMany(db.pollEventUser);
+db.pollEventUser.belongsTo(db.user);
 
 //  ToDo:  Have used the MODEL NAMES previously, but not working here... yet.
 // User.belongsToMany(PollEvent, { through: PollEventUser });
@@ -165,7 +179,11 @@ db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
 db.pollEventUser.belongsToMany(db.question, { through: db.userAnswer });
 db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
 
-//-----------------------------------------------------------------------------
+//  Courses & Polls : many-to-many
+db.course.belongsToMany(db.poll, { through: db.coursePoll });
+db.poll.belongsToMany(db.course, { through: db.coursePoll });
+
+//---------------------------------------------------------------------------
 //  Users & Sessions : one-to-many
 db.user.hasMany(
   db.session,
