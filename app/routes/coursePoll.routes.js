@@ -27,5 +27,8 @@ module.exports = (app) => {
     //  Disassociate a Poll from a Course
     router.delete("/course-polls/", [authenticateRoute, isProfessor], coursePoll.delete);
 
+    //  Disassociate all Courses from a Poll
+    router.delete("/course-polls/poll/:pollId", [authenticateRoute, isProfessor], coursePoll.deleteAllForPoll);
+
     app.use("/realtime-pollapi", router);
 };
