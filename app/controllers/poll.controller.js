@@ -1,4 +1,5 @@
 const db = require("../models");
+const Course = db.course;
 const Poll = db.poll;
 const Question = db.question;
 const Answer = db.answer;
@@ -56,6 +57,10 @@ exports.findAllForUser = (req, res) => {
                     model: Answer,
                 }],
             },
+            {
+                model: Course,
+                through: { attributes: [] },
+            },
         ],
         order: [
             ["name", "ASC"],
@@ -92,6 +97,10 @@ exports.findOne = (req, res) => {
                         model: Answer,
                     }],
                 },
+                {
+                    model: Course,
+                    through: { attributes: [] },
+                },
             ],
         })
         .then((data) => {
@@ -124,6 +133,10 @@ exports.findAll = (req, res) => {
                     include: [{
                         model: Answer,
                     }],
+                },
+                {
+                    model: Course,
+                    through: { attributes: [] },
                 },
             ],
             order: [
