@@ -124,3 +124,29 @@ exports.delete = async (req, res) => {
         });
     }
 };
+
+//  Delete all associations for a given Poll ID
+exports.deleteAllForPoll = async (req, res) => {
+    const { pollId } = req.params;
+
+    if (!pollId) {
+        return res.status(400).send({
+            message: "POLL ID is required to delete associations",
+        });
+    }
+
+    try {
+        const num = await CoursePoll.destroy({
+            where: { pollId: pollId },
+        });
+
+        res.send({
+            message: `${num} CoursePoll association(s) were deleted successfully for pollId: ${pollId}`,
+        });
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || `Error occurred while deleting CoursePoll associations for poll with ID = ${pollId}`,
+        });
+    }
+};
+
