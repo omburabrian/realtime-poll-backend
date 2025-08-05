@@ -103,6 +103,7 @@ require("./app/routes/question.routes")(app);
 require("./app/routes/answer.routes")(app);
 require("./app/routes/pollEvent.routes")(app);
 require("./app/routes/course.routes")(app);
+require("./app/routes/coursePoll.routes")(app);
 
 /*
 require("./app/routes/pollEventUser.routes")(app);
