@@ -96,11 +96,8 @@ exports.findOne = (req, res) => {
                         model: Answer,
                     }],
                 },
-                     {
-                        model: Courses,
-                        through: { attributes: [] }
-                    },
-                ,
+                  
+            
             ],
         })
         .then((data) => {
