@@ -44,7 +44,14 @@ exports.findAll = async (req, res) => {
     //  Optionally, look for course names matching user input.
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-    const data = await Course.findAll({ where: condition });
+    const data = await Course.findAll(
+      {
+        where: condition,
+        order: [
+          ['title', 'ASC']
+        ],
+      },
+    );
     res.send(data);
   } catch (err) {
     res.status(500).send({
