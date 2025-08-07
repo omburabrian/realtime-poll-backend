@@ -183,6 +183,12 @@ db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
 db.course.belongsToMany(db.poll, { through: db.coursePoll });
 db.poll.belongsToMany(db.course, { through: db.coursePoll });
 
+//  For "eager loading", will need to go ahead and specify these relationships.
+db.course.hasMany(db.coursePoll);
+db.coursePoll.belongsTo(db.course);
+db.poll.hasMany(db.coursePoll);
+db.coursePoll.belongsTo(db.poll);
+
 //---------------------------------------------------------------------------
 //  Users & Sessions : one-to-many
 db.user.hasMany(

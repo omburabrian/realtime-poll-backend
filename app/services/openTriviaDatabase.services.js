@@ -79,21 +79,41 @@ var category = 18;
 var difficulty = "easy";
 
 //---------------------------------------------------------------------------
-async function getTriviaQuestions(filename, amount, category, difficulty) {
+async function getTriviaQuestions(testDataSpecs) {
+//  async function getTriviaQuestions(filename, amount, category, difficulty, pollName) {
+
+    /*
+    testDataSpecs.fileName,
+    testDataSpecs.amount,
+    testDataSpecs.category,
+    testDataSpecs.difficulty,
+    testDataSpecs.pollName,
+    */
 
     var realtimePoll_JSON = {};     //  JSON Real-time Poll to be returned.
-    const opentdbQuestions_JSON = await getTriviaQuestionsFromApi(filename, amount, category, difficulty);
-    realtimePoll_JSON = convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON);
+    const opentdbQuestions_JSON = await getTriviaQuestionsFromApi(testDataSpecs);
+    //  const opentdbQuestions_JSON = await getTriviaQuestionsFromApi(filename, amount, category, difficulty);
+    realtimePoll_JSON = convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON, testDataSpecs);
 
     //  Edit the poll's description to include the user inputs:  amount, category, difficulty.
+    //  ToDo:  Push this down into convertTriviaQuestionsToRealTimePoll(), above.
     realtimePoll_JSON.description = `(amount = ${amount},  category = ${category},  difficulty = ${difficulty})`;
     return realtimePoll_JSON;
 }
 
 //---------------------------------------------------------------------------
-async function getTriviaQuestionsFromApi(filename, amount, category, difficulty) {
+async function getTriviaQuestionsFromApi(testDataSpecs) {
+//  async function getTriviaQuestionsFromApi(filename, amount, category, difficulty) {
 
-    //  ToDo:   Setup fetch from API later.
+    /*
+    testDataSpecs.fileName,
+    testDataSpecs.amount,
+    testDataSpecs.category,
+    testDataSpecs.difficulty,
+    testDataSpecs.pollName,
+    */
+
+    //  ToDo:   Setup fetch from API using the API's parameters.
     /*
     const response = await fetch(
         `${opentdbBaseUri}?amount=${amount}&category=${category}&difficulty=${difficulty}`
@@ -101,15 +121,14 @@ async function getTriviaQuestionsFromApi(filename, amount, category, difficulty)
     //  */
 
     //  TODO:   TESTING -- For now, just return JSON from a file already downloaded.
-    //  const relativePathToJsonFile = '../testData/opentdb/cs-10-easy.json';
-    const relativePathToJsonFile = `../testData/opentdb/${filename}`;
+    const relativePathToJsonFile = `../testData/opentdb/${testDataSpecs.fileName}`;
     const opentdbQuestions_JSON = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
 
     return opentdbQuestions_JSON;
 }
 
 //---------------------------------------------------------------------------
-function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON) {
+function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON, testDataSpecs) {
 
     //  Todo:  function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON) {
     //  As a test, return the first question from the list.  SUCCESS.
@@ -122,7 +141,8 @@ function convertTriviaQuestionsToRealTimePoll(opentdbQuestions_JSON) {
     */
 
     var aRealtimePoll = {
-        name: "(Quiz imported from Open Trivia Database)",
+        //  name: "(Quiz imported from Open Trivia Database)",
+        name: testDataSpecs.pollName,
         description: "(What were the user inputs to the API?  amount, category, difficulty)",
         //  secondsPerQuestion: 30,     //  Accept the default
         isQuiz: true,   //  All question sets imported from <opentdb> are "quizzes".

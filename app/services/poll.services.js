@@ -40,25 +40,41 @@ async function loadTestData() {
 
     var returnMessage = 'Error occurred while loading test data for POLLS';
 
-    //  For testing, just assign the test data polls to the first user,
-    //  assuming it is the dev who first logged in.
-    //  ToDo:   Assign the polls to various users who have the role of "professor".
+
+    /*
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    NOTE:   Which PROFESSOR USER to which to assign new Polls test data?
+
+    Only ADMINS have permission to create test data.  Admins also have
+    PROFESSOR permissions.  So for now, just assign the new test data for the
+    new Polls to the current user, who will be an ADMIN user.
+
+    ToDo:   Add option to assign new Polls test data to specified PROFESSOR
+            user(s).
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
+    */
+
     const theUserId = 1;
-    const testDataFiles = getTestDataFiles();
+    const testDataSpecifications = getTestDataSpecifications();
     var quizList = [];      //  List of polls that will be bulkCreate()'d.
     var poll_JSON = {};     //  Temporary variable for holding the poll in the loop.
 
     //  Read the list of test data files (previously downloaded from opentdb),
     //  converting them to Real-time Polls, Questions, and Answers.
-    testDataFiles.forEach(async (testDataFile) => { 
+    testDataSpecifications.forEach(async (testDataSpecs) => { 
 
+        poll_JSON = await getTriviaQuestions(testDataSpecs);
+
+        /*
         poll_JSON = await getTriviaQuestions(
             //  ToDo:  Eventually won't need fileName, as data will come from API.
-            testDataFile.fileName,
-            testDataFile.amount,
-            testDataFile.category,
-            testDataFile.difficulty
+            testDataSpecs.fileName,
+            testDataSpecs.amount,
+            testDataSpecs.category,
+            testDataSpecs.difficulty,
+            testDataSpecs.pollName,
         );
+        //  */
 
         //  Assign the "professor" user and add to the list from which
         //  to bulkCreate() the new POLLS (quizzes).
@@ -118,104 +134,120 @@ function getIncludeOptionsBlockForQA() {
 }
 
 //--------------------------------------------------------
-function getTestDataFiles() {
+function getTestDataSpecifications() {
 
     return [
         {
             fileName: 'animals-10-easy.json',
             category: 'Animals',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Animals Quiz'
         },
         {
             fileName: 'art-10-easy.json',
             category: 'Art',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Art Quiz'
         },
         {
             fileName: 'books-10-easy.json',
             category: 'Books',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Books Quiz'
         },
         {
             fileName: 'celebrities-10-easy.json',
             category: 'Celebrities',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Celebrities Quiz'
         },
         {
             fileName: 'computer-science-10-easy.json',
             category: 'Computer Science',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Computer Science Quiz'
         },
         {
             fileName: 'film-10-easy.json',
             category: 'Film',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Film Quiz'
         },
         {
             fileName: 'general-knowledge-10-easy.json',
             category: 'General Knowledge',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'General Knowledge Quiz'
         },
         {
             fileName: 'geography-10-easy.json',
             category: 'Geography',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Geography Quiz'
         },
         {
             fileName: 'history-10-easy.json',
             category: 'History',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'History Quiz'
         },
         {
             fileName: 'math-10-easy.json',
             category: 'Math',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Math Quiz'
         },
         {
             fileName: 'music-10-easy.json',
             category: 'Music',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Music Quiz'
         },
         {
             fileName: 'mythology-10-easy.json',
             category: 'Mythology',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Mythology Quiz'
         },
         {
             fileName: 'politics-10-easy.json',
             category: 'Politics',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Politics Quiz'
         },
         {
             fileName: 'science-and-nature-10-easy.json',
             category: 'Science and Nature',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Science and Nature Quiz'
         },
         {
             fileName: 'sports-10-easy.json',
             category: 'Sports',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Sports Quiz'
         },
                 {
             fileName: 'television-10-easy.json',
             category: 'Television',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Television Quiz'
         },
     ];
 
