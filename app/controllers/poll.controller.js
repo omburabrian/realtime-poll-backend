@@ -2,6 +2,7 @@ const db = require("../models");
 const Poll = db.poll;
 const Question = db.question;
 const Answer = db.answer;
+const Courses = db.course;
 const { bulkCreatePollsWithQuestionsAndAnswers } = require("../services/poll.services");
 const Op = db.Sequelize.Op;
 
@@ -55,6 +56,9 @@ exports.findAllForUser = (req, res) => {
                 include: [{
                     model: Answer,
                 }],
+            },   {
+                model: Courses,
+                through: { attributes: [] }
             },
         ],
         order: [
@@ -92,6 +96,11 @@ exports.findOne = (req, res) => {
                         model: Answer,
                     }],
                 },
+                     {
+                        model: Courses,
+                        through: { attributes: [] }
+                    },
+                ,
             ],
         })
         .then((data) => {
@@ -124,6 +133,10 @@ exports.findAll = (req, res) => {
                     include: [{
                         model: Answer,
                     }],
+                },
+                {
+                    model: Courses,
+                    through: { attributes: [] }
                 },
             ],
             order: [
