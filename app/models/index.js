@@ -168,6 +168,7 @@ db.pollEvent.belongsToMany(db.user, { through: db.pollEventUser });
 //  (Without this, get the error "poll_event is not associated to poll_event_user!", etc.)
 db.pollEvent.hasMany(db.pollEventUser);
 db.pollEventUser.belongsTo(db.pollEvent);
+
 db.user.hasMany(db.pollEventUser);
 db.pollEventUser.belongsTo(db.user);
 
@@ -178,6 +179,17 @@ db.pollEventUser.belongsTo(db.user);
 //  PollEventUsers & UserAnswers : many-to-many
 db.pollEventUser.belongsToMany(db.question, { through: db.userAnswer });
 db.question.belongsToMany(db.pollEventUser, { through: db.userAnswer });
+
+//  Error message:  "question is not associated to user_answer!" <<<  Since we are
+//  DIRECTLY querying the "userAnswer" join table, we need to explicitly define the
+//  "hasMany" and "belongsTo" relationships to the join table, userAnswer, even
+//  though we have the "belongsToMany" relationships defined above.
+//  (Just like the pollEvent & user tables, above.)
+db.pollEventUser.hasMany(db.userAnswer);
+db.userAnswer.belongsTo(db.pollEventUser);
+
+db.question.hasMany(db.userAnswer);
+db.userAnswer.belongsTo(db.question);
 
 //  Courses & Polls : many-to-many
 db.course.belongsToMany(db.poll, { through: db.coursePoll });

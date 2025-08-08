@@ -85,7 +85,7 @@ exports.findAllForPollEventUser = async (req, res) => {
 
 //  Get all the users and their answers for a POLL EVENT (ID).
 exports.findAllForPollEvent = async (req, res) => {
-    
+
     const pollEventId = req.params.pollEventId;
 
     try {
@@ -117,24 +117,38 @@ exports.findAllForPollEvent = async (req, res) => {
 };
 
 //  Find UserAnswer with specified ID.
-//  (Also get the assocated models, PollEvent and Question.)
+//  (Also get the assocated models, PollEventUser (and its User) and Question.)
 exports.findOne = async (req, res) => {
     const id = req.params.id;
 
     try {
         const data = await UserAnswer.findByPk(id, {
-            include: [{ model: PollEventUser, include: [db.user] }, { model: Question }],
+            include: [
+                {
+                    model: PollEventUser,
+                    include: [
+                        {
+                            model: db.user,
+                            //  Do NOT include sensitive user data.
+                            attributes: ["id", "username", "firstName", "lastName"],
+                        },
+                    ],
+                },
+                {
+                    model: Question
+                }
+            ],
         });
         if (data) {
             res.send(data);
         } else {
             res.status(404).send({
-                message: `Cannot find UserAnswer with id=${id}.`,
+                message: `Cannot find UserAnswer with id = ${id}`,
             });
         }
     } catch (err) {
         res.status(500).send({
-            message: "Error retrieving UserAnswer with id=" + id,
+            message: "Error retrieving UserAnswer with id = " + id,
         });
     }
 };
@@ -142,6 +156,15 @@ exports.findOne = async (req, res) => {
 //  Update a UserAnswer by its ID
 exports.update = async (req, res) => {
     const id = req.params.id;
+
+    //  ToDo:   The <correct answer count> may need to be updated
+    //          when this is updated.  But would also need to know
+    //          whether this was the correct answer in the first
+    //          place, before updating it.
+
+    //  ToDo:   Perhaps code a service function to update the
+    //          correct answer count for a specified PollEventUser,
+    //          and do it all at once as part of some process?
 
     try {
         const [num] = await UserAnswer.update(req.body, {
