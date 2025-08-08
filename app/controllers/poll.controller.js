@@ -56,7 +56,8 @@ exports.findAllForUser = (req, res) => {
                 include: [{
                     model: Answer,
                 }],
-            },   {
+            },
+            {
                 model: Courses,
                 through: { attributes: [] }
             },
@@ -82,7 +83,7 @@ exports.findAllForUser = (req, res) => {
         });
 };
 
-// Find a single Poll with an id
+//  Find a single Poll with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Poll.findByPk(
@@ -96,8 +97,10 @@ exports.findOne = (req, res) => {
                         model: Answer,
                     }],
                 },
-                  
-            
+                {
+                    model: Courses,
+                    through: { attributes: [] }
+                },
             ],
         })
         .then((data) => {
