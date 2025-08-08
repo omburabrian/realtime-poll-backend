@@ -5,7 +5,7 @@ module.exports = (app) => {
     //  via additional routes/functionality in them since this is not a "rich"
     //  join table, but its good to have explicit control here too.
 
-    const coursePoll = require("../controllers/coursePoll.controller.js");
+    const CoursePoll = require("../controllers/coursePoll.controller.js");
 
     const {
         authenticateRoute,
@@ -16,19 +16,19 @@ module.exports = (app) => {
     var router = require("express").Router();
 
     //  Associate a Poll with a Course
-    router.post("/course-polls/", [authenticateRoute, isProfessor], coursePoll.create);
+    router.post("/course-polls/", [authenticateRoute, isProfessor], CoursePoll.create);
 
     //  Retrieve all Polls for a Course
-    router.get("/course-polls/course/:courseId", [authenticateRoute, isProfessor], coursePoll.findAllPollsForCourse);
+    router.get("/course-polls/course/:courseId", [authenticateRoute, isProfessor], CoursePoll.findAllPollsForCourse);
 
     //  Retrieve all Courses for a Poll
-    router.get("/course-polls/poll/:pollId", [authenticateRoute, isProfessor], coursePoll.findAllCoursesForPoll);
+    router.get("/course-polls/poll/:pollId", [authenticateRoute, isProfessor], CoursePoll.findAllCoursesForPoll);
 
     //  Disassociate a Poll from a Course
-    router.delete("/course-polls/", [authenticateRoute, isProfessor], coursePoll.delete);
+    router.delete("/course-polls/", [authenticateRoute, isProfessor], CoursePoll.delete);
 
     //  Disassociate all Courses from a Poll
-    router.delete("/course-polls/poll/:pollId", [authenticateRoute, isProfessor], coursePoll.deleteAllForPoll);
+    router.delete("/course-polls/poll/:pollId", [authenticateRoute, isProfessor], CoursePoll.deleteAllForPoll);
 
     app.use("/realtime-pollapi", router);
 };

@@ -10,34 +10,24 @@ const { encrypt, getSalt, hashPassword } = require("../authentication/crypto");
 // Create and Save a new User
 exports.create = async (req, res) => {
 
-  //  Validate request - Ensure required fields have been input.
-  if (req.body.firstName === undefined) {
-    const error = new Error("FIRST NAME cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.lastName === undefined) {
-    const error = new Error("LAST NAME cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.email === undefined) {
-    const error = new Error("EMAIL cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.username === undefined) {
-    const error = new Error("USERNAME cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  } else if (req.body.password === undefined) {
-    const error = new Error("PASSWORD cannot be empty");
-    error.statusCode = 400;
-    throw error;
-  }
-
   //  Create a new user and persist it in the database.
   try {
 
-    //  Check whether user input email or username is already in use.
+    //  Validate request - Ensure required fields have been input.
+    //  Test for "untruthy" value == undefined, empty string, etc.
+    if (!req.body.firstName) {
+      return res.status(400).send({ message: "FIRST NAME cannot be empty" })
+    } else if (!req.body.lastName) {
+      return res.status(400).send({ message: "LAST NAME cannot be empty" })
+    } else if (!req.body.email) {
+      return res.status(400).send({ message: "EMAIL cannot be empty" })
+    } else if (!req.body.username) {
+      return res.status(400).send({ message: "USERNAME cannot be empty" })
+    } else if (!req.body.password) {
+      return res.status(400).send({ message: "PASSWORD cannot be empty" })
+    }
 
+    //  Check whether user input email or username is already in use.
     //  Get any existing user that matches these fields.
     const existingUser = await User.findOne({
       where: {
@@ -129,7 +119,7 @@ exports.create = async (req, res) => {
       });
   } catch (err) {
     console.log(err);
-    res.status(500).send({
+    res.status(err.statusCode || 500).send({
       message:
         err.message || "Error creating user with email / username = " + email + " / " + username,
     });
