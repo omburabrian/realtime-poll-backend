@@ -2,6 +2,7 @@ const db = require("../models");
 const Poll = db.poll;
 const Question = db.question;
 const Answer = db.answer;
+const Courses = db.course;
 const { bulkCreatePollsWithQuestionsAndAnswers } = require("../services/poll.services");
 const Op = db.Sequelize.Op;
 
@@ -56,6 +57,10 @@ exports.findAllForUser = (req, res) => {
                     model: Answer,
                 }],
             },
+            {
+                model: Courses,
+                through: { attributes: [] }
+            },
         ],
         order: [
             ["name", "ASC"],
@@ -78,7 +83,7 @@ exports.findAllForUser = (req, res) => {
         });
 };
 
-// Find a single Poll with an id
+//  Find a single Poll with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Poll.findByPk(
@@ -91,6 +96,10 @@ exports.findOne = (req, res) => {
                     include: [{
                         model: Answer,
                     }],
+                },
+                {
+                    model: Courses,
+                    through: { attributes: [] }
                 },
             ],
         })
@@ -124,6 +133,10 @@ exports.findAll = (req, res) => {
                     include: [{
                         model: Answer,
                     }],
+                },
+                {
+                    model: Courses,
+                    through: { attributes: [] }
                 },
             ],
             order: [
