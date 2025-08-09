@@ -108,13 +108,6 @@ require("./app/routes/pollEventUser.routes")(app);
 require("./app/routes/userAnswer.routes")(app);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//  Example RECIPE routes -- TODO:  DELETE LATER
-require("./app/routes/ingredient.routes")(app);
-require("./app/routes/recipe.routes")(app);
-require("./app/routes/recipeStep.routes")(app);
-require("./app/routes/recipeIngredient.routes")(app);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // set port, listen for requests
 const PORT = process.env.PORT || 3201;
 if (process.env.NODE_ENV !== "test") {

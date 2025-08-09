@@ -1,5 +1,9 @@
 const dbConfig = require("../config/db.config.js");
+
+//  The Sequelize Library, itself  (upper-case "Sequelize")
 const Sequelize = require("sequelize");
+
+//  An instance of a Sequelize database  (lower-case "sequelize")
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -9,7 +13,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     acquire: dbConfig.pool.acquire,
     idle: dbConfig.pool.idle,
   },
+  logging: false,   //  Disable logging of SQL queries to the console
 });
+
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
@@ -27,16 +33,6 @@ db.answer = require("./answer.model.js")(sequelize, Sequelize);
 db.userAnswer = require("./userAnswer.model.js")(sequelize, Sequelize);
 db.course = require("./course.model.js")(sequelize, Sequelize);
 db.coursePoll = require("./coursePoll.model.js")(sequelize, Sequelize);
-
-//-----------------------------------------------------------------------------
-//  Example RECIPE tables -- TODO:  DELETE LATER
-db.ingredient = require("./ingredient.model.js")(sequelize, Sequelize);
-db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
-db.recipeStep = require("./recipeStep.model.js")(sequelize, Sequelize);
-db.recipeIngredient = require("./recipeIngredient.model.js")(
-  sequelize,
-  Sequelize
-);
 
 //-----------------------------------------------------------------------------
 db.session = require("./session.model.js")(sequelize, Sequelize);
@@ -207,69 +203,6 @@ db.session.belongsTo(
     onDelete: "CASCADE"
   }
 );
-
-//#############################################################################
-//VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//  RECIPE FOREIGN KEYS -- TODO:  DELETE LATER
-
-// foreign key for recipe
-db.user.hasMany(
-  db.recipe,
-  { as: "recipe" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.recipe.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: true }, onDelete: "CASCADE" }
-);
-
-// foreign key for recipeStep
-db.recipe.hasMany(
-  db.recipeStep,
-  { as: "recipeStep" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.recipeStep.belongsTo(
-  db.recipe,
-  { as: "recipe" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-// foreign keys for recipeIngredient
-db.recipeStep.hasMany(
-  db.recipeIngredient,
-  { as: "recipeIngredient" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.recipe.hasMany(
-  db.recipeIngredient,
-  { as: "recipeIngredient" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.ingredient.hasMany(
-  db.recipeIngredient,
-  { as: "recipeIngredient" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.recipeIngredient.belongsTo(
-  db.recipeStep,
-  { as: "recipeStep" },
-  { foreignKey: { allowNull: true }, onDelete: "CASCADE" }
-);
-db.recipeIngredient.belongsTo(
-  db.recipe,
-  { as: "recipe" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.recipeIngredient.belongsTo(
-  db.ingredient,
-  { as: "ingredient" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-//#############################################################################
 
 //-----------------------------------------------------------------------------
 module.exports = db;
