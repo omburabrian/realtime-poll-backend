@@ -1,4 +1,5 @@
 const { getTriviaQuestions } = require("./openTriviaDatabase.services");
+const { loadJsonFromFile } = require("./utility.services.js");
 
 const db = require("../models");
 const Poll = db.poll;
@@ -7,7 +8,6 @@ const Answer = db.answer;
 const Op = db.Sequelize.Op;
 
 const path = require("path");
-const fs = require('fs');
 
 //---------------------------------------------------------------------------
 //  Find all Polls for a user (professor)
@@ -34,7 +34,7 @@ async function findAllForUserId(userId) {
 };
 
 //---------------------------------------------------------------------------
-async function loadTestData() {
+async function loadTestData_quizzesAndAnswers() {
 
     //  (Let calling function catch errors.  Probably a contoller function.)
 
@@ -87,6 +87,38 @@ async function loadTestData() {
     returnMessage = `${pollCount} POLLS were created successfully`;
     // console.log(returnMessage);
     return returnMessage;
+}
+
+//---------------------------------------------------------------------------
+async function loadTestData() {
+    try {
+        const quizzesMessage = await loadTestData_quizzesAndAnswers();
+        const discussionPollsMessage = await loadTestData_discussionPolls();
+
+        // Combine messages for a comprehensive response
+        return `${quizzesMessage}\n${discussionPollsMessage}`;
+
+    } catch (err) {
+        console.error('Error loading test data for DISCUSSION POLLS and QUIZZES:', err);
+        //  Re-throw a more generic error to be handled by the controller
+        throw new Error(err.message || "Error occurred while loading test data for DISCUSSION POLLS and QUIZZES");
+    }
+}
+
+//---------------------------------------------------------------------------
+async function loadTestData_discussionPolls() {
+    try {
+        const relativePathToJsonFile = '../testData/discussion_polls.test_data.json';
+        const discussionPollsData = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
+
+        const pollCount = await bulkCreatePollsWithQuestionsAndAnswers(discussionPollsData);
+
+        return `${pollCount} discussion POLLS were created successfully`;
+
+    } catch (err) {
+        console.error('Error loading discussion poll test data:', err);
+        throw new Error(err.message || "Error occurred while loading test data for DISCUSSION POLLS");
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -280,5 +312,7 @@ function getTestDataSpecifications() {
 module.exports = {
     findAllForUserId,
     loadTestData,
-    bulkCreatePollsWithQuestionsAndAnswers
+    loadTestData_quizzesAndAnswers,
+    loadTestData_discussionPolls,
+    bulkCreatePollsWithQuestionsAndAnswers,
 };

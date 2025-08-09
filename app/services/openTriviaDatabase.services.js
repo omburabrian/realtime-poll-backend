@@ -97,7 +97,7 @@ async function getTriviaQuestions(testDataSpecs) {
 
     //  Edit the poll's description to include the user inputs:  amount, category, difficulty.
     //  ToDo:  Push this down into convertTriviaQuestionsToRealTimePoll(), above.
-    realtimePoll_JSON.description = `(amount = ${amount},  category = ${category},  difficulty = ${difficulty})`;
+    realtimePoll_JSON.description = `(# of questions = ${amount},  category = ${category},  difficulty = ${difficulty})`;
     return realtimePoll_JSON;
 }
 

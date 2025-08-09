@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Ice Cream Poll",
+    "description": "A poll about everyone's favorite frozen treat.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What is your all-time favorite ice cream flavor and why?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "Toppings or no toppings? What are your go-to toppings?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "Cup or cone? If cone, what kind (waffle, sugar, cake)?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the most unusual ice cream flavor you've ever tried?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could invent a new ice cream flavor, what would it be?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Cars Poll",
+    "description": "A poll to discuss all things automotive.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What was your first car, or what do you dream your first car will be?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could own any car in the world, regardless of price, what would it be?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "Electric, hybrid, or gasoline-powered cars: what's your preference and why?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the most important feature you look for in a car?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "What's your favorite road trip you've ever taken in a car?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Sports Poll",
+    "description": "Let's talk about the wide world of sports.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What is your favorite sport to watch, and which team do you root for?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "What is your favorite sport to play?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "Who do you consider the greatest athlete of all time in any sport?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What is the most exciting sporting event you have ever attended?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could be a professional athlete for a day, which sport would you choose?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Dating Poll",
+    "description": "A discussion about modern dating and relationships.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What makes for a perfect first date?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "What is the biggest 'deal-breaker' for you in a relationship?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "What qualities do you value most in a partner?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the best piece of dating advice you've ever received?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "Online dating apps: a great tool or a source of frustration? Share your thoughts.",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "School Poll",
+    "description": "Reminiscing about our school days.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What was your favorite subject in school and why?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "Who was your most memorable teacher and what made them stand out?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "What is one thing you wish you had learned in school that wasn't taught?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's your best study tip?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "What was your favorite school-related extracurricular activity?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Pets Poll",
+    "description": "A poll for all the animal lovers out there.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "Are you a dog person, a cat person, or something else entirely?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the funniest thing your pet has ever done?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could have any animal as a pet (real or mythical), what would it be?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the best name you've ever heard for a pet?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "Share a favorite memory of a pet you've had.",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Desserts Poll",
+    "description": "A sweet discussion about our favorite desserts.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could only eat one dessert for the rest of your life, what would it be?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "Chocolate or fruit-based desserts: which do you prefer?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "What is your favorite dessert to make at home?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the best dessert you've ever had at a restaurant?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "Is there a dessert you dislike that most people seem to love?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Food Poll",
+    "description": "A general discussion about all things food.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What is your ultimate comfort food?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "If you had to eat one type of cuisine for a year, what would you choose?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "What's a food you think is overrated?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the most adventurous thing you've ever eaten?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "Sweet or savory breakfast? What's your go-to?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Music Poll",
+    "description": "Let's talk about the music that moves us.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What's a song that always puts you in a good mood?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "Who is an artist or band you think everyone should listen to at least once?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "What was the first concert you ever attended?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could create a soundtrack for your life, what's one song that would have to be on it?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "Live music or studio recordings: what's your preference and why?",
+        "answers": []
+      }
+    ]
+  },
+  {
+    "name": "Vacation Poll",
+    "description": "A poll about our dream getaways and travel experiences.",
+    "isQuiz": false,
+    "isPublic": true,
+    "secondsPerQuestion": 60,
+    "userId": 1,
+    "questions": [
+      {
+        "questionNumber": 1,
+        "questionType": "OPEN_ENDED",
+        "text": "What is your dream vacation destination?",
+        "answers": []
+      },
+      {
+        "questionNumber": 2,
+        "questionType": "OPEN_ENDED",
+        "text": "Relaxing on a beach or exploring a new city: what's your ideal vacation style?",
+        "answers": []
+      },
+      {
+        "questionNumber": 3,
+        "questionType": "OPEN_ENDED",
+        "text": "What's the most memorable trip you've ever taken?",
+        "answers": []
+      },
+      {
+        "questionNumber": 4,
+        "questionType": "OPEN_ENDED",
+        "text": "What's one travel tip you swear by?",
+        "answers": []
+      },
+      {
+        "questionNumber": 5,
+        "questionType": "OPEN_ENDED",
+        "text": "If you could take a year-long sabbatical to travel, where would you go?",
+        "answers": []
+      }
+    ]
+  }
+]

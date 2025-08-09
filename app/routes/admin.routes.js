@@ -13,9 +13,17 @@ module.exports = (app) => {
   router.post("/admin/load-test-data/users", [authenticateRoute, isAdmin],
     Admin.loadTestData_users);
 
-  //  Load test data for POLLS, QUESTIONS, and ANSWERS
+  //  Load ALL test data for POLLS (Quizzes and Discussion Polls)
   router.post("/admin/load-test-data/polls", [authenticateRoute, isAdmin],
-    Admin.loadTestData_pollsQuestionsAnswers);
+    Admin.loadTestData_polls);
+
+  //  Load test data for QUIZZES (POLLS), QUESTIONS, and ANSWERS
+  router.post("/admin/load-test-data/quizzes", [authenticateRoute, isAdmin],
+    Admin.loadTestData_quizzesAndAnswers);
+
+  //  Load test data for DISCUSSION POLLS
+  router.post("/admin/load-test-data/discussion-polls", [authenticateRoute, isAdmin],
+    Admin.loadTestData_discussionPolls);
 
   //  Load test data for COURSES
   router.post("/admin/load-test-data/courses", [authenticateRoute, isAdmin],

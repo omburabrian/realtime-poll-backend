@@ -65,17 +65,45 @@ exports.loadTestData_users = async (req, res) => {
 }
 
 //---------------------------------------------------------------------------
-//  Load test data for POLLS, QUESTIONS, and ANSWERS
-exports.loadTestData_pollsQuestionsAnswers = async (req, res) => {
+//  Load ALL test data for POLLS (Quizzes and Discussions)
+exports.loadTestData_polls = async (req, res) => {
   try {
     const responseMessage = await PollServices.loadTestData();
     res.send({ message: responseMessage });
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Error occurred while loading test data for POLLS",
+      message:
+        err.message || "Error occurred while loading test data for POLLS",
+    });
+  }
+};
+
+//---------------------------------------------------------------------------
+//  Load test data for POLLS, QUESTIONS, and ANSWERS
+exports.loadTestData_quizzesAndAnswers = async (req, res) => {
+  try {
+    const responseMessage = await PollServices.loadTestData_quizzesAndAnswers();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Error occurred while loading test data for QUIZZES (POLLS)",
     });
   }
 }
+
+//---------------------------------------------------------------------------
+//  Load test data for DISCUSSION POLLS
+exports.loadTestData_discussionPolls = async (req, res) => {
+  try {
+    const responseMessage = await PollServices.loadTestData_discussionPolls();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Error occurred while loading test data for DISCUSSION POLLS",
+    });
+  }
+};
 
 //---------------------------------------------------------------------------
 //  Load test data for COURSES
