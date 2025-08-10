@@ -129,11 +129,42 @@ async function loadTestData_discussionPolls() {
 //---------------------------------------------------------------------------
 async function loadTestData_pollEvents() {
     try {
-        const relativePathToJsonFile = '../testData/pollEvent.test_data.json';
-        const pollEventsData = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
+        //  This POLLS data file was created by querying the database
+        //  (using Postman) for ALL POLLS, including their original ID.
+        //  This set of POLLS will be used as reference ( thus "referencePolls")
+        //  in order to identify the new POLL IDs from this seeding procedure.
+        const relativePathToJsonFile = '../testData/all-polls.from-postman.json';
+        const referencePolls = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
 
-        const createdPollEvents = await PollEvent.bulkCreate(pollEventsData);
+        //  This will be the POLL EVENT objects with their corresponding, newly assigned IDs.
+        const pollEventsToCreate = [];
 
+        //  Get all POLLS in the DB and create a MAP, using their NAMES as KEYS to their IDs.
+        const allPollsInDb = await Poll.findAll({ attributes: ['id', 'name'] });
+        //  Map the NAMEs (KEYs) to the IDs (VALUEs).
+        const pollMap = new Map(allPollsInDb.map(p => [p.name, p.id]));
+
+        //  Now read the POLL EVENT TEST DATA to create, which does NOT contain any IDs.
+        const pollEventsData = await loadJsonFromFile(path.resolve(__dirname, '../testData/pollEvent.test_data.json'));
+
+        //  1.  Iterate through the POLL EVENT test data records to be created.
+        //  2.  Use the previously created "referencePolls" to cross-reference
+        //      the original IDs to the POLL NAMES.
+        //  3.  Then use the POLL NAME as the KEY to MAP from the common NAME
+        //      to the new, actual ID in the database.
+        //  4.  And assign that ID to the new POLL EVENT object to be created.
+        //  5.  Add the POLL EVENT object to list of objects to be bulk created.
+        for (const event of pollEventsData) {
+            //  Find the original poll NAME from the reference file using the old ID
+            const refPoll = referencePolls.find(p => p.id === event.pollId);
+            if (refPoll && pollMap.has(refPoll.name)) {
+                // Get the new ID from the map and update the event object
+                event.pollId = pollMap.get(refPoll.name);
+                pollEventsToCreate.push(event);
+            }
+        }
+
+        const createdPollEvents = await PollEvent.bulkCreate(pollEventsToCreate);
         return `${createdPollEvents.length} PollEvents were created successfully`;
 
     } catch (err) {
