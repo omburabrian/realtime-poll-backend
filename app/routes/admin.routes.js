@@ -3,11 +3,15 @@ module.exports = (app) => {
   //  Routes require not only AUTHENTICATION, but also ADMIN role.
 
   const Admin = require("../controllers/admin.controller.js");
+  const Poll = require("../controllers/poll.controller.js");
   const { authenticateRoute, isAdmin } = require("../authentication/authentication");
   var router = require("express").Router();
 
   //  Get admin dashboard data
   router.get("/admin", [authenticateRoute, isAdmin], Admin.getDashboardData);
+
+  //  Get ALL Polls -- Do NOT include related models
+  router.get("/admin/polls-only", [authenticateRoute, isAdmin], Poll.findAll_pollsOnly);
 
   //  Load test data for USERS
   router.post("/admin/load-test-data/users", [authenticateRoute, isAdmin],
@@ -24,6 +28,10 @@ module.exports = (app) => {
   //  Load test data for DISCUSSION POLLS
   router.post("/admin/load-test-data/discussion-polls", [authenticateRoute, isAdmin],
     Admin.loadTestData_discussionPolls);
+
+  //  Load test data for POLL EVENTS
+  router.post("/admin/load-test-data/poll-events", [authenticateRoute, isAdmin],
+    Admin.loadTestData_pollEvents);
 
   //  Load test data for COURSES
   router.post("/admin/load-test-data/courses", [authenticateRoute, isAdmin],

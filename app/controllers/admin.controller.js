@@ -106,6 +106,20 @@ exports.loadTestData_discussionPolls = async (req, res) => {
 };
 
 //---------------------------------------------------------------------------
+//  Load test data for POLL EVENTS
+exports.loadTestData_pollEvents = async (req, res) => {
+  try {
+    const responseMessage = await PollServices.loadTestData_pollEvents();
+    res.send({ message: responseMessage });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Error occurred while loading test data for POLL EVENTS",
+    });
+  }
+};
+
+//---------------------------------------------------------------------------
 //  Load test data for COURSES
 exports.loadTestData_courses = async (req, res) => {
   try {

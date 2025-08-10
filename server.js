@@ -12,10 +12,11 @@ const { USER_ROLES } = require("./app/config/constants");
 const { getSalt, hashPassword } = require("./app/authentication/crypto");
 
 //  Sync all defined models with the database.
+console.log("Syncing database...");
 db.sequelize.sync()
   .then(() => {
     //  If models and DB successfully synced, perform any required DB initialization.
-    console.log("Synced DB.");
+    console.log("Database synced successfully.");
     initializeDatabase();
   });
 

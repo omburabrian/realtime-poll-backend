@@ -3,6 +3,7 @@ const { loadJsonFromFile } = require("./utility.services.js");
 
 const db = require("../models");
 const Poll = db.poll;
+const PollEvent = db.pollEvent;
 const Question = db.question;
 const Answer = db.answer;
 const Op = db.Sequelize.Op;
@@ -84,7 +85,7 @@ async function loadTestData_quizzesAndAnswers() {
 
     //  Bulk create all the polls, en masse... ("The Incredible *Bulk*!")
     const pollCount = await bulkCreatePollsWithQuestionsAndAnswers(quizList);
-    returnMessage = `${pollCount} POLLS were created successfully`;
+    returnMessage = `${pollCount} POLLS (quiz type) were created successfully`;
     // console.log(returnMessage);
     return returnMessage;
 }
@@ -95,13 +96,17 @@ async function loadTestData() {
         const quizzesMessage = await loadTestData_quizzesAndAnswers();
         const discussionPollsMessage = await loadTestData_discussionPolls();
 
+        //  NOTE:   It is important to run this IMMEDIATELY after the previous
+        //          two functions, as the "pollId" values are dependent on them.
+        const pollEventsMessage = await loadTestData_pollEvents();
+        
         // Combine messages for a comprehensive response
-        return `${quizzesMessage}\n${discussionPollsMessage}`;
+        return `${quizzesMessage}\n${discussionPollsMessage}\n${pollEventsMessage}`;
 
     } catch (err) {
-        console.error('Error loading test data for DISCUSSION POLLS and QUIZZES:', err);
+        console.error('Error loading test data for POLLS and POLL EVENTS:', err);
         //  Re-throw a more generic error to be handled by the controller
-        throw new Error(err.message || "Error occurred while loading test data for DISCUSSION POLLS and QUIZZES");
+        throw new Error(err.message || "Error loading test data for POLLS and POLL EVENTS");
     }
 }
 
@@ -118,6 +123,22 @@ async function loadTestData_discussionPolls() {
     } catch (err) {
         console.error('Error loading discussion poll test data:', err);
         throw new Error(err.message || "Error occurred while loading test data for DISCUSSION POLLS");
+    }
+}
+
+//---------------------------------------------------------------------------
+async function loadTestData_pollEvents() {
+    try {
+        const relativePathToJsonFile = '../testData/pollEvent.test_data.json';
+        const pollEventsData = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
+
+        const createdPollEvents = await PollEvent.bulkCreate(pollEventsData);
+
+        return `${createdPollEvents.length} PollEvents were created successfully`;
+
+    } catch (err) {
+        console.error('Error loading poll event test data:', err);
+        throw new Error(err.message || "Error occurred while loading test data for POLL EVENTS");
     }
 }
 
@@ -314,5 +335,6 @@ module.exports = {
     loadTestData,
     loadTestData_quizzesAndAnswers,
     loadTestData_discussionPolls,
+    loadTestData_pollEvents,
     bulkCreatePollsWithQuestionsAndAnswers,
 };
