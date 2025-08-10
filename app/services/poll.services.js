@@ -1,13 +1,14 @@
 const { getTriviaQuestions } = require("./openTriviaDatabase.services");
+const { loadJsonFromFile } = require("./utility.services.js");
 
 const db = require("../models");
 const Poll = db.poll;
+const PollEvent = db.pollEvent;
 const Question = db.question;
 const Answer = db.answer;
 const Op = db.Sequelize.Op;
 
 const path = require("path");
-const fs = require('fs');
 
 //---------------------------------------------------------------------------
 //  Find all Polls for a user (professor)
@@ -34,31 +35,47 @@ async function findAllForUserId(userId) {
 };
 
 //---------------------------------------------------------------------------
-async function loadTestData() {
+async function loadTestData_quizzesAndAnswers() {
 
     //  (Let calling function catch errors.  Probably a contoller function.)
 
     var returnMessage = 'Error occurred while loading test data for POLLS';
 
-    //  For testing, just assign the test data polls to the first user,
-    //  assuming it is the dev who first logged in.
-    //  ToDo:   Assign the polls to various users who have the role of "professor".
+
+    /*
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    NOTE:   Which PROFESSOR USER to which to assign new Polls test data?
+
+    Only ADMINS have permission to create test data.  Admins also have
+    PROFESSOR permissions.  So for now, just assign the new test data for the
+    new Polls to the current user, who will be an ADMIN user.
+
+    ToDo:   Add option to assign new Polls test data to specified PROFESSOR
+            user(s).
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
+    */
+
     const theUserId = 1;
-    const testDataFiles = getTestDataFiles();
+    const testDataSpecifications = getTestDataSpecifications();
     var quizList = [];      //  List of polls that will be bulkCreate()'d.
     var poll_JSON = {};     //  Temporary variable for holding the poll in the loop.
 
     //  Read the list of test data files (previously downloaded from opentdb),
     //  converting them to Real-time Polls, Questions, and Answers.
-    testDataFiles.forEach(async (testDataFile) => { 
+    testDataSpecifications.forEach(async (testDataSpecs) => { 
 
+        poll_JSON = await getTriviaQuestions(testDataSpecs);
+
+        /*
         poll_JSON = await getTriviaQuestions(
             //  ToDo:  Eventually won't need fileName, as data will come from API.
-            testDataFile.fileName,
-            testDataFile.amount,
-            testDataFile.category,
-            testDataFile.difficulty
+            testDataSpecs.fileName,
+            testDataSpecs.amount,
+            testDataSpecs.category,
+            testDataSpecs.difficulty,
+            testDataSpecs.pollName,
         );
+        //  */
 
         //  Assign the "professor" user and add to the list from which
         //  to bulkCreate() the new POLLS (quizzes).
@@ -68,9 +85,92 @@ async function loadTestData() {
 
     //  Bulk create all the polls, en masse... ("The Incredible *Bulk*!")
     const pollCount = await bulkCreatePollsWithQuestionsAndAnswers(quizList);
-    returnMessage = `${pollCount} POLLS were created successfully`;
+    returnMessage = `${pollCount} POLLS (quiz type) were created successfully`;
     // console.log(returnMessage);
     return returnMessage;
+}
+
+//---------------------------------------------------------------------------
+async function loadTestData() {
+    try {
+        const quizzesMessage = await loadTestData_quizzesAndAnswers();
+        const discussionPollsMessage = await loadTestData_discussionPolls();
+
+        //  NOTE:   It is important to run this IMMEDIATELY after the previous
+        //          two functions, as the "pollId" values are dependent on them.
+        const pollEventsMessage = await loadTestData_pollEvents();
+        
+        // Combine messages for a comprehensive response
+        return `${quizzesMessage}\n${discussionPollsMessage}\n${pollEventsMessage}`;
+
+    } catch (err) {
+        console.error('Error loading test data for POLLS and POLL EVENTS:', err);
+        //  Re-throw a more generic error to be handled by the controller
+        throw new Error(err.message || "Error loading test data for POLLS and POLL EVENTS");
+    }
+}
+
+//---------------------------------------------------------------------------
+async function loadTestData_discussionPolls() {
+    try {
+        const relativePathToJsonFile = '../testData/discussion_polls.test_data.json';
+        const discussionPollsData = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
+
+        const pollCount = await bulkCreatePollsWithQuestionsAndAnswers(discussionPollsData);
+
+        return `${pollCount} discussion POLLS were created successfully`;
+
+    } catch (err) {
+        console.error('Error loading discussion poll test data:', err);
+        throw new Error(err.message || "Error occurred while loading test data for DISCUSSION POLLS");
+    }
+}
+
+//---------------------------------------------------------------------------
+async function loadTestData_pollEvents() {
+    try {
+        //  This POLLS data file was created by querying the database
+        //  (using Postman) for ALL POLLS, including their original ID.
+        //  This set of POLLS will be used as reference ( thus "referencePolls")
+        //  in order to identify the new POLL IDs from this seeding procedure.
+        const relativePathToJsonFile = '../testData/all-polls.from-postman.json';
+        const referencePolls = await loadJsonFromFile(path.resolve(__dirname, relativePathToJsonFile));
+
+        //  This will be the POLL EVENT objects with their corresponding, newly assigned IDs.
+        const pollEventsToCreate = [];
+
+        //  Get all POLLS in the DB and create a MAP, using their NAMES as KEYS to their IDs.
+        const allPollsInDb = await Poll.findAll({ attributes: ['id', 'name'] });
+        //  Map the NAMEs (KEYs) to the IDs (VALUEs).
+        const pollMap = new Map(allPollsInDb.map(p => [p.name, p.id]));
+
+        //  Now read the POLL EVENT TEST DATA to create, which does NOT contain any IDs.
+        const pollEventsData = await loadJsonFromFile(path.resolve(__dirname, '../testData/pollEvent.test_data.json'));
+
+        //  1.  Iterate through the POLL EVENT test data records to be created.
+        //  2.  Use the previously created "referencePolls" to cross-reference
+        //      the original IDs to the POLL NAMES.
+        //  3.  Then use the POLL NAME as the KEY to MAP from the common NAME
+        //      to the new, actual ID in the database.
+        //  4.  And assign that ID to the new POLL EVENT object to be created.
+        //  5.  Add the POLL EVENT object to list of objects to be bulk created.
+        for (const event of pollEventsData) {
+            //  Find the original poll NAME from the reference file using the old ID
+            const refPoll = referencePolls.find(p => p.id === event.pollId);
+            if (refPoll && pollMap.has(refPoll.name)) {
+                // Get the new ID from the map and update the event object
+                event.pollId = pollMap.get(refPoll.name);
+                pollEventsToCreate.push(event);
+            }
+        }
+
+        const createdPollEvents = await PollEvent.bulkCreate(pollEventsToCreate);
+        return `${createdPollEvents.length} PollEvents were created successfully`;
+
+    } catch (err) {
+        console.error('Error loading poll event test data:', err);
+        throw new Error(err.message || "Error occurred while loading test data for POLL EVENTS");
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -118,104 +218,120 @@ function getIncludeOptionsBlockForQA() {
 }
 
 //--------------------------------------------------------
-function getTestDataFiles() {
+function getTestDataSpecifications() {
 
     return [
         {
             fileName: 'animals-10-easy.json',
             category: 'Animals',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Animals Quiz'
         },
         {
             fileName: 'art-10-easy.json',
             category: 'Art',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Art Quiz'
         },
         {
             fileName: 'books-10-easy.json',
             category: 'Books',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Books Quiz'
         },
         {
             fileName: 'celebrities-10-easy.json',
             category: 'Celebrities',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Celebrities Quiz'
         },
         {
             fileName: 'computer-science-10-easy.json',
             category: 'Computer Science',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Computer Science Quiz'
         },
         {
             fileName: 'film-10-easy.json',
             category: 'Film',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Film Quiz'
         },
         {
             fileName: 'general-knowledge-10-easy.json',
             category: 'General Knowledge',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'General Knowledge Quiz'
         },
         {
             fileName: 'geography-10-easy.json',
             category: 'Geography',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Geography Quiz'
         },
         {
             fileName: 'history-10-easy.json',
             category: 'History',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'History Quiz'
         },
         {
             fileName: 'math-10-easy.json',
             category: 'Math',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Math Quiz'
         },
         {
             fileName: 'music-10-easy.json',
             category: 'Music',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Music Quiz'
         },
         {
             fileName: 'mythology-10-easy.json',
             category: 'Mythology',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Mythology Quiz'
         },
         {
             fileName: 'politics-10-easy.json',
             category: 'Politics',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Politics Quiz'
         },
         {
             fileName: 'science-and-nature-10-easy.json',
             category: 'Science and Nature',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Science and Nature Quiz'
         },
         {
             fileName: 'sports-10-easy.json',
             category: 'Sports',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Sports Quiz'
         },
                 {
             fileName: 'television-10-easy.json',
             category: 'Television',
             difficulty: 'easy',
-            amount: '10'
+            amount: '10',
+            pollName: 'Television Quiz'
         },
     ];
 
@@ -248,5 +364,8 @@ function getTestDataFiles() {
 module.exports = {
     findAllForUserId,
     loadTestData,
-    bulkCreatePollsWithQuestionsAndAnswers
+    loadTestData_quizzesAndAnswers,
+    loadTestData_discussionPolls,
+    loadTestData_pollEvents,
+    bulkCreatePollsWithQuestionsAndAnswers,
 };
