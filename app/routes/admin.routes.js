@@ -18,6 +18,7 @@ module.exports = (app) => {
     Admin.loadTestData_users);
 
   //  Load ALL test data for POLLS (Quizzes and Discussion Polls)
+  //  . . . and subsequently corresponding POLL EVENTS
   router.post("/admin/load-test-data/polls", [authenticateRoute, isAdmin],
     Admin.loadTestData_polls);
 
