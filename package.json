@@ -28,6 +28,7 @@
     "nanoid": "^5.1.5",
     "parse": "^6.1.1",
     "sequelize": "^6.19.0",
+    "socket.io": "^4.8.1",
     "supertest": "^6.3.3"
   }
 }

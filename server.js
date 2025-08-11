@@ -2,9 +2,13 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const http = require("http");
 
 const app = express();
 
+//  Create an HTTP server from the Express app, which we can then pass to Socket.IO
+const httpServer = http.createServer(app);
+const { Server } = require("socket.io");
 const db = require("./app/models");
 
 //  Get data needed for creating default admin user, if needed.
@@ -19,6 +23,16 @@ db.sequelize.sync()
     console.log("Database synced successfully.");
     initializeDatabase();
   });
+
+//  Initialize Socket.IO
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:8081", //  Allow requests from your Vue frontend
+    methods: ["GET", "POST"]
+  }
+});
+
+require("./app/socket")(io); //  Pass the io instance to our new socket logic module
 
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -112,7 +126,8 @@ require("./app/routes/userAnswer.routes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 3201;
 if (process.env.NODE_ENV !== "test") {
-  app.listen(PORT, () => {
+  //   app.listen(PORT, () => {
+  httpServer.listen(PORT, () => { //  Use the httpServer to listen, not the app
     console.log(`Server is running on port ${PORT}.`);
   });
 }
