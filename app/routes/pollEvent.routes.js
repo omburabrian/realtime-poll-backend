@@ -12,7 +12,9 @@ module.exports = (app) => {
   router.get("/poll-events/poll/:pollId", [authenticateRoute, isProfessor],
     PollEvent.findAllForPoll);
 
-  //  Retrieve all PollEvents for a User
+  //  Retrieve all PollEvents for a PROFESSOR User (created by specified (Professor) User)
+  //  ToDo:   Need another route for regular users to retrieve their own poll event history,
+  //          polls that they have participated in.
   router.get("/poll-events/user/:userId", [authenticateRoute, isProfessor],
     PollEvent.findAllForUser);    
 
