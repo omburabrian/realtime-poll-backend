@@ -14,7 +14,7 @@ module.exports = (app) => {
   //  Retrieve a single Poll with ID
   router.get("/polls/:id", [authenticateRoute], Poll.findOne);
 
-  //  Retrieve ALL Polls  (ADMIN use only)
+  //  Retrieve ALL Polls  (ADMIN use only)   ToDo:  Why were admin permissions removed from this?
   router.get("/polls/", Poll.findAll);
 
   //  TODO:  Need a Poll.findAllTakenByUser ?

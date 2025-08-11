@@ -153,6 +153,25 @@ exports.findAll = (req, res) => {
         });
 };
 
+//  Retrieve ALL Polls (for ADMINs only)
+exports.findAll_pollsOnly = (req, res) => {
+
+    Poll.findAll(
+        {
+            order: [
+                ["name", "ASC"],
+            ],
+        },)
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Error occurred while retrieving Polls",
+            });
+        });
+};
+
 //  Update a Poll identified by the specified ID
 exports.update = (req, res) => {
     const id = req.params.id;

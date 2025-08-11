@@ -12,10 +12,11 @@ const { USER_ROLES } = require("./app/config/constants");
 const { getSalt, hashPassword } = require("./app/authentication/crypto");
 
 //  Sync all defined models with the database.
+console.log("Syncing database...");
 db.sequelize.sync()
   .then(() => {
     //  If models and DB successfully synced, perform any required DB initialization.
-    console.log("Synced DB.");
+    console.log("Database synced successfully.");
     initializeDatabase();
   });
 
@@ -106,13 +107,6 @@ require("./app/routes/answer.routes")(app);
 require("./app/routes/pollEvent.routes")(app);
 require("./app/routes/pollEventUser.routes")(app);
 require("./app/routes/userAnswer.routes")(app);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//  Example RECIPE routes -- TODO:  DELETE LATER
-require("./app/routes/ingredient.routes")(app);
-require("./app/routes/recipe.routes")(app);
-require("./app/routes/recipeStep.routes")(app);
-require("./app/routes/recipeIngredient.routes")(app);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // set port, listen for requests

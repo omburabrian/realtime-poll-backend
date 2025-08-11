@@ -11,6 +11,7 @@ const QUESTION_TYPES = Object.freeze({
   MULTIPLE_CHOICE: 'multiple_choice',
   TRUE_FALSE: 'true_false',
   SHORT_ANSWER: 'short_answer',
+  OPEN_ENDED: 'open_ended',
 });
 
 const QUESTION_DIFFICULTY = Object.freeze({

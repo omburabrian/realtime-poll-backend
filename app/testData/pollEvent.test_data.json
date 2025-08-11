@@ -1,0 +1,548 @@
+[
+  {
+    "name": "Animals Quiz - Session 1",
+    "description": "This is session 1 for the 'Animals Quiz' poll.",
+    "guid": "aBcDeFgHi1",
+    "uri": "http://localhost:8081/join/aBcDeFgHi1",
+    "pollId": 1
+  },
+  {
+    "name": "Animals Quiz - Session 2",
+    "description": "This is session 2 for the 'Animals Quiz' poll.",
+    "guid": "jKlMnOpQr2",
+    "uri": "http://localhost:8081/join/jKlMnOpQr2",
+    "pollId": 1
+  },
+  {
+    "name": "Animals Quiz - Session 3",
+    "description": "This is session 3 for the 'Animals Quiz' poll.",
+    "guid": "sTuVwXyZ3",
+    "uri": "http://localhost:8081/join/sTuVwXyZ3",
+    "pollId": 1
+  },
+  {
+    "name": "Art Quiz - Session 1",
+    "description": "This is session 1 for the 'Art Quiz' poll.",
+    "guid": "bCdEfGhI4",
+    "uri": "http://localhost:8081/join/bCdEfGhI4",
+    "pollId": 2
+  },
+  {
+    "name": "Art Quiz - Session 2",
+    "description": "This is session 2 for the 'Art Quiz' poll.",
+    "guid": "kLmNoPqR5",
+    "uri": "http://localhost:8081/join/kLmNoPqR5",
+    "pollId": 2
+  },
+  {
+    "name": "Art Quiz - Session 3",
+    "description": "This is session 3 for the 'Art Quiz' poll.",
+    "guid": "tUvWxYz6",
+    "uri": "http://localhost:8081/join/tUvWxYz6",
+    "pollId": 2
+  },
+  {
+    "name": "Books Quiz - Session 1",
+    "description": "This is session 1 for the 'Books Quiz' poll.",
+    "guid": "cDeFgHiJ7",
+    "uri": "http://localhost:8081/join/cDeFgHiJ7",
+    "pollId": 3
+  },
+  {
+    "name": "Books Quiz - Session 2",
+    "description": "This is session 2 for the 'Books Quiz' poll.",
+    "guid": "lMnOpQrS8",
+    "uri": "http://localhost:8081/join/lMnOpQrS8",
+    "pollId": 3
+  },
+  {
+    "name": "Books Quiz - Session 3",
+    "description": "This is session 3 for the 'Books Quiz' poll.",
+    "guid": "uVwXyZaB9",
+    "uri": "http://localhost:8081/join/uVwXyZaB9",
+    "pollId": 3
+  },
+  {
+    "name": "Cars Poll - Session 1",
+    "description": "This is session 1 for the 'Cars Poll' poll.",
+    "guid": "dEfGhIjK1",
+    "uri": "http://localhost:8081/join/dEfGhIjK1",
+    "pollId": 18
+  },
+  {
+    "name": "Cars Poll - Session 2",
+    "description": "This is session 2 for the 'Cars Poll' poll.",
+    "guid": "mNoPqRsT2",
+    "uri": "http://localhost:8081/join/mNoPqRsT2",
+    "pollId": 18
+  },
+  {
+    "name": "Cars Poll - Session 3",
+    "description": "This is session 3 for the 'Cars Poll' poll.",
+    "guid": "vWxYzAbC3",
+    "uri": "http://localhost:8081/join/vWxYzAbC3",
+    "pollId": 18
+  },
+  {
+    "name": "Celebrities Quiz - Session 1",
+    "description": "This is session 1 for the 'Celebrities Quiz' poll.",
+    "guid": "eFgHiJkL4",
+    "uri": "http://localhost:8081/join/eFgHiJkL4",
+    "pollId": 4
+  },
+  {
+    "name": "Celebrities Quiz - Session 2",
+    "description": "This is session 2 for the 'Celebrities Quiz' poll.",
+    "guid": "nOpQrStU5",
+    "uri": "http://localhost:8081/join/nOpQrStU5",
+    "pollId": 4
+  },
+  {
+    "name": "Celebrities Quiz - Session 3",
+    "description": "This is session 3 for the 'Celebrities Quiz' poll.",
+    "guid": "wXyZaBcD6",
+    "uri": "http://localhost:8081/join/wXyZaBcD6",
+    "pollId": 4
+  },
+  {
+    "name": "Computer Science Quiz - Session 1",
+    "description": "This is session 1 for the 'Computer Science Quiz' poll.",
+    "guid": "fGhIjKlM7",
+    "uri": "http://localhost:8081/join/fGhIjKlM7",
+    "pollId": 5
+  },
+  {
+    "name": "Computer Science Quiz - Session 2",
+    "description": "This is session 2 for the 'Computer Science Quiz' poll.",
+    "guid": "oPqRsTuV8",
+    "uri": "http://localhost:8081/join/oPqRsTuV8",
+    "pollId": 5
+  },
+  {
+    "name": "Computer Science Quiz - Session 3",
+    "description": "This is session 3 for the 'Computer Science Quiz' poll.",
+    "guid": "xYzAaCdE9",
+    "uri": "http://localhost:8081/join/xYzAaCdE9",
+    "pollId": 5
+  },
+  {
+    "name": "Dating Poll - Session 1",
+    "description": "This is session 1 for the 'Dating Poll' poll.",
+    "guid": "gHiJkLnM1",
+    "uri": "http://localhost:8081/join/gHiJkLnM1",
+    "pollId": 20
+  },
+  {
+    "name": "Dating Poll - Session 2",
+    "description": "This is session 2 for the 'Dating Poll' poll.",
+    "guid": "pQrStUvW2",
+    "uri": "http://localhost:8081/join/pQrStUvW2",
+    "pollId": 20
+  },
+  {
+    "name": "Dating Poll - Session 3",
+    "description": "This is session 3 for the 'Dating Poll' poll.",
+    "guid": "yZaBcDeF3",
+    "uri": "http://localhost:8081/join/yZaBcDeF3",
+    "pollId": 20
+  },
+  {
+    "name": "Desserts Poll - Session 1",
+    "description": "This is session 1 for the 'Desserts Poll' poll.",
+    "guid": "hIjKlMnN4",
+    "uri": "http://localhost:8081/join/hIjKlMnN4",
+    "pollId": 23
+  },
+  {
+    "name": "Desserts Poll - Session 2",
+    "description": "This is session 2 for the 'Desserts Poll' poll.",
+    "guid": "qRsTuVwX5",
+    "uri": "http://localhost:8081/join/qRsTuVwX5",
+    "pollId": 23
+  },
+  {
+    "name": "Desserts Poll - Session 3",
+    "description": "This is session 3 for the 'Desserts Poll' poll.",
+    "guid": "zAbCdEfG6",
+    "uri": "http://localhost:8081/join/zAbCdEfG6",
+    "pollId": 23
+  },
+  {
+    "name": "Film Quiz - Session 1",
+    "description": "This is session 1 for the 'Film Quiz' poll.",
+    "guid": "iJkLmNoO7",
+    "uri": "http://localhost:8081/join/iJkLmNoO7",
+    "pollId": 6
+  },
+  {
+    "name": "Film Quiz - Session 2",
+    "description": "This is session 2 for the 'Film Quiz' poll.",
+    "guid": "rStUvWxY8",
+    "uri": "http://localhost:8081/join/rStUvWxY8",
+    "pollId": 6
+  },
+  {
+    "name": "Film Quiz - Session 3",
+    "description": "This is session 3 for the 'Film Quiz' poll.",
+    "guid": "aBcDeFgH9",
+    "uri": "http://localhost:8081/join/aBcDeFgH9",
+    "pollId": 6
+  },
+  {
+    "name": "Food Poll - Session 1",
+    "description": "This is session 1 for the 'Food Poll' poll.",
+    "guid": "jKlMnOpP1",
+    "uri": "http://localhost:8081/join/jKlMnOpP1",
+    "pollId": 24
+  },
+  {
+    "name": "Food Poll - Session 2",
+    "description": "This is session 2 for the 'Food Poll' poll.",
+    "guid": "sTuVwXyZ2",
+    "uri": "http://localhost:8081/join/sTuVwXyZ2",
+    "pollId": 24
+  },
+  {
+    "name": "Food Poll - Session 3",
+    "description": "This is session 3 for the 'Food Poll' poll.",
+    "guid": "bCdEfGhI3",
+    "uri": "http://localhost:8081/join/bCdEfGhI3",
+    "pollId": 24
+  },
+  {
+    "name": "General Knowledge Quiz - Session 1",
+    "description": "This is session 1 for the 'General Knowledge Quiz' poll.",
+    "guid": "kLmNoPqQ4",
+    "uri": "http://localhost:8081/join/kLmNoPqQ4",
+    "pollId": 7
+  },
+  {
+    "name": "General Knowledge Quiz - Session 2",
+    "description": "This is session 2 for the 'General Knowledge Quiz' poll.",
+    "guid": "tUvWxYzA5",
+    "uri": "http://localhost:8081/join/tUvWxYzA5",
+    "pollId": 7
+  },
+  {
+    "name": "General Knowledge Quiz - Session 3",
+    "description": "This is session 3 for the 'General Knowledge Quiz' poll.",
+    "guid": "cDeFgHiJ6",
+    "uri": "http://localhost:8081/join/cDeFgHiJ6",
+    "pollId": 7
+  },
+  {
+    "name": "Geography Quiz - Session 1",
+    "description": "This is session 1 for the 'Geography Quiz' poll.",
+    "guid": "lMnOpQrR7",
+    "uri": "http://localhost:8081/join/lMnOpQrR7",
+    "pollId": 8
+  },
+  {
+    "name": "Geography Quiz - Session 2",
+    "description": "This is session 2 for the 'Geography Quiz' poll.",
+    "guid": "uVwXyZaB8",
+    "uri": "http://localhost:8081/join/uVwXyZaB8",
+    "pollId": 8
+  },
+  {
+    "name": "Geography Quiz - Session 3",
+    "description": "This is session 3 for the 'Geography Quiz' poll.",
+    "guid": "dEfGhIjK9",
+    "uri": "http://localhost:8081/join/dEfGhIjK9",
+    "pollId": 8
+  },
+  {
+    "name": "History Quiz - Session 1",
+    "description": "This is session 1 for the 'History Quiz' poll.",
+    "guid": "mNoPqRsS1",
+    "uri": "http://localhost:8081/join/mNoPqRsS1",
+    "pollId": 9
+  },
+  {
+    "name": "History Quiz - Session 2",
+    "description": "This is session 2 for the 'History Quiz' poll.",
+    "guid": "vWxYzAbC2",
+    "uri": "http://localhost:8081/join/vWxYzAbC2",
+    "pollId": 9
+  },
+  {
+    "name": "History Quiz - Session 3",
+    "description": "This is session 3 for the 'History Quiz' poll.",
+    "guid": "eFgHiJkL3",
+    "uri": "http://localhost:8081/join/eFgHiJkL3",
+    "pollId": 9
+  },
+  {
+    "name": "Ice Cream Poll - Session 1",
+    "description": "This is session 1 for the 'Ice Cream Poll' poll.",
+    "guid": "nOpQrStT4",
+    "uri": "http://localhost:8081/join/nOpQrStT4",
+    "pollId": 17
+  },
+  {
+    "name": "Ice Cream Poll - Session 2",
+    "description": "This is session 2 for the 'Ice Cream Poll' poll.",
+    "guid": "wXyZaBcD5",
+    "uri": "http://localhost:8081/join/wXyZaBcD5",
+    "pollId": 17
+  },
+  {
+    "name": "Ice Cream Poll - Session 3",
+    "description": "This is session 3 for the 'Ice Cream Poll' poll.",
+    "guid": "fGhIjKlM6",
+    "uri": "http://localhost:8081/join/fGhIjKlM6",
+    "pollId": 17
+  },
+  {
+    "name": "Math Quiz - Session 1",
+    "description": "This is session 1 for the 'Math Quiz' poll.",
+    "guid": "oPqRsTuU7",
+    "uri": "http://localhost:8081/join/oPqRsTuU7",
+    "pollId": 10
+  },
+  {
+    "name": "Math Quiz - Session 2",
+    "description": "This is session 2 for the 'Math Quiz' poll.",
+    "guid": "xYzAaCdE8",
+    "uri": "http://localhost:8081/join/xYzAaCdE8",
+    "pollId": 10
+  },
+  {
+    "name": "Math Quiz - Session 3",
+    "description": "This is session 3 for the 'Math Quiz' poll.",
+    "guid": "gHiJkLnM9",
+    "uri": "http://localhost:8081/join/gHiJkLnM9",
+    "pollId": 10
+  },
+  {
+    "name": "Music Poll - Session 1",
+    "description": "This is session 1 for the 'Music Poll' poll.",
+    "guid": "pQrStUvV1",
+    "uri": "http://localhost:8081/join/pQrStUvV1",
+    "pollId": 25
+  },
+  {
+    "name": "Music Poll - Session 2",
+    "description": "This is session 2 for the 'Music Poll' poll.",
+    "guid": "yZaBcDeF2",
+    "uri": "http://localhost:8081/join/yZaBcDeF2",
+    "pollId": 25
+  },
+  {
+    "name": "Music Poll - Session 3",
+    "description": "This is session 3 for the 'Music Poll' poll.",
+    "guid": "hIjKlMnN3",
+    "uri": "http://localhost:8081/join/hIjKlMnN3",
+    "pollId": 25
+  },
+  {
+    "name": "Music Quiz - Session 1",
+    "description": "This is session 1 for the 'Music Quiz' poll.",
+    "guid": "qRsTuVwW4",
+    "uri": "http://localhost:8081/join/qRsTuVwW4",
+    "pollId": 11
+  },
+  {
+    "name": "Music Quiz - Session 2",
+    "description": "This is session 2 for the 'Music Quiz' poll.",
+    "guid": "zAbCdEfG5",
+    "uri": "http://localhost:8081/join/zAbCdEfG5",
+    "pollId": 11
+  },
+  {
+    "name": "Music Quiz - Session 3",
+    "description": "This is session 3 for the 'Music Quiz' poll.",
+    "guid": "iJkLmNoO6",
+    "uri": "http://localhost:8081/join/iJkLmNoO6",
+    "pollId": 11
+  },
+  {
+    "name": "Mythology Quiz - Session 1",
+    "description": "This is session 1 for the 'Mythology Quiz' poll.",
+    "guid": "rStUvWxX7",
+    "uri": "http://localhost:8081/join/rStUvWxX7",
+    "pollId": 12
+  },
+  {
+    "name": "Mythology Quiz - Session 2",
+    "description": "This is session 2 for the 'Mythology Quiz' poll.",
+    "guid": "aBcDeFgH8",
+    "uri": "http://localhost:8081/join/aBcDeFgH8",
+    "pollId": 12
+  },
+  {
+    "name": "Mythology Quiz - Session 3",
+    "description": "This is session 3 for the 'Mythology Quiz' poll.",
+    "guid": "jKlMnOpP9",
+    "uri": "http://localhost:8081/join/jKlMnOpP9",
+    "pollId": 12
+  },
+  {
+    "name": "Pets Poll - Session 1",
+    "description": "This is session 1 for the 'Pets Poll' poll.",
+    "guid": "sTuVwXyY1",
+    "uri": "http://localhost:8081/join/sTuVwXyY1",
+    "pollId": 22
+  },
+  {
+    "name": "Pets Poll - Session 2",
+    "description": "This is session 2 for the 'Pets Poll' poll.",
+    "guid": "bCdEfGhI2",
+    "uri": "http://localhost:8081/join/bCdEfGhI2",
+    "pollId": 22
+  },
+  {
+    "name": "Pets Poll - Session 3",
+    "description": "This is session 3 for the 'Pets Poll' poll.",
+    "guid": "kLmNoPqQ3",
+    "uri": "http://localhost:8081/join/kLmNoPqQ3",
+    "pollId": 22
+  },
+  {
+    "name": "Politics Quiz - Session 1",
+    "description": "This is session 1 for the 'Politics Quiz' poll.",
+    "guid": "tUvWxYzZ4",
+    "uri": "http://localhost:8081/join/tUvWxYzZ4",
+    "pollId": 13
+  },
+  {
+    "name": "Politics Quiz - Session 2",
+    "description": "This is session 2 for the 'Politics Quiz' poll.",
+    "guid": "cDeFgHiJ5",
+    "uri": "http://localhost:8081/join/cDeFgHiJ5",
+    "pollId": 13
+  },
+  {
+    "name": "Politics Quiz - Session 3",
+    "description": "This is session 3 for the 'Politics Quiz' poll.",
+    "guid": "lMnOpQrR6",
+    "uri": "http://localhost:8081/join/lMnOpQrR6",
+    "pollId": 13
+  },
+  {
+    "name": "School Poll - Session 1",
+    "description": "This is session 1 for the 'School Poll' poll.",
+    "guid": "uVwXyZaA7",
+    "uri": "http://localhost:8081/join/uVwXyZaA7",
+    "pollId": 21
+  },
+  {
+    "name": "School Poll - Session 2",
+    "description": "This is session 2 for the 'School Poll' poll.",
+    "guid": "dEfGhIjK8",
+    "uri": "http://localhost:8081/join/dEfGhIjK8",
+    "pollId": 21
+  },
+  {
+    "name": "School Poll - Session 3",
+    "description": "This is session 3 for the 'School Poll' poll.",
+    "guid": "mNoPqRsS9",
+    "uri": "http://localhost:8081/join/mNoPqRsS9",
+    "pollId": 21
+  },
+  {
+    "name": "Science and Nature Quiz - Session 1",
+    "description": "This is session 1 for the 'Science and Nature Quiz' poll.",
+    "guid": "vWxYzAbB1",
+    "uri": "http://localhost:8081/join/vWxYzAbB1",
+    "pollId": 14
+  },
+  {
+    "name": "Science and Nature Quiz - Session 2",
+    "description": "This is session 2 for the 'Science and Nature Quiz' poll.",
+    "guid": "eFgHiJkL2",
+    "uri": "http://localhost:8081/join/eFgHiJkL2",
+    "pollId": 14
+  },
+  {
+    "name": "Science and Nature Quiz - Session 3",
+    "description": "This is session 3 for the 'Science and Nature Quiz' poll.",
+    "guid": "nOpQrStT3",
+    "uri": "http://localhost:8081/join/nOpQrStT3",
+    "pollId": 14
+  },
+  {
+    "name": "Sports Poll - Session 1",
+    "description": "This is session 1 for the 'Sports Poll' poll.",
+    "guid": "wXyZaBcD4",
+    "uri": "http://localhost:8081/join/wXyZaBcD4",
+    "pollId": 19
+  },
+  {
+    "name": "Sports Poll - Session 2",
+    "description": "This is session 2 for the 'Sports Poll' poll.",
+    "guid": "fGhIjKlM5",
+    "uri": "http://localhost:8081/join/fGhIjKlM5",
+    "pollId": 19
+  },
+  {
+    "name": "Sports Poll - Session 3",
+    "description": "This is session 3 for the 'Sports Poll' poll.",
+    "guid": "oPqRsTuV6",
+    "uri": "http://localhost:8081/join/oPqRsTuV6",
+    "pollId": 19
+  },
+  {
+    "name": "Sports Quiz - Session 1",
+    "description": "This is session 1 for the 'Sports Quiz' poll.",
+    "guid": "xYzAaCdE7",
+    "uri": "http://localhost:8081/join/xYzAaCdE7",
+    "pollId": 15
+  },
+  {
+    "name": "Sports Quiz - Session 2",
+    "description": "This is session 2 for the 'Sports Quiz' poll.",
+    "guid": "gHiJkLnM8",
+    "uri": "http://localhost:8081/join/gHiJkLnM8",
+    "pollId": 15
+  },
+  {
+    "name": "Sports Quiz - Session 3",
+    "description": "This is session 3 for the 'Sports Quiz' poll.",
+    "guid": "pQrStUvW9",
+    "uri": "http://localhost:8081/join/pQrStUvW9",
+    "pollId": 15
+  },
+  {
+    "name": "Television Quiz - Session 1",
+    "description": "This is session 1 for the 'Television Quiz' poll.",
+    "guid": "yZaBcDeF1",
+    "uri": "http://localhost:8081/join/yZaBcDeF1",
+    "pollId": 16
+  },
+  {
+    "name": "Television Quiz - Session 2",
+    "description": "This is session 2 for the 'Television Quiz' poll.",
+    "guid": "hIjKlMnN2",
+    "uri": "http://localhost:8081/join/hIjKlMnN2",
+    "pollId": 16
+  },
+  {
+    "name": "Television Quiz - Session 3",
+    "description": "This is session 3 for the 'Television Quiz' poll.",
+    "guid": "qRsTuVwX3",
+    "uri": "http://localhost:8081/join/qRsTuVwX3",
+    "pollId": 16
+  },
+  {
+    "name": "Vacation Poll - Session 1",
+    "description": "This is session 1 for the 'Vacation Poll' poll.",
+    "guid": "zAbCdEfG4",
+    "uri": "http://localhost:8081/join/zAbCdEfG4",
+    "pollId": 26
+  },
+  {
+    "name": "Vacation Poll - Session 2",
+    "description": "This is session 2 for the 'Vacation Poll' poll.",
+    "guid": "iJkLmNoO5",
+    "uri": "http://localhost:8081/join/iJkLmNoO5",
+    "pollId": 26
+  },
+  {
+    "name": "Vacation Poll - Session 3",
+    "description": "This is session 3 for the 'Vacation Poll' poll.",
+    "guid": "rStUvWxY6",
+    "uri": "http://localhost:8081/join/rStUvWxY6",
+    "pollId": 26
+  }
+]
