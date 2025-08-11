@@ -32,7 +32,7 @@ const io = new Server(httpServer, {
   }
 });
 
-require("./app/socket")(io); //  Pass the io instance to our new socket logic module
+require("./app/socket/index.js")(io); //  Pass the io instance to our new socket logic module
 
 var corsOptions = {
   origin: "http://localhost:8081",
