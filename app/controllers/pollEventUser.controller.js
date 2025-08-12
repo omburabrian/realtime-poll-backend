@@ -32,6 +32,59 @@ exports.create = async (req, res) => {
     });
   }
 };
+
+// Get a single PollEventUser by userId + pollEventId
+exports.findOneByUserAndEvent = async (req, res) => {
+  try {
+    const { pollEventId, userId } = req.params;
+    if (!pollEventId || !userId) {
+      return res.status(400).send({ message: "pollEventId and userId required" });
+    }
+
+    const row = await PollEventUser.findOne({
+      where: { pollEventId, userId },
+      include: [
+        { model: db.user, attributes: ["id", "username", "firstName", "lastName"] },
+        { model: db.pollEvent, include: [{ model: db.poll, attributes: ["id", "name"] }] },
+      ],
+    });
+
+    if (!row) return res.status(404).send({ message: "Not found" });
+    return res.send(row);
+  } catch (err) {
+    console.error("findOneByUserAndEvent error:", err);
+    return res.status(500).send({ message: err.message || "Server error" });
+  }
+};
+
+// Get a single PollEventUser by userId + pollId (joins via PollEvent)
+exports.findOneByUserAndPoll = async (req, res) => {
+  try {
+    const { pollId, userId } = req.params;
+    if (!pollId || !userId) {
+      return res.status(400).send({ message: "pollId and userId required" });
+    }
+
+    const row = await PollEventUser.findOne({
+      where: { userId },
+      include: [
+        {
+          model: db.pollEvent,
+          where: { pollId },                     // assumes PollEvent has pollId FK
+          include: [{ model: db.poll, attributes: ["id", "name"] }],
+        },
+        { model: db.user, attributes: ["id", "username", "firstName", "lastName"] },
+      ],
+    });
+
+    if (!row) return res.status(404).send({ message: "Not found" });
+    return res.send(row);
+  } catch (err) {
+    console.error("findOneByUserAndPoll error:", err);
+    return res.status(500).send({ message: err.message || "Server error" });
+  }
+};
+
 // Retrieve all polls taken by user via PollEventUser
 exports.findAllTakenByUser = async (req, res) => {
   const userId = req.params.userId;
