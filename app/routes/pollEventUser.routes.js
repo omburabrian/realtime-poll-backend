@@ -1,6 +1,10 @@
 module.exports = (app) => {
   const PollEventUser = require("../controllers/pollEventUser.controller.js");
-  const { authenticateRoute, isProfessor, isAdmin } = require("../authentication/authentication");
+  const {
+    authenticateRoute,
+    isProfessor,
+    isAdmin,
+  } = require("../authentication/authentication");
   var router = require("express").Router();
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -8,28 +12,60 @@ module.exports = (app) => {
   router.post("/poll-event-users/", [authenticateRoute], PollEventUser.create);
 
   //  Retrieve all PollEventUsers for a PollEvent
-  router.get("/poll-event-users/poll-event/:pollEventId", [authenticateRoute, isProfessor],
-    PollEventUser.findAllForPollEvent);
+  router.get(
+    "/poll-event-users/poll-event/:pollEventId",
+    [authenticateRoute, isProfessor],
+    PollEventUser.findAllForPollEvent
+  );
 
   //  Retrieve all PollEventUsers for a Poll
-  router.get("/poll-event-users/poll/:pollId", [authenticateRoute, isProfessor],
-    PollEventUser.findAllForPoll);
+  router.get(
+    "/poll-event-users/poll/:pollId",
+    [authenticateRoute, isProfessor],
+    PollEventUser.findAllForPoll
+  );
 
   //  Retrieve a single PollEventUser with ID
-  router.get("/poll-event-users/:id", [authenticateRoute, isProfessor], PollEventUser.findOne);
+  router.get(
+    "/poll-event-users/:id",
+    [authenticateRoute, isProfessor],
+    PollEventUser.findOne
+  );
 
+  //  Retrieve all PollEventUsers for a User
+  router.get(
+    "/poll-event-users/user/:userId",
+    [authenticateRoute],
+    PollEventUser.findAllTakenByUser
+  );
   //  Update a PollEventUser with ID
-  router.put("/poll-event-users/:id", [authenticateRoute, isProfessor], PollEventUser.update);
+  router.put(
+    "/poll-event-users/:id",
+    [authenticateRoute, isProfessor],
+    PollEventUser.update
+  );
 
   //  Delete a PollEventUser with ID
-  router.delete("/poll-event-users/:id", [authenticateRoute, isProfessor], PollEventUser.delete);
+  router.delete(
+    "/poll-event-users/:id",
+    [authenticateRoute, isProfessor],
+    PollEventUser.delete
+  );
 
   //  Delete all PollEventUsers
-  router.delete("/poll-event-users/", [authenticateRoute, isAdmin], PollEventUser.deleteAll);
+  router.delete(
+    "/poll-event-users/",
+    [authenticateRoute, isAdmin],
+    PollEventUser.deleteAll
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //  Create PollEventUsers in bulk
-  router.post("/poll-event-users/bulk-create", [authenticateRoute, isProfessor], PollEventUser.bulkCreate);
+  router.post(
+    "/poll-event-users/bulk-create",
+    [authenticateRoute, isProfessor],
+    PollEventUser.bulkCreate
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
