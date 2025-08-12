@@ -1,4 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
+
+    const STATES = {
+        READY: 'ready',
+        WAITING: 'waiting',
+        STARTED: 'started',
+        ENDED: 'ended',
+        CANCELED: 'canceled',
+        PAUSED: 'paused',
+        ERROR: 'error',
+    };
+
     const PollEvent = sequelize.define("poll_event", {
         name: {
             type: Sequelize.STRING,
@@ -16,6 +27,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: true,
         },
+        state: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
         startDateTime: {
             type: Sequelize.DATE,
             allowNull: true,
@@ -25,5 +40,10 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
         },
     });
+
+    //  Referenced by PollEvent.STATES.STARTED, etc.
+    //  (Attach the enum to the model as a static property)
+    PollEvent.STATES = STATES;
+
     return PollEvent;
 };

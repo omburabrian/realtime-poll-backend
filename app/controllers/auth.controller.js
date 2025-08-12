@@ -4,7 +4,6 @@ const User = db.user;
 const Session = db.session;
 const Op = db.Sequelize.Op;
 const { encrypt, decrypt } = require("../authentication/crypto");
-const { USER_ROLES } = require("../config/constants");
 
 exports.login = async (req, res) => {
 
@@ -65,7 +64,8 @@ exports.logout = async (req, res) => {
   }
 };
 
-//  Send a list of USER_ROLES to the frontend.
+//  Send a list of USER ROLES to the frontend.
 exports.getUserRoles = (req, res) => {
-  res.send(USER_ROLES);
+  //  res.send(USER_ROLES);
+  res.send(db.user.ROLES);
 };

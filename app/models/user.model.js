@@ -1,6 +1,14 @@
 const { saltSize, keySize } = require("../authentication/crypto");
 
 module.exports = (sequelize, Sequelize) => {
+
+  const ROLES = {
+    ADMIN: "admin",
+    PROFESSOR: "professor",
+    //  STUDENT: "student",
+    USER: "user",
+  };
+
   const User = sequelize.define("user", {
     firstName: {
       type: Sequelize.STRING,
@@ -20,7 +28,8 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     role: {
-      type: Sequelize.TEXT('tiny'),
+      type: Sequelize.ENUM,
+      values: Object.values(ROLES),
       allowNull: false,
     },
     password: {
@@ -32,6 +41,10 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
   });
+
+  //  Referenced by User.ROLES.PROFESSOR, etc.
+  //  (Attach the enum to the model as a static property)
+  User.ROLES = ROLES;
 
   return User;
 };

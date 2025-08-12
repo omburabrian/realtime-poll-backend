@@ -2,7 +2,6 @@ const db = require("../models");
 const User = db.user;
 const Session = db.session;
 const Op = db.Sequelize.Op;
-const { USER_ROLES } = require("../config/constants");
 const { encrypt, getSalt, hashPassword } = require("../authentication/crypto");
 
 //  TODO:   Re-write all functions using try {} catch() {} and async-await.
@@ -69,7 +68,7 @@ exports.create = async (req, res) => {
 
     //  If no ROLE was specified, set default value.
     if (req.body.role === undefined) {
-      user.role = USER_ROLES.USER;
+      user.role = db.user.ROLES.USER;
     }
 
     //  Persist the User object in the database

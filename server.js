@@ -11,8 +11,6 @@ const httpServer = http.createServer(app);
 const { Server } = require("socket.io");
 const db = require("./app/models");
 
-//  Get data needed for creating default admin user, if needed.
-const { USER_ROLES } = require("./app/config/constants");
 const { getSalt, hashPassword } = require("./app/authentication/crypto");
 
 //  Sync all defined models with the database.
@@ -32,6 +30,7 @@ const io = new Server(httpServer, {
   }
 });
 
+//  "socket"
 require("./app/socket/index.js")(io); //  Pass the io instance to our new socket logic module
 
 var corsOptions = {
@@ -90,7 +89,7 @@ async function ensureAdminUserExists() {
         lastName: "User",
         username: "admin",
         email: process.env.DEFAULT_ADMIN_EMAIL || temporaryDefaultAdminEmail,
-        role: USER_ROLES.ADMIN,
+        role: db.user.ROLES.ADMIN,
         password: hash,
         salt: salt,
       });

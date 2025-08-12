@@ -5,7 +5,7 @@ const UserServices = require("../services/user.services.js");
 const PollServices = require("../services/poll.services.js");
 const CourseServices = require("../services/course.services.js");
 
-const { USER_ROLES, QUESTION_TYPES, QUESTION_DIFFICULTY } = require("../config/constants");
+const { QUESTION_TYPES, QUESTION_DIFFICULTY } = require("../config/constants");
 
 //---------------------------------------------------------------------------
 //  Data for the ADMIN Dashboard
@@ -32,7 +32,8 @@ exports.getDashboardData = async (req, res) => {
         polls: pollCount,
       },
       configData: {
-        userRoles: USER_ROLES,
+        //  userRoles: USER_ROLES,
+        userRoles: db.user.ROLES,
         questionTypes: QUESTION_TYPES,
         questionDifficulties: QUESTION_DIFFICULTY,
       },

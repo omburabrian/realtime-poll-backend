@@ -49,6 +49,7 @@ exports.create = async (req, res) => {
             //  guid: crypto.randomUUID(),  //  Generate globally unique identifier
             //  Use this short & sweet version, instead:
             guid: nanoid(),
+            state: PollEvent.STATES.READY,
             startDateTime: new Date(),  //  Will be updated when Poll Event is started by professor.
         };
 

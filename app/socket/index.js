@@ -1,22 +1,27 @@
 const { decrypt } = require("../authentication/crypto");
 const db = require("../models");
-const { USER_ROLES } = require("../config/constants");
 
 const PollEvent = db.pollEvent;
 const PollEventUser = db.pollEventUser;
 const Question = db.question;
 const Answer = db.answer;
 const UserAnswer = db.userAnswer;
+const User = db.user;
 const Poll = db.poll;
+const { SOCKET_MESSAGES } = require("../config/constants.js");
 
 module.exports = (io) => {
 
   //  Middleware for authenticating socket connections
   //  (Must be logged in USER to "use" the socket.)
-  //  ToDo:  Add option for anonymous poll takers.
+  //  ToDo:  Add option for anonymous poll takers?
+
+  //  'socket' is received as an argument in the callback function.  Represents connection to a SINGLE USER.
   io.use(async (socket, next) => {
+
     const token = socket.handshake.auth.token;
 
+    //  ToDo:  Allow for 'anonymous' poll takers?  Will need to create temporary user to track answers.
     if (!token) {
       return next(new Error("Authentication error: No token provided."));
     }
@@ -57,18 +62,36 @@ module.exports = (io) => {
 
   //---------------------------------------------------------------------------
   //  When a user connects (server recieves the "connection" mesage with the socket)
+
+  //  'io' is the entire Socket.io server.  This is used to broadcast to ALL users in a "room" (poll event).
+  //  'socket' is a connection from a single user.  When they connect, define the messages that can be sent/recieved to them.
   io.on("connection", (socket) => {
+
     console.log(`Socket connected: ${socket.id} (User: ${socket.user.username})`);
+
+    console.log("SOCKET_MESSAGES.SEND_MESSAGE = " + SOCKET_MESSAGES.SEND_MESSAGE);
+    console.log("SOCKET_MESSAGES.NEW_MESSAGE = " + SOCKET_MESSAGES.NEW_MESSAGE);
+
+
 
     // --- Poll Event Lifecycle ---
 
+    //-----------------------------------------------------------------------------------------------------
     //  When a user joins a poll event (in order to answer questions in a poll)
     socket.on("joinPollEvent", async (pollEventGuid) => {
+
+
+
+      console.log("socket.on(\"joinPollEvent\", async (pollEventGuid) => {" + pollEventGuid );
+
 
       try {
 
         //  Verify the PollEvent exists
-        const pollEvent = await PollEvent.findOne({ where: { guid: pollEventGuid } });
+        //  ToDo:   CHANGED TO USING THE POLL EVENT ID RATHER THAN THE POLL EVENT GUID.
+        //          POSSIBLY CHANGE BACK LATER.
+        //  const pollEvent = await PollEvent.findOne({ where: { guid: pollEventGuid } });
+        const pollEvent = await PollEvent.findOne({ where: { id: pollEventGuid } });
 
         if (!pollEvent) {
           socket.emit('error', { message: `Poll event with GUID ${pollEventGuid} not found.` });
@@ -105,10 +128,11 @@ module.exports = (io) => {
       io.to(pollEventGuid).emit('userLeft', { id: socket.user.id, username: socket.user.username });
     });
 
+    //-----------------------------------------------------------------------------------------------------
     //  When a PROFESSOR or ADMIN starts a poll (in a specific poll event)
     socket.on("startPoll", async ({ pollEventGuid }) => {
       //  Role check:  Only PROFESSORs or ADMINs can start a poll
-      if (socket.user.role !== USER_ROLES.PROFESSOR && socket.user.role !== USER_ROLES.ADMIN) {
+      if (socket.user.role !== User.ROLES.PROFESSOR && socket.user.role !== User.ROLES.ADMIN) {
         return socket.emit('unauthorized', { message: 'You do not have permission to start the poll.' });
       }
 
@@ -138,12 +162,13 @@ module.exports = (io) => {
       }
     });
 
+    //-----------------------------------------------------------------------------------------------------
     //  When the PROFESSOR or the TIMER needs to advance to the nextg question of the poll
     socket.on("showNextQuestion", async ({ pollEventGuid, currentQuestionNumber }) => {
       //  Role check:   Only PROFESSORs or ADMINs can advance questions.
       //  ToDo:   Allow the TIMER to advance the poll.
       //          (Set the PROFESSOR's UI containing a time to send the message?)
-      if (socket.user.role !== USER_ROLES.PROFESSOR && socket.user.role !== USER_ROLES.ADMIN) {
+      if (socket.user.role !== User.ROLES.PROFESSOR && socket.user.role !== User.ROLES.ADMIN) {
         return socket.emit('unauthorized', { message: 'You do not have permission to change questions.' });
       }
 
@@ -178,6 +203,7 @@ module.exports = (io) => {
       }
     });
 
+    //-----------------------------------------------------------------------------------------------------
     //  When a user submits an answer to a question
     socket.on("submitAnswer", async ({ pollEventGuid, pollEventUserId, questionId, answer }) => {
       try {
@@ -226,7 +252,7 @@ module.exports = (io) => {
         //  Send live results of this answer ONLY to PROFESSORs and ADMINs in the "room" / poll event
         const roomSockets = await io.in(pollEventGuid).fetchSockets();
         for (const roomSocket of roomSockets) {
-          if (roomSocket.user.role === USER_ROLES.PROFESSOR || roomSocket.user.role === USER_ROLES.ADMIN) {
+          if (roomSocket.user.role === User.ROLES.PROFESSOR || roomSocket.user.role === User.ROLES.ADMIN) {
             roomSocket.emit('liveResultsUpdate', { questionId, results: summary });
           }
         }
@@ -242,11 +268,12 @@ module.exports = (io) => {
       }
     });
 
+    //-------------------------------------------------------------------------
     //  When a PROFESSOR or ADMIN ends a poll
     socket.on("endPoll", async ({ pollEventGuid }) => {
 
       //  Role check:   Only PROFESSORs or ADMINs can end a poll.
-      if (socket.user.role !== USER_ROLES.PROFESSOR && socket.user.role !== USER_ROLES.ADMIN) {
+      if (socket.user.role !== User.ROLES.PROFESSOR && socket.user.role !== User.ROLES.ADMIN) {
         return socket.emit('unauthorized', { message: 'You do not have permission to end the poll.' });
       }
 
@@ -273,14 +300,28 @@ module.exports = (io) => {
       }
     });
 
+    //-------------------------------------------------------------------------
+    //  TEST CHAT ROOM MESSAGE  (Setup upon initial installation of socket.io.)
+
     // --- Chat Functionality ---
 
-    socket.on("newMessage", ({ pollEventGuid, message }) => {
+    //  Listen for the client to SEND_MESSAGE.
+    socket.on(SOCKET_MESSAGES.SEND_MESSAGE , ({ pollEventGuid, message }) => {
+    //  socket.on("newMessage", ({ pollEventGuid, message }) => {
+
+      console.log("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+      console.log("socket.on(SOCKET_MESSAGES.SEND_MESSAGE , ({ pollEventGuid, message }) => {");
+      console.log("SOCKET_MESSAGES.SEND_MESSAGE = pollEventGuid: " + pollEventGuid + " : message = " + message);
+      console.log("SOCKET_MESSAGES.NEW_MESSAGE = " + SOCKET_MESSAGES.NEW_MESSAGE);
+      console.log("SOCKET_MESSAGES.SEND_MESSAGE = " + SOCKET_MESSAGES.SEND_MESSAGE);
+      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
       const user = socket.user;
       // Broadcast the message to all clients in the specific poll event room
-      io.to(pollEventGuid).emit("newMessage", { user, message, timestamp: new Date() });
+      io.to(pollEventGuid).emit(SOCKET_MESSAGES.NEW_MESSAGE, { user, message, timestamp: new Date() });
     });
 
+    //===============================================================================================
     //  Handle disconnection
     socket.on("disconnect", (reason) => {
 
