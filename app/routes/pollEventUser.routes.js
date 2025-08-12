@@ -63,9 +63,22 @@ module.exports = (app) => {
   //  Create PollEventUsers in bulk
   router.post(
     "/poll-event-users/bulk-create",
-    [authenticateRoute, isProfessor],
+    [authenticateRoute],
     PollEventUser.bulkCreate
   );
+  // Lookup by event + user (students should hit this)
+router.get(
+  "/poll-event-users/lookup/event/:pollEventId/user/:userId",
+  [authenticateRoute],
+  PollEventUser.findOneByUserAndEvent
+);
+
+// Lookup by poll + user (joins through PollEvent)
+router.get(
+  "/poll-event-users/lookup/poll/:pollId/user/:userId",
+  [authenticateRoute],
+  PollEventUser.findOneByUserAndPoll
+);
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   app.use("/realtime-pollapi", router);
