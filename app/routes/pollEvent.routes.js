@@ -19,7 +19,7 @@ module.exports = (app) => {
     PollEvent.findAllForUser);    
 
   //  Retrieve a single PollEvent with ID
-  router.get("/poll-events/:id", [authenticateRoute, isProfessor], PollEvent.findOne);
+  router.get("/poll-events/:id", [authenticateRoute], PollEvent.findOne);
 
   //  Update a PollEvent with ID
   router.put("/poll-events/:id", [authenticateRoute, isProfessor], PollEvent.update);
