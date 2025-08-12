@@ -35,6 +35,7 @@ const SOCKET_MESSAGES = Object.freeze({
 
     //  Professor Poll Event messages
 
+    OPEN_POLL_EVENT: "open_poll_event",
     START_POLL: "start_poll",
     PAUSE_POLL: "pause_poll",
     RESUME_POLL: "resume_poll",

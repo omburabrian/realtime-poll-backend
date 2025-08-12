@@ -2,6 +2,7 @@ module.exports = (sequelize, Sequelize) => {
 
     const STATES = {
         READY: 'ready',
+        OPEN: 'open',
         WAITING: 'waiting',
         STARTED: 'started',
         ENDED: 'ended',

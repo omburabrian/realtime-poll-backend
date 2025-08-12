@@ -82,7 +82,7 @@ module.exports = (io) => {
 
 
 
-      console.log("socket.on(\"joinPollEvent\", async (pollEventGuid) => {" + pollEventGuid );
+      console.log("socket.on(\"joinPollEvent\", async (pollEventGuid) => {" + pollEventGuid);
 
 
       try {
@@ -127,6 +127,21 @@ module.exports = (io) => {
       console.log(`Socket ${socket.id} (User: ${socket.user.username}) left room: ${pollEventGuid}`);
       io.to(pollEventGuid).emit('userLeft', { id: socket.user.id, username: socket.user.username });
     });
+
+
+    //-----------------------------------------------------------------------------------------------------
+    //  When a PROFESSOR opens a poll event
+    //  socket.on(SOCKET_MESSAGES.OPEN_POLL_EVENT, async ({ pollEventGuid }) => {
+    socket.on(SOCKET_MESSAGES.OPEN_POLL_EVENT, (pollEventId) => {
+      
+      console.log('Receieved message: ' + SOCKET_MESSAGES.OPEN_POLL_EVENT + ', poll event ID: ' + pollEventId);
+      console.log('Change status to ' + PollEvent.STATES.OPEN);
+
+      //  ToDo:   Change the status of the POLL EVENT to OPEN.
+    });
+
+
+
 
     //-----------------------------------------------------------------------------------------------------
     //  When a PROFESSOR or ADMIN starts a poll (in a specific poll event)
@@ -306,8 +321,8 @@ module.exports = (io) => {
     // --- Chat Functionality ---
 
     //  Listen for the client to SEND_MESSAGE.
-    socket.on(SOCKET_MESSAGES.SEND_MESSAGE , ({ pollEventGuid, message }) => {
-    //  socket.on("newMessage", ({ pollEventGuid, message }) => {
+    socket.on(SOCKET_MESSAGES.SEND_MESSAGE, ({ pollEventGuid, message }) => {
+      //  socket.on("newMessage", ({ pollEventGuid, message }) => {
 
       console.log("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
       console.log("socket.on(SOCKET_MESSAGES.SEND_MESSAGE , ({ pollEventGuid, message }) => {");
